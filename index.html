@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8" />
-<title></title>
+<title>텍스트 RPG</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <style>
 :root{font-size:100%}body{font-family:Arial,sans-serif;background:
@@ -1653,9 +1653,10 @@ function armTo(hx,hy,c){ctx.strokeStyle=c;ctx.lineWidth=7;ctx.lineCap='round';ct
 function thrVal(u,idle,wind,ext){const K=KF[P.cb];if(u<K.a)return lerp(idle,wind,ease(u/K.a));if(u<K.b){const x=(u-K.a)/(K.b-K.a);return lerp(wind,ext,1-Math.pow(1-x,3))}return lerp(ext,idle,ease((u-K.b)/(1-K.b)))}
 /* ---------- 전투 로직 ---------- */
 const near=md=>{let b=null,bd=md;for(const e of Es){if(e.dead)continue;const d=Math.hypot(e.x-P.x,e.y-P.y);if(d<bd){bd=d;b=e}}return b};
+let EUID=0;
 function mkEnemy(mo,x,y,forced){
  const nm=mo.name,b0=nm.replace('뒤틀린 ',''),tw=nm!==b0;
- const e={z:zoneAt(x,y),x:x,y:y,vx:0,vy:0,t:rnd()*6,fl:0,cd:1.4+rnd(),wind:0,bt:0,sz:(SZ[b0]||100)*(tw?1.12:1),sp:(SPD[b0]||90)*(tw?1.15:1),spr:sprite(nm),m:mo,forced:forced,agg:forced,wa:rnd()*PI2,wt:0,dead:false,dtm:0};
+ const e={z:zoneAt(x,y),x:x,y:y,vx:0,vy:0,t:rnd()*6,fl:0,cd:1.4+rnd(),wind:0,bt:0,sz:(SZ[b0]||100)*(tw?1.12:1),sp:(SPD[b0]||90)*(tw?1.15:1),spr:sprite(nm),m:mo,forced:forced,agg:forced,wa:rnd()*PI2,wt:0,dead:false,dtm:0,uid:++EUID};
  e.rng=e.sz*.36+24;Es.push(e);return e;
 }
 function spawnFree(){
@@ -1675,7 +1676,7 @@ function dealRaw(e,d){e.m.hp-=d;e.fl=.15;e.agg=true;pop(Math.round(d),e.x,e.y-e.
 function die(e){
  if(e.dead||R.end)return;
  spark(e.x,e.y-20,30,'#7fe07a',260,4);R.flash=Math.max(R.flash,.2);R.fc='#fff';R.hs=.12;
- if(e.forced)R.end={t:.7,win:true,e:e};else{e.dead=true;e.dtm=.5;reward(e)}
+ if(e.forced)R.end={t:.7,win:true,e:e};else{e.dead=true;e.dtm=.5;reward(e);PT.kill(e)}
 }
 function enemyHit(e){
  if(P.inv>0||R.end)return;
@@ -1704,6 +1705,7 @@ function strike(){
    if(e.m.hp<=0)die(e);
   }
  }
+ n=PT.strikeGhosts(n,fxh,mult,c,big,thr,rch,sk);
  swingFX(c,big,thr,fxh);
  if(sk)skillFX(sk,fxh);
 }
@@ -1743,7 +1745,7 @@ function collect(k){
  dirty();
 }
 function update(dt,blk){
- worldStep(blk);
+ worldStep(blk);PT.step(dt);
  if(R.hs>0){R.hs-=dt;dt*=.15}
  R.T+=dt;R.sk=Math.max(0,R.sk-dt);
  let ix=J.x,iy=J.y;
@@ -1821,7 +1823,7 @@ function draw(){
  ground();villageGround();
  const L=[],hw=VW/2/Z+60,i0=Math.floor((cam.x-hw)/190),i1=Math.ceil((cam.x+hw)/190),j0=Math.floor((cam.y-VH*.42/Z-120)/190),j1=Math.ceil((cam.y+VH*.58/Z+40)/190);
  for(let j=j0;j<=j1;j++)for(let i=i0;i<=i1;i++){const o=obAt(i,j);if(o)L.push({y:o.y,f:()=>drawOb(o)})}
- for(const e of Es)L.push({y:e.y,f:()=>drawMon(e)});
+ for(const e of Es)L.push({y:e.y,f:()=>drawMon(e)});PT.collect(L);
  if(gs!=='combat')for(const q of Ps)L.push({y:q.y,f:()=>drawPk(q)});
  L.push({y:P.y,f:drawPlayer});
  for(const lm of LMS)if(Math.abs(lm.x-cam.x)<900&&Math.abs(lm.y-cam.y)<1100)L.push({y:lm.y,f:()=>landmark(lm)});for(const sp of SPOTS)if(Math.abs(sp.x-cam.x)<420&&Math.abs(sp.y-cam.y)<620)L.push({y:sp.y,f:()=>drawSpot(sp)});for(const d of VDEC)if(Math.abs(d[1]-cam.x)<420&&Math.abs(d[2]-cam.y)<620)L.push({y:d[2],f:()=>drawDecor(d)});
@@ -1860,6 +1862,235 @@ function loop(n){
  requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
+/* ---------- 👥 파티 사냥 (WebRTC P2P · PeerJS, 서버 불필요) ---------- */
+const PT={on:false,host:false,busy:false,code:'',id:'',peer:null,hc:null,conns:new Map(),mem:new Map(),gh:new Map(),err:'',nick:'',joinCode:'',chk:0,lastM:0,lastK:{}};
+(function(){
+ const PREFIX='trpg-party-v1-',PEER_SRC='https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js',MAXP=4;
+ const num=v=>{v=+v;return Number.isFinite(v)?v:0};
+ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ try{PT.nick=localStorage.getItem('trpgPartyNick')||''}catch(e){}
+ if(!PT.nick)PT.nick='모험가'+(10+Math.floor(rnd()*90));
+ /* ----- DOM: 버튼 / HUD ----- */
+ document.head.insertAdjacentHTML('beforeend','<style>#ptbtn{position:fixed;right:calc(8px + env(safe-area-inset-right,0px));top:var(--hm-top,calc(env(safe-area-inset-top,0px) + 96px));z-index:20;width:46px;height:46px;border-radius:12px;border:0;background:rgba(255,255,255,.92);box-shadow:0 2px 8px rgba(16,24,40,.22);font-size:20px;display:none;align-items:center;justify-content:center;cursor:pointer;flex-direction:column;line-height:1;padding:0}#ptbtn small{font-size:9px;font-weight:700;margin-top:2px;color:#334}#ptbtn.on{background:#dff3ff;box-shadow:0 0 0 2px #3b82f6,0 2px 8px rgba(16,24,40,.22)}body.world #ptbtn{display:flex}#pthud{position:fixed;right:calc(8px + env(safe-area-inset-right,0px));top:calc(var(--hm-top,calc(env(safe-area-inset-top,0px) + 96px)) + 54px);z-index:19;display:none;flex-direction:column;gap:4px;pointer-events:none;width:132px}body.world #pthud.on{display:flex}#pthud .pr{background:rgba(20,24,40,.72);color:#fff;border-radius:8px;padding:4px 7px;font-size:11px;font-weight:700;line-height:1.2}#pthud .pr .hp{height:4px;border-radius:2px;background:rgba(255,255,255,.25);margin-top:3px;overflow:hidden}#pthud .pr .hp i{display:block;height:100%;background:#4ade80}#rpanel .pt-in{width:100%;box-sizing:border-box;padding:10px;border:1px solid #c7cde0;border-radius:10px;font-size:16px;margin-bottom:8px}#rpanel .pt-code{font-size:30px;font-weight:900;letter-spacing:6px;text-align:center;color:#2b5fd9;margin:2px 0 4px}#rpanel .pt-sub{font-size:12px;color:#556;text-align:center;margin-bottom:8px}#rpanel .pt-err{font-size:12px;color:#d33;text-align:center;margin-bottom:8px;font-weight:700}#rpanel .pt-row{display:flex;justify-content:space-between;padding:7px 10px;background:#f1f4fb;border-radius:8px;margin-bottom:6px;font-size:13px;font-weight:700}</style>');
+ const btn=document.createElement('button');btn.id='ptbtn';btn.innerHTML='👥<small>파티</small>';btn.setAttribute('aria-label','파티');document.body.appendChild(btn);
+ const hud=document.createElement('div');hud.id='pthud';document.body.appendChild(hud);
+ btn.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation()});
+ btn.addEventListener('click',()=>{if(!blocked())render()});
+ /* ----- PeerJS 로드 (처음 열 때만) ----- */
+ function load(){return new Promise((res,rej)=>{if(window.Peer)return res();const s=document.createElement('script');s.src=PEER_SRC;s.onload=()=>res();s.onerror=()=>rej(new Error('load'));document.head.appendChild(s)})}
+ function send(msg){msg.f=PT.id;try{if(PT.host){PT.conns.forEach(c=>{if(c.open)c.send(msg)})}else if(PT.hc&&PT.hc.open)PT.hc.send(msg)}catch(e){}}
+ PT.send=send;
+ /* ----- 상태 초기화 / 종료 ----- */
+ function reset(){const pr=PT.peer;PT.on=false;PT.host=false;PT.busy=false;PT.code='';PT.id='';PT.peer=null;PT.hc=null;PT.conns=new Map();PT.mem.clear();PT.gh.clear();PT.lastM=0;setTimeout(()=>{try{pr&&pr.destroy()}catch(e){}},300);updUI()}
+ function leave(note){try{if(PT.on){if(PT.host)send({t:'end'});else send({t:'bye',x:PT.id})}}catch(e){}reset();if(note){PT.err=note;try{toast('👥 '+note)}catch(e){}}refresh()}
+ function fail(msg){const pr=PT.peer;PT.busy=false;PT.err=msg;PT.peer=null;try{pr&&pr.destroy()}catch(e){}updUI();refresh()}
+ /* ----- 만들기 / 참가 ----- */
+ const rcode=()=>{const A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<4;i++)s+=A[Math.floor(rnd()*A.length)];return s};
+ async function create(){
+  if(PT.busy||PT.on)return;PT.busy=true;PT.err='';render();
+  try{await load()}catch(e){return fail('파티 연결 모듈(PeerJS)을 불러오지 못했어요. 인터넷 연결을 확인해 주세요.')}
+  const tryOpen=n=>{
+   const code=rcode(),peer=new Peer(PREFIX+code);PT.peer=peer;
+   peer.on('open',id=>{if(PT.peer!==peer)return;PT.id=id;PT.host=true;PT.code=code;PT.on=true;PT.busy=false;PT.err='';updUI();render();toast('👥 파티를 만들었어요! 코드: '+code)});
+   peer.on('connection',onGuest);
+   peer.on('disconnected',()=>{try{peer.reconnect()}catch(e){}});
+   peer.on('error',er=>{if(PT.peer!==peer)return;if(er&&er.type==='unavailable-id'&&n<6){try{peer.destroy()}catch(e){}tryOpen(n+1)}else if(PT.on)toast('👥 연결 오류가 있었어요');else fail('파티를 만들지 못했어요. 잠시 후 다시 시도해 주세요.')});
+  };
+  tryOpen(0);
+ }
+ function onGuest(c){
+  c.on('open',()=>{
+   if(!PT.on||PT.conns.size>=MAXP-1){try{c.send({t:'full',f:PT.id})}catch(e){}setTimeout(()=>{try{c.close()}catch(e){}},400);return}
+   PT.conns.set(c.peer,c);
+  });
+  c.on('data',d=>handle(d,c));
+  c.on('close',()=>gone(c));c.on('error',()=>gone(c));
+ }
+ function gone(c){if(!PT.conns.has(c.peer))return;PT.conns.delete(c.peer);const mm=PT.mem.get(c.peer);drop(c.peer);send({t:'bye',x:c.peer});if(mm)toast('👥 '+mm.n+'님이 나갔어요')}
+ async function join(code){
+  if(PT.busy||PT.on)return;code=String(code||'').trim().toUpperCase();PT.joinCode=code;PT.err='';
+  if(!/^[A-Z0-9]{4}$/.test(code)){PT.err='파티 코드는 영문/숫자 4자리예요.';return render()}
+  PT.busy=true;render();
+  try{await load()}catch(e){return fail('파티 연결 모듈(PeerJS)을 불러오지 못했어요. 인터넷 연결을 확인해 주세요.')}
+  const peer=new Peer();PT.peer=peer;let ok=false;
+  const to=setTimeout(()=>{if(!ok&&PT.peer===peer)fail('파티를 찾지 못했어요. 코드를 확인하거나 네트워크 환경을 바꿔 보세요.')},12000);
+  peer.on('error',er=>{if(PT.peer!==peer)return;clearTimeout(to);if(er&&er.type==='peer-unavailable')fail('해당 코드의 파티가 없어요.');else if(PT.on)leave('연결 오류로 파티에서 나왔어요.');else fail('연결에 실패했어요. 잠시 후 다시 시도해 주세요.')});
+  peer.on('open',id=>{
+   if(PT.peer!==peer)return;PT.id=id;
+   const c=peer.connect(PREFIX+code,{reliable:true});
+   c.on('open',()=>{ok=true;clearTimeout(to);PT.hc=c;PT.host=false;PT.code=code;PT.on=true;PT.busy=false;PT.err='';c.send({t:'hi',f:id,n:PT.nick});updUI();render();toast('👥 파티에 참가했어요!')});
+   c.on('data',d=>handle(d,null));
+   c.on('close',()=>{if(PT.on&&PT.hc===c)leave('파티장과 연결이 끊어졌어요.')});
+   c.on('error',()=>{if(PT.on&&PT.hc===c)leave('파티장과 연결이 끊어졌어요.')});
+  });
+ }
+ /* ----- 수신 처리 ----- */
+ function handle(msg,conn){
+  if(!msg||typeof msg!=='object'||!PT.on&&msg.t!=='full')return;
+  const t=msg.t,f=String(msg.f||'').slice(0,64);
+  if(PT.host&&conn){if(f!==conn.peer)return;if(t!=='hi')PT.conns.forEach(o=>{if(o!==conn&&o.open)try{o.send(msg)}catch(e){}})}
+  if(t==='s')memState(msg,f);
+  else if(t==='m')ghostState(msg,f);
+  else if(t==='h'){if(msg.o===PT.id)applyHit(msg,f)}
+  else if(t==='k')shareKill(msg,f);
+  else if(t==='bye'){const id=String(msg.x||f);const mm=PT.mem.get(id);drop(id);if(mm)toast('👥 '+mm.n+'님이 나갔어요')}
+  else if(t==='end'){if(!PT.host)leave('파티장이 파티를 해산했어요.')}
+  else if(t==='full'){if(!PT.host){const hc=PT.hc;leave('파티가 가득 찼어요. (최대 '+MAXP+'명)');try{hc&&hc.close()}catch(e){}}}
+ }
+ function wInfoFor(w){const sv=p.weapon;p.weapon=w;try{return wInfo()}finally{p.weapon=sv}}
+ function memState(msg,id){
+  if(!id||id===PT.id)return;
+  let mm=PT.mem.get(id);
+  if(!mm){if(PT.mem.size>=MAXP-1)return;mm={id:id,x:num(msg.x),y:num(msg.y),tx:0,ty:0,face:1,run:0,ph:0,at:-1,cb:0,skn:null,sm:0,spd:0,inv:0,vx:0,vy:0,hit:true,nodmg:false,W:null,wk:'',n:'',lv:1,hp:1,mh:1,seen:0};PT.mem.set(id,mm);toast('👥 '+String(msg.n||'모험가').slice(0,10)+'님이 파티에 합류!');refresh()}
+  mm.n=String(msg.n||'모험가').slice(0,10);mm.lv=Math.max(1,num(msg.lv)|0);mm.hp=Math.max(0,num(msg.hp));mm.mh=Math.max(1,num(msg.mh));
+  mm.tx=Math.max(-1e5,Math.min(1e5,num(msg.x)));mm.ty=Math.max(-1e5,Math.min(1e5,num(msg.y)));
+  mm.face=num(msg.fc)>=0?1:-1;mm.spd=Math.min(600,Math.max(0,num(msg.sp)));
+  let cb=num(msg.cb)|0;if(cb<0||cb>=KF.length||!(DURS[cb]>0))cb=0;mm.cb=cb;
+  mm.at=num(msg.at)>=0?num(msg.at):-1;mm.skn=typeof msg.sk==='string'?msg.sk.slice(0,16):null;mm.sm=num(msg.sm);
+  const wk=String(msg.wn||'')+'|'+String(msg.wr||'');
+  if(wk!==mm.wk||!mm.W){mm.wk=wk;try{mm.W=wInfoFor({name:String(msg.wn||'').slice(0,40),rarity:String(msg.wr||'D')})}catch(e){mm.W=null}}
+  mm.seen=Date.now();
+ }
+ function drop(id){if(PT.mem.delete(id)){for(const [k,g] of PT.gh)if(g.o===id)PT.gh.delete(k);refresh()}}
+ /* ----- 다른 파티원의 몬스터 (고스트) ----- */
+ function mkGhost(own,uid,nm,x,y){
+  const b0=nm.replace('뒤틀린 ',''),tw=nm!==b0,sz=(SZ[b0]||100)*(tw?1.12:1);
+  return{o:own,i:uid,x:x,y:y,tx:x,ty:y,vx:0,vy:0,t:rnd()*6,fl:0,wind:0,atkT:0,sz:sz,sp:(SPD[b0]||90)*(tw?1.15:1),spr:sprite(nm),m:{name:nm,hp:1,maxHp:1},forced:false,dead:false,dtm:0,rng:sz*.36+24,seen:0,wF:0,aF:0,wasW:false,wasA:false};
+ }
+ function ghostState(msg,own){
+  if(!own||own===PT.id||!PT.mem.has(own)||!Array.isArray(msg.l))return;
+  const seen=new Set();
+  for(const r of msg.l.slice(0,10)){
+   if(!Array.isArray(r))continue;const uid=num(r[0])|0,nm=String(r[1]||'').slice(0,30);
+   if(!m.some(o=>o.name===nm))continue;
+   const key=own+':'+uid;seen.add(key);let g=PT.gh.get(key);
+   if(!g){g=mkGhost(own,uid,nm,num(r[2]),num(r[3]));PT.gh.set(key,g)}
+   g.tx=num(r[2]);g.ty=num(r[3]);g.m.hp=Math.max(0,num(r[4]));g.m.maxHp=Math.max(1,num(r[5]));g.wF=r[6]?1:0;g.aF=r[7]?1:0;g.seen=Date.now();
+  }
+  for(const [k,g] of PT.gh)if(g.o===own&&!g.dead&&!seen.has(k)){g.dead=true;g.dtm=.5}
+ }
+ /* ----- 파티원 공격 → 내 몬스터에 적용 / 처치 보상 공유 ----- */
+ function applyHit(msg,from){
+  if(R.end||gs!=='main')return;
+  const uid=num(msg.i)|0,d=Math.min(1e9,Math.max(0,Math.floor(num(msg.d))));if(!d)return;
+  const e=Es.find(q=>q.uid===uid&&!q.dead&&!q.forced);if(!e)return;
+  const mm=PT.mem.get(from);if(mm)e.vx+=(e.x>=mm.x?1:-1)*140;
+  dealRaw(e,d);
+ }
+ function shareKill(msg,from){
+  if(from===PT.id||gs!=='main'||R.end||!PT.mem.has(from))return;
+  const now=Date.now();if(now-(PT.lastK[from]||0)<250)return;PT.lastK[from]=now;
+  const nm=String(msg.n||''),x=num(msg.x),y=num(msg.y);
+  if(Math.hypot(x-P.x,y-P.y)>900)return;
+  const def=m.find(o=>o.name===nm);if(!def)return;
+  const mo=JSON.parse(JSON.stringify(def));mo.maxHp=mo.hp;
+  const b0=nm.replace('뒤틀린 ',''),sz=(SZ[b0]||100)*(nm!==b0?1.12:1);
+  reward({m:mo,x:x,y:y,sz:sz});
+  pop('👥 파티 보상',x,y-sz-52,'#9bd0ff',1);
+ }
+ PT.kill=e=>{if(PT.on&&!e.forced)send({t:'k',n:e.m.name,x:Math.round(e.x),y:Math.round(e.y)})};
+ PT.strikeGhosts=(n,fxh,mult,c,big,thr,rch,sk)=>{
+  if(!PT.on)return n;
+  for(const g of PT.gh.values()){
+   if(n>=4)break;if(g.dead)continue;
+   const dx=(g.x-P.x)*P.face,dy=g.y-P.y;
+   if(dx>(big?-55:-12)&&dx<rch+g.sz*.35&&Math.abs(dy)<(thr?32:46)+(sk==='가로 베기'?40:0)+g.sz*.22){
+    n++;fxh.push(g);const r=calculateCombatDamage(mult);
+    g.fl=.15;g.m.hp=Math.max(0,g.m.hp-r.damage);
+    pop(r.damage+(r.critical?'!':''),g.x,g.y-g.sz*.9,r.critical?'#ff5252':(big?'#ffd54a':'#fff'),r.critical||big);
+    hitFX(g.x,g.y-g.sz*.3,c,big,thr);R.shake=Math.max(R.shake,SH[c]+R.W.tier);
+    send({t:'h',o:g.o,i:g.i,d:r.damage});
+   }
+  }
+  return n;
+ };
+ /* ----- 매 프레임 갱신 / 그리기 ----- */
+ PT.step=dt=>{
+  if(!PT.on)return;const now=Date.now();
+  for(const mm of PT.mem.values()){
+   const dx=mm.tx-mm.x,dy=mm.ty-mm.y;
+   if(Math.hypot(dx,dy)>500){mm.x=mm.tx;mm.y=mm.ty}else{const k=Math.min(1,dt*12);mm.x+=dx*k;mm.y+=dy*k}
+   mm.run+=(Math.min(1,mm.spd/(MAXS*.75))-mm.run)*Math.min(1,dt*10);mm.ph+=mm.spd*dt*.08;
+   if(mm.at>=0){mm.at+=dt;if(mm.at>=DURS[mm.cb])mm.at=-1}
+  }
+  for(const [k,g] of PT.gh){
+   if(g.dead){g.dtm-=dt;if(g.dtm<=0)PT.gh.delete(k);continue}
+   const dx=g.tx-g.x,dy=g.ty-g.y;if(Math.hypot(dx,dy)>400){g.x=g.tx;g.y=g.ty}else{const q=Math.min(1,dt*10);g.x+=dx*q;g.y+=dy*q}
+   g.t+=dt;g.fl=Math.max(0,g.fl-dt);
+   if(g.wF&&!g.wasW)g.wind=.5;g.wasW=!!g.wF;if(g.wind>0)g.wind-=dt;
+   if(g.aF&&!g.wasA)g.atkT=.32;g.wasA=!!g.aF;if(g.atkT>0)g.atkT-=dt;
+  }
+  if(now-PT.chk>1000){
+   PT.chk=now;
+   for(const [id,mm] of PT.mem)if(now-mm.seen>7000){drop(id);toast('👥 '+mm.n+'님과 연결이 끊어졌어요')}
+   for(const g of PT.gh.values())if(!g.dead&&now-g.seen>2500){g.dead=true;g.dtm=.3}
+  }
+ };
+ function drawMember(mm){
+  if(!mm.W)return;
+  const sv={x:P.x,y:P.y,face:P.face,run:P.run,ph:P.ph,at:P.at,cb:P.cb,skn:P.skn,sm:P.sm,inv:P.inv,nodmg:P.nodmg,hit:P.hit},sW=R.W,sE=R.end,nb=p.nextBlock,np=p.nextParry,fu=p.furyTurns;
+  P.x=mm.x;P.y=mm.y;P.face=mm.face;P.run=mm.run;P.ph=mm.ph;P.at=mm.at;P.cb=mm.cb;P.skn=mm.skn;P.sm=mm.sm;P.inv=0;P.nodmg=false;P.hit=true;
+  R.W=mm.W;R.end=null;p.nextBlock=false;p.nextParry=false;p.furyTurns=0;
+  try{drawPlayer()}finally{Object.assign(P,sv);R.W=sW;R.end=sE;p.nextBlock=nb;p.nextParry=np;p.furyTurns=fu}
+  ctx.save();ctx.textAlign='center';ctx.font='bold 11px system-ui,sans-serif';ctx.lineWidth=3;ctx.strokeStyle='rgba(0,0,0,.65)';ctx.fillStyle='#bfe3ff';
+  const tx='Lv'+mm.lv+' '+mm.n;ctx.strokeText(tx,mm.x,mm.y-76);ctx.fillText(tx,mm.x,mm.y-76);
+  ctx.fillStyle='rgba(0,0,0,.6)';ctx.fillRect(mm.x-23,mm.y-72,46,6);ctx.fillStyle='#4ade80';ctx.fillRect(mm.x-22,mm.y-71,44*Math.max(0,Math.min(1,mm.hp/mm.mh)),4);
+  ctx.restore();
+ }
+ PT.collect=L=>{if(!PT.on)return;for(const g of PT.gh.values())L.push({y:g.y,f:()=>drawMon(g)});for(const mm of PT.mem.values())L.push({y:mm.y,f:()=>drawMember(mm)})};
+ /* ----- 네트워크 송신 (0.11초마다) ----- */
+ const monList=()=>{const l=[];if(gs!=='main')return l;for(const e of Es){if(e.dead||e.forced)continue;l.push([e.uid,e.m.name,Math.round(e.x),Math.round(e.y),Math.max(0,Math.round(e.m.hp)),Math.round(e.m.maxHp||e.m.hp),e.wind>0?1:0,e.atkT>0?1:0]);if(l.length>=10)break}return l};
+ let tick=0;
+ setInterval(()=>{
+  if(!PT.on)return;
+  try{
+   const w=p.weapon||{};
+   send({t:'s',n:PT.nick,lv:p.level|0,x:Math.round(P.x),y:Math.round(P.y),fc:P.face,sp:Math.round(P.speed||0),at:P.at>=0?Math.round(P.at*100)/100:-1,cb:P.cb|0,sk:P.skn||null,sm:P.sm||0,hp:Math.round(p.hp),mh:p.maxHp|0,wn:w.name,wr:w.rarity});
+   const l=monList();if(l.length||PT.lastM){send({t:'m',l:l});PT.lastM=l.length}
+   if(++tick%5===0){updHud();refresh()}
+  }catch(e){}
+ },110);
+ /* ----- UI ----- */
+ function updUI(){btn.classList.toggle('on',PT.on);if(!PT.on)hud.classList.remove('on');else hud.classList.add('on')}
+ function updHud(){
+  if(!PT.on){hud.classList.remove('on');return}
+  hud.classList.add('on');
+  const rows=[{n:PT.nick+' (나)',lv:p.level|0,hp:p.hp,mh:p.maxHp}];
+  PT.mem.forEach(mm=>rows.push({n:mm.n,lv:mm.lv,hp:mm.hp,mh:mm.mh}));
+  hud.innerHTML=rows.map(r=>'<div class="pr">'+esc(r.n)+' <span style="opacity:.7">Lv'+(r.lv|0)+'</span><div class="hp"><i style="width:'+Math.max(0,Math.min(100,r.hp/Math.max(1,r.mh)*100))+'%"></i></div></div>').join('');
+ }
+ const panelIsParty=()=>panel.style.display==='block'&&panel.firstChild&&panel.firstChild.dataset&&panel.firstChild.dataset.pt==='1';
+ function refresh(){if(panelIsParty()&&(PT.on||PT.busy||PT.err))render()}
+ function render(){
+  panel.innerHTML='';ptitle('👥 파티 사냥');panel.firstChild.dataset.pt='1';
+  const txt=(cls,t)=>{const d=document.createElement('div');d.className=cls;d.textContent=t;panel.appendChild(d);return d};
+  const closeBtn=()=>pbtn('닫기',closeP,'rpx');
+  if(PT.on){
+   txt('pt-sub',PT.host?'친구에게 이 코드를 알려주세요':'참가 중인 파티 코드');
+   txt('pt-code',PT.code);
+   txt('pt-sub',(PT.mem.size+1)+' / '+MAXP+'명 · 같은 지역에서 사냥하면 처치 보상을 함께 받아요');
+   const me=document.createElement('div');me.className='pt-row';me.innerHTML='<span>'+esc(PT.nick)+' (나)'+(PT.host?' 👑':'')+'</span><span>Lv'+(p.level|0)+' · ❤ '+Math.max(0,Math.ceil(p.hp))+'/'+(p.maxHp|0)+'</span>';panel.appendChild(me);
+   PT.mem.forEach(mm=>{const r=document.createElement('div');r.className='pt-row';r.innerHTML='<span>'+esc(mm.n)+'</span><span>Lv'+mm.lv+' · ❤ '+Math.ceil(mm.hp)+'/'+Math.ceil(mm.mh)+'</span>';panel.appendChild(r)});
+   if(PT.err)txt('pt-err',PT.err);
+   pbtn(PT.host?'🚪 파티 해산':'🚪 파티 나가기',()=>{closeP();leave(null);toast('👥 파티에서 나왔어요')},'');
+   closeBtn();
+  }else if(PT.busy){
+   txt('pt-sub','연결 중이에요… 잠시만 기다려 주세요.');
+   pbtn('취소',()=>{const pr=PT.peer;PT.peer=null;PT.busy=false;try{pr&&pr.destroy()}catch(e){}render()},'rpx');
+  }else{
+   txt('pt-sub','친구와 같은 지역에서 함께 사냥하세요. 서로의 몬스터를 같이 잡고, 처치 보상(코인·경험치·드롭)을 모두가 받아요. 최대 '+MAXP+'명.');
+   const ni=document.createElement('input');ni.className='pt-in';ni.maxLength=10;ni.placeholder='닉네임';ni.value=PT.nick;ni.addEventListener('input',()=>{PT.nick=ni.value.trim().slice(0,10)||'모험가';try{localStorage.setItem('trpgPartyNick',PT.nick)}catch(e){}});panel.appendChild(ni);
+   pbtn('🎉 파티 만들기',()=>create());
+   const ci=document.createElement('input');ci.className='pt-in';ci.maxLength=4;ci.placeholder='파티 코드 4자리';ci.value=PT.joinCode;ci.autocapitalize='characters';ci.autocomplete='off';ci.style.textTransform='uppercase';ci.addEventListener('input',()=>{PT.joinCode=ci.value.toUpperCase()});ci.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();join(ci.value)}});panel.appendChild(ci);
+   pbtn('🔗 코드로 참가',()=>join(ci.value));
+   if(PT.err)txt('pt-err',PT.err);
+   closeBtn();
+  }
+  panel.style.display='block';
+ }
+ window.addEventListener('pagehide',()=>{try{if(PT.on){if(PT.host)send({t:'end'});else send({t:'bye',x:PT.id})}}catch(e){}});
+})();
+
 /* ---------- TRPG 연결 ---------- */
 const tb=$('rtoast');
 const rnBox=document.createElement('div');rnBox.id='rnote';document.body.appendChild(rnBox);
@@ -1906,5 +2137,78 @@ const _us=useEquippedSkill;useEquippedSkill=function(){if(R.on&&(gs==='main'||gs
  setInterval(flush,5000);
 })();
 </script>
+<style>
+#drop-pop{position:fixed;inset:0;z-index:3000;display:none;align-items:center;justify-content:center;background:rgba(10,14,30,.62);padding:16px;box-sizing:border-box}
+#drop-pop.on{display:flex}
+#drop-box{width:min(340px,92vw);max-height:84vh;overflow:auto;background:#fff;border-radius:18px;padding:18px 16px 14px;box-shadow:0 14px 44px rgba(0,0,0,.45);text-align:center;animation:dp-in .22s ease}
+@keyframes dp-in{from{transform:scale(.85);opacity:0}to{transform:none;opacity:1}}
+@keyframes dp-glow{0%,100%{box-shadow:0 0 6px var(--c)}50%{box-shadow:0 0 20px var(--c)}}
+#drop-box .dp-title{font-weight:800;font-size:16px;color:#223;margin-bottom:10px}
+#drop-box .dp-item{margin:8px 0;padding:12px 10px;border-radius:12px;background:#f5f6fb;border:2px solid var(--c,#ccc);color:#222}
+#drop-box .dp-item.hi{animation:dp-glow 1.6s ease-in-out infinite}
+#drop-box .dp-item.dark{background:#171230;color:#fff}
+#drop-box .dp-badge{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--c,#888);color:#fff;font-size:11px;font-weight:800;margin-bottom:6px}
+#drop-box .dp-name{font-size:16px;font-weight:800;word-break:keep-all;line-height:1.35}
+#drop-box .dp-stat{margin-top:5px;font-size:13px;opacity:.85}
+#drop-box .dp-note{margin:8px 0;padding:10px;border-radius:10px;background:#eef2ff;color:#312e81;font-size:13px;font-weight:700;line-height:1.4}
+#drop-ok{margin-top:10px;width:100%;min-height:44px;border:0;border-radius:12px;background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;font-size:15px;font-weight:800;cursor:pointer}
+</style>
+<script>
+/* 상점 구매 결과 알림창: 무기/갑옷 구매, 마정석 뽑기, 랜덤 박스 */
+(function(){
+ var RL={D:'D급',C:'C급',B:'B급',A:'A급',S:'S급',SSS:'SSS급',Secret:'Secret',Void:'Void',Eternal:'Eternal',Transcendent:'Transcendent'};
+ var RC={D:'#8B4513',C:'#808080',B:'#555',A:'#DAA520',S:'#8A2BE2',SSS:'#6d28d9',Secret:'#00acc1',Void:'#7B2CFF',Eternal:'#a78bfa',Transcendent:'#ff9d24'};
+ var DARK={Secret:1,Void:1,Eternal:1,Transcendent:1},HI={A:1,S:1,SSS:1,Secret:1,Void:1,Eternal:1,Transcendent:1},TOP={SSS:1,Secret:1,Void:1,Eternal:1,Transcendent:1};
+ var pop=null,box=null;
+ function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+ function build(){
+  if(pop)return;
+  pop=document.createElement('div');pop.id='drop-pop';
+  pop.innerHTML='<div id="drop-box" role="alertdialog" aria-modal="true"></div>';
+  document.body.appendChild(pop);box=pop.firstChild;
+  pop.addEventListener('click',function(e){if(e.target===pop)close()});
+  document.addEventListener('keydown',function(e){if(pop.classList.contains('on')&&(e.key==='Enter'||e.key==='Escape'||e.key===' ')){e.preventDefault();e.stopPropagation();close()}},true);
+ }
+ function close(){if(pop)pop.classList.remove('on')}
+ function nameHtml(it){try{if(typeof gdn==='function')return gdn(it)}catch(e){}return esc(it.name||'???')}
+ function show(title,items,notes){
+  build();
+  var groups=[],idx={};
+  items.forEach(function(it){var k=[it.type,it.name,it.rarity,it.damage,it.defense].join('|');if(idx[k]==null){idx[k]=groups.length;groups.push({it:it,n:0})}groups[idx[k]].n++});
+  var top=items.some(function(it){return TOP[it.rarity]});
+  var h='<div class="dp-title">'+(top?'🎉 ':'')+esc(title)+'</div>';
+  groups.forEach(function(g){
+   var it=g.it,c=RC[it.rarity]||'#888',wp=it.type==='weapon';
+   var stat=wp?'⚔️ 공격력 '+(Number(it.damage)||0).toLocaleString():'🛡️ 방어력 '+(Number(it.defense)||0).toLocaleString();
+   h+='<div class="dp-item'+(HI[it.rarity]?' hi':'')+(DARK[it.rarity]?' dark':'')+'" style="--c:'+c+'">'
+    +'<div class="dp-badge">'+(wp?'무기':'갑옷')+' · '+esc(RL[it.rarity]||it.rarity||'')+'</div>'
+    +'<div class="dp-name">'+nameHtml(it)+(g.n>1?' ×'+g.n:'')+'</div>'
+    +'<div class="dp-stat">'+stat+'</div></div>';
+  });
+  (notes||[]).forEach(function(t){h+='<div class="dp-note">'+esc(t)+'</div>'});
+  if(items.length)h+='<div style="font-size:12px;color:#667;margin-top:6px">인벤토리에 추가되었습니다.</div>';
+  h+='<button id="drop-ok" type="button">확인</button>';
+  box.innerHTML=h;pop.classList.add('on');
+  var ok=document.getElementById('drop-ok');ok.addEventListener('click',close);setTimeout(function(){try{ok.focus()}catch(e){}},30);
+ }
+ function wrap(name,title){
+  var orig=window[name];if(typeof orig!=='function')return;
+  window[name]=function(){
+   var inv0=(p.inventory||[]).length,bt0=Number(p.bossTickets)||0,notes=[],alOrig=window.al;
+   window.al=function(t){try{notes.push(String(t).replace(/<[^>]*>/g,''))}catch(e){}return alOrig.apply(this,arguments)};
+   var r;try{r=orig.apply(this,arguments)}finally{window.al=alOrig}
+   try{
+    var added=(p.inventory||[]).slice(inv0),bt=(Number(p.bossTickets)||0)-bt0,extra=[];
+    if(bt>0)extra.push('🎟️ 보스 티켓 ×'+bt+' 획득!');
+    if(added.length||bt>0)show(title,added,extra);
+    else if(notes.length)show('알림',[],[notes[notes.length-1]]);
+   }catch(e){console.error(e)}
+   return r;
+  };
+ }
+ wrap('pw','무기 구매 결과');wrap('pa','갑옷 구매 결과');wrap('drawMageStone','마정석 뽑기 결과');wrap('randomBox','랜덤 박스 결과');
+})();
+</script>
+
 </body>
 </html>
