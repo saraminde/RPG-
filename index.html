@@ -380,7 +380,7 @@ const w=[{name:'나무검 (D급)',damage:5,rarity:'D',dropRate:.55},{name:'철�
 const a=[{name:'가죽 갑옷 (C급)',defense:5,rarity:'C',dropRate:.5},{name:'철 갑옷 (B급)',defense:10,rarity:'B',dropRate:.3},{name:'강철 갑옷 (A급)',defense:20,rarity:'A',dropRate:.15},{name:'크리스탈 갑옷 (S급)',defense:35,rarity:'S',dropRate:.05},{name:'인피니티 갑옷 (Secret급)',defense:70,rarity:'Secret',dropRate:0}];
 const voidWeapons=[{name:'보이드 사이드',damage:1200},{name:'공허 지배자',damage:1000},{name:'네뷸라 소드',damage:800},{name:'공허의 검',damage:700},{name:'혜성의 검',damage:600}];
 const voidArmors=[{name:'공허 갑옷',defense:100},{name:'별의 갑옷',defense:75},{name:'태양의 갑옷',defense:70}];
-const m=[{name:'슬라임',hp:60,attack:5,coins:10,exp:5,minLevel:1,weaponDrops:['나무검 (D급)']},{name:'오크',hp:120,attack:12,coins:30,exp:15,minLevel:1,weaponDrops:['철검 (C급)','강철 창 (C급)']},{name:'골렘',hp:240,attack:22,coins:45,exp:30,minLevel:5,weaponDrops:['다이아몬드 검 (B급)','파이어 소드 (A급)']},{name:'드래곤',hp:600,attack:40,coins:75,exp:60,minLevel:10,weaponDrops:['스타 소드 (S급)','오로라 소드 (SSS급)','전설의 검 (A급)','네크로맨서 원드 (SSS급)']},{name:'어둠의 군주',hp:1500,attack:60,coins:500,exp:150,minLevel:20,weaponDrops:['스타 소드 (S급)','오로라 소드 (SSS급)','네크로맨서 원드 (SSS급)']},{name:'심연의 군주',hp:1400,attack:74,coins:700,exp:200,minLevel:25,weaponDrops:['스타 소드 (S급)','오로라 소드 (SSS급)','네크로맨서 원드 (SSS급)']},{name:'종말의 심판자',hp:1320,attack:80,coins:1000,exp:300,minLevel:30,weaponDrops:['오로라 소드 (SSS급)','네크로맨서 원드 (SSS급)']},{name:'타락천사',hp:1500,attack:130,coins:5000,exp:500,minLevel:40,weaponDrops:['오로라 소드 (SSS급)','네크로맨서 원드 (SSS급)']},{name:'아고니',hp:1500,attack:130,coins:5000,exp:500,minLevel:40,weaponDrops:['오로라 소드 (SSS급)','네크로맨서 원드 (SSS급)']},{name:'보이드 드래곤',hp:2000,attack:150,coins:15000,exp:1000,minLevel:50,weaponDrops:[]},{name:'뒤틀린 슬라임',hp:6000,attack:260,coins:50000,exp:2500,minLevel:50,weaponDrops:[]},{name:'뒤틀린 오크',hp:8000,attack:320,coins:75000,exp:4000,minLevel:50,weaponDrops:[]},{name:'뒤틀린 골렘',hp:10000,attack:420,coins:100000,exp:6000,minLevel:50,weaponDrops:[]},{name:'뒤틀린 드래곤',hp:11000,attack:560,coins:150000,exp:9000,minLevel:50,weaponDrops:[]}];
+const m=[{name:'슬라임',hp:60,attack:5,coins:10,exp:5,minLevel:1,weaponDrops:['나무검 (D급)']},{name:'오크',hp:120,attack:12,coins:30,exp:15,minLevel:1,weaponDrops:['철검 (C급)','강철 창 (C급)']},{name:'골렘',hp:240,attack:22,coins:45,exp:30,minLevel:5,weaponDrops:['다이아몬드 검 (B급)','파이어 소드 (A급)']},{name:'드래곤',hp:600,attack:40,coins:75,exp:60,minLevel:10,weaponDrops:['스타 소드 (S급)','전설의 검 (A급)']},{name:'어둠의 군주',hp:1500,attack:60,coins:500,exp:150,minLevel:20,weaponDrops:['스타 소드 (S급)','오로라 소드 (SSS급)','네크로맨서 원드 (SSS급)']},{name:'심연의 군주',hp:1400,attack:74,coins:700,exp:200,minLevel:25,weaponDrops:['스타 소드 (S급)','오로라 소드 (SSS급)','네크로맨서 원드 (SSS급)']},{name:'종말의 심판자',hp:1320,attack:80,coins:1000,exp:300,minLevel:30,weaponDrops:['오로라 소드 (SSS급)','네크로맨서 원드 (SSS급)']},{name:'타락천사',hp:1500,attack:130,coins:5000,exp:500,minLevel:40,weaponDrops:['오로라 소드 (SSS급)','네크로맨서 원드 (SSS급)']},{name:'아고니',hp:1500,attack:130,coins:5000,exp:500,minLevel:40,weaponDrops:['오로라 소드 (SSS급)','네크로맨서 원드 (SSS급)']},{name:'보이드 드래곤',hp:2000,attack:150,coins:15000,exp:1000,minLevel:50,weaponDrops:[]},{name:'뒤틀린 슬라임',hp:6000,attack:260,coins:50000,exp:2500,minLevel:50,weaponDrops:[]},{name:'뒤틀린 오크',hp:8000,attack:320,coins:75000,exp:4000,minLevel:50,weaponDrops:[]},{name:'뒤틀린 골렘',hp:10000,attack:420,coins:100000,exp:6000,minLevel:50,weaponDrops:[]},{name:'뒤틀린 드래곤',hp:11000,attack:560,coins:150000,exp:9000,minLevel:50,weaponDrops:[]}];
 
 const SKILL_TIERS={
  '하급':['가로 베기','찌르기','세로 베기'],
@@ -393,10 +393,10 @@ const SKILL_INFO={
  '찌르기':{tier:'하급',desc:'공격력의 1.5배 피해를 준다.',kind:'damage',mult:1.5},
  '세로 베기':{tier:'하급',desc:'공격력의 1.5배 피해를 준다.',kind:'damage',mult:1.5},
  '내려찍기':{tier:'중급',desc:'공격력의 2배 피해를 준다.',kind:'damage',mult:2},
- '파이어 슬래시':{tier:'중급',desc:'공격력의 30%만큼 4턴 동안 지속 피해를 준다.',kind:'burn'},
+ '파이어 슬래시':{tier:'중급',desc:'4초 동안 1초마다 공격력의 30%만큼 지속 피해를 준다.',kind:'burn'},
  '막기':{tier:'중급',desc:'다음에 받는 몬스터의 공격을 막는다.',kind:'block'},
  '패리':{tier:'상급',desc:'다음에 받는 몬스터의 공격을 반사한다.',kind:'parry'},
- '분노':{tier:'상급',desc:'5턴 동안 공격력이 1.5배가 된다.',kind:'buff'},
+ '분노':{tier:'상급',desc:'5초 동안 공격력이 1.5배가 된다.',kind:'buff'},
  '섬멸':{tier:'상급',desc:'공격력의 4배 피해를 준다.',kind:'damage',mult:4},
  '드래곤 퍼니셔':{tier:'상급',desc:'공격력의 7배 피해를 준다.',kind:'damage',mult:7}
 };
@@ -506,14 +506,14 @@ const MON_ART={
  mzAn('kFlk',1.3,'50% 100%',mzP('M60 4C63 24 90 36 90 62c0 18-13 28-30 28S30 80 30 62c0-14 9-20 15-34 4 10 9 8 11-4 2-8 2-14 4-20Z','#ff6a2b'))+
  mzAn('kFlk',1,'50% 100%',mzP('M60 28C62 42 76 48 76 64c0 12-7 18-16 18s-16-6-16-18c0-8 5-12 8-20 3 6 6 5 8-2Z','#ffc24a'),-.5)+
  mzP('M33 48 22 30l18 10ZM87 48l11-18-18 10Z','#3a140c')+mzAn('kBlk',4,'50% 50%',mzP('M43 54l13 7-3 5-12-6ZM77 54l-13 7 3 5 12-6Z','#fff4cf')+mzE(53,62,1.6,1.6,'#3a0c06')+mzE(67,62,1.6,1.6,'#3a0c06'))+mzP('M46 72h28c0 14-28 14-28 0Z','#3a0c06')+mzP('M50 72l3 6 3-6M64 72l3 6 3-6','#fff'),
-'최종 보스':()=>mzAn('kPul',2.4,'50% 50%','<ellipse cx="60" cy="60" rx="50" ry="44" fill="#ff3355" opacity=".2" filter="url(#mgGl)"/>')+
+'마왕':()=>mzAn('kPul',2.4,'50% 50%','<ellipse cx="60" cy="60" rx="50" ry="44" fill="#ff3355" opacity=".2" filter="url(#mgGl)"/>')+
  mzAn('kFlL',2.4,'100% 80%',mzP('M42 46C28 42 14 32 8 8 26 12 34 20 38 30 30 30 24 36 22 40 32 42 36 48Z','#7a1630')+mzP('M42 46C28 40 18 30 8 8 24 20 34 34 42 46Z','#c2334f',.5))+
  mzAn('kFlR',2.4,'0% 80%',mzP('M78 46c14-4 28-14 34-38-18 4-26 12-30 22 8 0 14 6 16 10-10 2-14 8-14 8Z','#7a1630')+mzP('M78 46C92 40 102 30 112 8 96 20 86 34 78 46Z','#c2334f',.5))+
  mzL('M48 90v12h-10M72 90v12h10','#4a0f1f',10)+
  mzAn('kBrth',2.6,'50% 100%',mzL('M42 70 28 56l-4 14M78 70l14-14 4 14','#8f1d38',8)+mzP('M40 62h40l6 30H34Z','#c2334f')+mzP('M60 62h20l6 30H60Z','#8f1d38',.5)+mzP('M45 64h30l-3 14H48Z','#f0c24a')+mzP('M34 86h52v4H34Z','#f0c24a')+mzE(36,64,8,8,'#f0c24a')+mzE(84,64,8,8,'#f0c24a')+mzAn('kPul',2,'50% 50%',mzGlow(60,71,3,'#ff3355')))+
  mzAn('kSwh',3,'50% 100%',mzP('M40 36C26 34 20 24 18 12 28 16 36 22 42 30ZM80 36c14-2 20-12 22-24-10 4-18 10-24 18Z','#efe6cf')+mzP('M38 30h44v22c0 12-9 18-22 18S38 64 38 52Z','#e3485f')+mzP('M60 30h22v22c0 12-9 18-22 18Z','#b52a44',.5)+mzP('M42 28l-2-14 9 6 11-12 11 12 9-6-2 14Z','#f0c24a')+mzE(60,20,2.4,2.4,'#e53955')+mzAn('kBlk',4,'50% 50%',mzGlow(50,43,2.6,'#ffd24a')+mzGlow(70,43,2.6,'#ffd24a'))+mzL('M45 39l9 4M75 39l-9 4','#4a0f1f',3)+mzL('M50 58h20','#fff0d6',2.2))
 };
-const MON_VB={'슬라임':[26,74],'오크':[6,96],'골렘':[4,100],'드래곤':[4,100],'보이드 드래곤':[4,100],'어둠의 군주':[2,106],'심연의 군주':[2,104],'종말의 심판자':[0,102],'타락천사':[0,104],'아고니':[0,108],'최종 보스':[4,104]};
+const MON_VB={'슬라임':[26,74],'오크':[6,96],'골렘':[4,100],'드래곤':[4,100],'보이드 드래곤':[4,100],'어둠의 군주':[2,106],'심연의 군주':[2,104],'종말의 심판자':[0,102],'타락천사':[0,104],'아고니':[0,108],'마왕':[4,104]};
 function monsterSVG(name,ns){
  const tw=name.startsWith('뒤틀린 '),base=tw?name.replace('뒤틀린 ',''):name,key=MON_ART[base]?base:'슬라임',vb=MON_VB[key]||[0,112];
  const open='<svg viewBox="0 '+vb[0]+' 120 '+vb[1]+'" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'+name+'" class="'+(tw?'twisted':'')+'">';
@@ -523,14 +523,14 @@ function monsterSVG(name,ns){
  return open+MON_CSS+defs+sh+'<g'+(tw?' filter="url(#mgTw)"':'')+'>'+MON_ART[key]()+'</g>'+cr+'</svg>';
 }
 
-function umi(){const mi=document.getElementById('monster-info');if(cm&&gs==='combat'){mi.style.display='block';const effects=[];if((p.furyTurns||0)>0)effects.push(`분노 ${p.furyTurns}턴`);if(p.nextBlock)effects.push('다음 공격 막기');if(p.nextParry)effects.push('다음 공격 반사');if((cm.fireTurns||0)>0)effects.push(`화상 ${cm.fireTurns}턴`);if(mi._cm!==cm){mi._cm=cm;mi._hp=cm.hp;mi.classList.remove('mon-twist','mon-boss');if(cm.name.startsWith('뒤틀린 '))mi.classList.add('mon-twist');else if(!['슬라임','오크','골렘','드래곤'].includes(cm.name))mi.classList.add('mon-boss');mi.innerHTML='<div class="mon-meta"></div><div class="mon-stage"><div class="mon-art">'+monsterSVG(cm.name)+'</div><div class="mon-shadow"></div></div><div class="mon-fx"></div>'}
+function umi(){const mi=document.getElementById('monster-info');if(cm&&gs==='combat'){mi.style.display='block';const effects=[];if((p.furyTurns||0)>0)effects.push(`분노 ${Math.ceil(p.furyTurns)}초`);if(p.nextBlock)effects.push('다음 공격 막기');if(p.nextParry)effects.push('다음 공격 반사');if((cm.fireTurns||0)>0)effects.push(`화상 ${cm.fireTurns}초`);if(mi._cm!==cm){mi._cm=cm;mi._hp=cm.hp;mi.classList.remove('mon-twist','mon-boss');if(cm.name.startsWith('뒤틀린 '))mi.classList.add('mon-twist');else if(!['슬라임','오크','골렘','드래곤'].includes(cm.name))mi.classList.add('mon-boss');mi.innerHTML='<div class="mon-meta"></div><div class="mon-stage"><div class="mon-art">'+monsterSVG(cm.name)+'</div><div class="mon-shadow"></div></div><div class="mon-fx"></div>'}
 const dmg=Math.round(mi._hp-cm.hp);if(dmg>0){const ar=mi.querySelector('.mon-art');ar.classList.remove('hit');void ar.offsetWidth;ar.classList.add('hit');clearTimeout(ar._ht);ar._ht=setTimeout(()=>ar.classList.remove('hit'),450);const sp=document.createElement('span');sp.className='mon-dmg';sp.textContent='-'+dmg;mi.querySelector('.mon-stage').appendChild(sp);setTimeout(()=>sp.remove(),800)}
 mi._hp=cm.hp;
 const hpPct=Math.max(0,Math.min(100,cm.hp/cm.maxHp*100));
 mi.querySelector('.mon-meta').innerHTML=`<div class="mon-top"><span class="mon-name">${cm.name}</span><span class="mon-atk">ATK ${cm.attack}</span></div><div class="mon-hp ${hpPct<=25?'low':hpPct<=50?'mid':''}"><i style="width:${hpPct}%"></i></div><div class="mon-hpnum">${Math.max(0,cm.hp)} / ${cm.maxHp}</div>`;
 mi.querySelector('.mon-fx').textContent=[p.equippedSkill?'스킬: '+p.equippedSkill:'',...effects].filter(Boolean).join(' · ');
 }else mi.style.display='none'}
-function rm(){const mn=document.getElementById('main-menu');const gc=document.getElementById('game-container');if(gc)gc.classList.toggle('weapon-enhance-mode',gs==='weapon_enhancement');mn.innerHTML='';if(gs==='enhancement'||gs==='weapon_enhancement'||gs==='armor_enhancement'){mn.className='enhancement-page'}else mn.className='';if(gs==='main'){mn.classList.add('home-grid');hb(cb(mn,'인벤토리',()=>oi()),'bag');hb(cb(mn,'순간이동',()=>worldMap()),'map');}else if(gs==='help'){helpMenu(mn)}else if(gs==='rift'){cb(mn,'지역 선택',()=>showMonsterSelect(true));cb(mn,'업그레이드',()=>{gs='rift_upgrades';uu()});cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='rift_upgrades'){if(!p.autoSkillUpgradeBought){cb(mn,'자동 스킬 사용 해금 (마정석 20개)',buyAutoSkillUpgrade)}else{const row=document.createElement('div');row.className='rift-upgrade-row';const copy=document.createElement('div');copy.className='rift-upgrade-copy';copy.innerHTML='자동 스킬 사용<span class="rift-upgrade-sub">전투 중 장착 스킬을 자동으로 사용합니다.</span>';row.appendChild(copy);const label=document.createElement('label');label.className='switch-control';label.setAttribute('aria-label','자동 스킬 사용 켜기 또는 끄기');const input=document.createElement('input');input.type='checkbox';input.checked=!!p.autoSkillEnabled;input.addEventListener('change',()=>{p.autoSkillEnabled=input.checked;saveCombatResult();al(p.autoSkillEnabled?'자동 스킬 사용을 켰습니다.':'자동 스킬 사용을 껐습니다.');uu()});const track=document.createElement('span');track.className='switch-track';label.appendChild(input);label.appendChild(track);row.appendChild(label);mn.appendChild(row)}cb(mn,`이터널 장비 드롭 확률 증가 +1% (마정석 10개) · 현재 +${Math.min(8,Number(p.eternalDropUpgrade)||0)}% / 최대 +8%`,buyEternalDropUpgrade);cb(mn,`스킬 사용 행동력 10 감소 (마정석 50개)${p.skillCostReduction?' · 구매 완료':''}`,buySkillCostUpgrade);cb(mn,'돌아가기',()=>{gs='rift';uu()})}else if(gs==='village'){cb(mn,'상점',()=>os());cb(mn,'대장간',()=>oe());cb(mn,'💎 마정석 광산',()=>showMageMine());cb(mn,'📖 도움말',()=>{gs='help';uu()});cb(mn,'💰 코인 러쉬',()=>showCoinRush());cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='shop'){cb(mn,'무기 구매 (100코인)',()=>pw());cb(mn,'갑옷 구매 (200코인)',()=>pa());cb(mn,'💎 마정석 뽑기 (마정석 1개)',()=>drawMageStone());cb(mn,'행동력 포션 (10000코인)',()=>psp());cb(mn,'🪙 코인 두배 포션 (10000코인)',()=>buyCoinDoublePotion());cb(mn,'🎁 랜덤 박스 (700000코인)',()=>randomBox());cb(mn,'잠금 메뉴',()=>olm());cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='lock_menu'){cb(mn,'무기 잠금 (100코인)',()=>lw());cb(mn,'무기 잠금 해제 (500코인)',()=>ulw());cb(mn,'갑옷 잠금 (100코인)',()=>la());cb(mn,'갑옷 잠금 해제 (500코인)',()=>ula());cb(mn,'돌아가기',()=>{gs='shop';uu()})}else if(gs==='training'){cb(mn,'공격력 훈련 (1000코인)',()=>td());cb(mn,'행동력 회복 훈련 ('+((Number(p.staminaRecoveryTraining)||0)>=3?'최대 단계':(Number(p.staminaRecoveryTraining)||0)>=2?'마정석 5개':'5000코인')+')',()=>ts());cb(mn,'치명타 훈련 (2000코인)',()=>tc());cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='enhancement'){cb(mn,'⚔️ 무기',()=>ewp());cb(mn,'🛡️ 갑옷',()=>eap());cb(mn,'🔨 제작',()=>craftPage());cb(mn,'외형 커스텀 (100000코인)',()=>openVisualCustom());cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='weapon_enhancement'){cbHold(mn,'무기 강화 (100코인)',ucw);cb(mn,'✨ 무기 인첸트 (10000코인)',()=>enchantWeapon());cbHold(mn,'무기 합성',fw);cbHold(mn,'무기 각성',tw);cb(mn,'무기 강림',()=>dw());cb(mn,'축복',()=>bw());cb(mn,'✨ 도금',()=>plating());cb(mn,'🌈 레인보우',()=>rainbow());cb(mn,'돌아가기',()=>{gs='enhancement';uu()})}else if(gs==='armor_enhancement'){cbHold(mn,'갑옷 강화 (100코인)',uca);cbHold(mn,'갑옷 합성',fa);cbHold(mn,'갑옷 각성',ta);cb(mn,'✨ 갑옷 인첸트 (10000코인)',()=>enchantArmor());cb(mn,'돌아가기',()=>{gs='enhancement';uu()})}else if(gs==='crafting'){cb(mn,'1번째 제작 · ⚔️ 공허 지배자',craftVoidWeapon);cb(mn,'2번째 제작 · 🛡️ 공허 갑옷',craftVoidArmor);cb(mn,'3번째 제작 · 🌠 이터널 소드',craftEternalSword);cb(mn,'4번째 제작 · 🔥 제로 디바이드',craftZeroDivide);cb(mn,'🧪 [임시] 제로 디바이드 지급',giveZeroDivideTemp);cb(mn,'돌아가기',()=>{gs='enhancement';uu()})}else if(gs==='mage_mine'){cb(mn,'⛏️ 마정석 광맥 캐기',mineMageStone);cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='combat')cb(mn,'도망가기',()=>ra())}
+function rm(){const mn=document.getElementById('main-menu');const gc=document.getElementById('game-container');if(gc)gc.classList.toggle('weapon-enhance-mode',gs==='weapon_enhancement');mn.innerHTML='';if(gs==='enhancement'||gs==='weapon_enhancement'||gs==='armor_enhancement'){mn.className='enhancement-page'}else mn.className='';if(gs==='main'){mn.classList.add('home-grid');hb(cb(mn,'인벤토리',()=>oi()),'bag');hb(cb(mn,'순간이동',()=>worldMap()),'map');}else if(gs==='help'){helpMenu(mn)}else if(gs==='rift'){cb(mn,'지역 선택',()=>showMonsterSelect(true));cb(mn,'업그레이드',()=>{gs='rift_upgrades';uu()});cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='rift_upgrades'){if(!p.autoSkillUpgradeBought){cb(mn,'자동 스킬 사용 해금 (마정석 20개)',buyAutoSkillUpgrade)}else{const row=document.createElement('div');row.className='rift-upgrade-row';const copy=document.createElement('div');copy.className='rift-upgrade-copy';copy.innerHTML='자동 스킬 사용<span class="rift-upgrade-sub">전투 중 장착 스킬을 자동으로 사용합니다.</span>';row.appendChild(copy);const label=document.createElement('label');label.className='switch-control';label.setAttribute('aria-label','자동 스킬 사용 켜기 또는 끄기');const input=document.createElement('input');input.type='checkbox';input.checked=!!p.autoSkillEnabled;input.addEventListener('change',()=>{p.autoSkillEnabled=input.checked;saveCombatResult();al(p.autoSkillEnabled?'자동 스킬 사용을 켰습니다.':'자동 스킬 사용을 껐습니다.');uu()});const track=document.createElement('span');track.className='switch-track';label.appendChild(input);label.appendChild(track);row.appendChild(label);mn.appendChild(row)}cb(mn,`이터널 장비 드롭 확률 증가 +1% (마정석 10개) · 현재 +${Math.min(8,Number(p.eternalDropUpgrade)||0)}% / 최대 +8%`,buyEternalDropUpgrade);cb(mn,`스킬 사용 행동력 10 감소 (마정석 50개)${p.skillCostReduction?' · 구매 완료':''}`,buySkillCostUpgrade);cb(mn,'돌아가기',()=>{gs='rift';uu()})}else if(gs==='village'){cb(mn,'상점',()=>os());cb(mn,'대장간',()=>oe());cb(mn,'💎 마정석 광산',()=>showMageMine());cb(mn,'📖 도움말',()=>{gs='help';uu()});cb(mn,'💰 코인 러쉬',()=>showCoinRush());cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='shop'){cb(mn,'무기 구매 (100코인)',()=>pw());cb(mn,'갑옷 구매 (200코인)',()=>pa());cb(mn,'💎 마정석 뽑기 (마정석 1개)',()=>drawMageStone());cb(mn,'행동력 포션 (10000코인)',()=>psp());cb(mn,'🪙 코인 두배 포션 (10000코인)',()=>buyCoinDoublePotion());cb(mn,'🎁 랜덤 박스 (700000코인)',()=>randomBox());cb(mn,'잠금 메뉴',()=>olm());cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='lock_menu'){cb(mn,'무기 잠금 (100코인)',()=>lw());cb(mn,'무기 잠금 해제 (500코인)',()=>ulw());cb(mn,'갑옷 잠금 (100코인)',()=>la());cb(mn,'갑옷 잠금 해제 (500코인)',()=>ula());cb(mn,'돌아가기',()=>{gs='shop';uu()})}else if(gs==='training'){cb(mn,'공격력 훈련 (1000코인)',()=>td());cb(mn,'행동력 회복 훈련 ('+((Number(p.staminaRecoveryTraining)||0)>=3?'최대 단계':(Number(p.staminaRecoveryTraining)||0)>=2?'마정석 5개':'5000코인')+')',()=>ts());cb(mn,'치명타 훈련 (2000코인)',()=>tc());cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='enhancement'){cb(mn,'⚔️ 무기',()=>ewp());cb(mn,'🛡️ 갑옷',()=>eap());cb(mn,'🔨 제작',()=>craftPage());cb(mn,'외형 커스텀 (100000코인)',()=>openVisualCustom());cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='weapon_enhancement'){cbHold(mn,'무기 강화 (100코인)',ucw);cb(mn,'✨ 무기 인첸트 (10000코인)',()=>enchantWeapon());cbHold(mn,'무기 합성',fw);cbHold(mn,'무기 각성',tw);cb(mn,'무기 강림',()=>dw());cb(mn,'축복',()=>bw());cb(mn,'✨ 도금',()=>plating());cb(mn,'🌈 레인보우',()=>rainbow());cb(mn,'돌아가기',()=>{gs='enhancement';uu()})}else if(gs==='armor_enhancement'){cbHold(mn,'갑옷 강화 (100코인)',uca);cbHold(mn,'갑옷 합성',fa);cbHold(mn,'갑옷 각성',ta);cb(mn,'✨ 갑옷 인첸트 (10000코인)',()=>enchantArmor());cb(mn,'돌아가기',()=>{gs='enhancement';uu()})}else if(gs==='crafting'){cb(mn,'1번째 제작 · ⚔️ 공허 지배자',craftVoidWeapon);cb(mn,'2번째 제작 · 🛡️ 공허 갑옷',craftVoidArmor);cb(mn,'3번째 제작 · 🌠 이터널 소드',craftEternalSword);cb(mn,'4번째 제작 · 🔥 제로 디바이드',craftZeroDivide);cb(mn,'🧪 [임시] 제로 디바이드 지급',giveZeroDivideTemp);cb(mn,'돌아가기',()=>{gs='enhancement';uu()})}else if(gs==='mage_mine'){cb(mn,'⛏️ 마정석 광맥 캐기',mineMageStone);cb(mn,'돌아가기',()=>{gs='main';uu()})}}
 function cleanButtonLabel(tx){return String(tx).replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu,'').trim()}
 function cb(pr,tx,h){const b=document.createElement('button');b.className='button';b.innerText=cleanButtonLabel(tx);b.onclick=()=>{let before='';try{before=JSON.stringify(p)}catch(e){}h();if(gs!=='combat'&&gs!=='coin_rush'){try{if(before!==JSON.stringify(p))saveCombatResult()}catch(e){}}};pr.appendChild(b);return b}
 const HOME_ICONS={bag:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 8V6.5a3.5 3.5 0 0 1 7 0V8"/><rect x="4" y="8" width="16" height="13" rx="3.5"/><path d="M4 14h16"/><path d="M10 14v2.2h4V14"/></svg>',village:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 12.5 7.5 6.5l6 6"/><path d="M3.5 11.5V19h8v-7.5"/><path d="M6.5 19v-4h2v4"/><path d="M13.5 15l4.5-4.5 4.5 4.5"/><path d="M15 14.5V19h6v-4.5"/><path d="M1 19h22"/></svg>',run:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="15.5" cy="4.5" r="2"/><path d="M14 7.5 11.5 13"/><path d="M13.7 8.7l4 2.3"/><path d="M13.3 8.5 9 9.5 8 12.5"/><path d="M11.5 13l3.5 2.5-.5 4.5"/><path d="M11.5 13l-2.7 3.4-3.3 2"/></svg>',map:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5l6-2.5 6 2.5 6-2.5V18l-6 2.5-6-2.5-6 2.5z"/><path d="M9 4v14"/><path d="M15 6.5v14"/></svg>',boss:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 10c0-3.2 2.9-5.5 6.5-5.5s6.5 2.3 6.5 5.5v3c0 4-2.9 7-6.5 7s-6.5-3-6.5-7z"/><path d="M5.8 8.5 3.5 2.8 9 5.5"/><path d="M18.2 8.5l2.3-5.700L15 5.5"/><path d="M8.5 10.8l2.8 1.2"/><path d="M15.5 10.8 12.700 12"/><path d="M9 16.2l1.5 1.6 1.5-1.6 1.5 1.6 1.5-1.6"/></svg>',rift:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a1.7 1.7 0 0 1 3.4 0 5 5 0 0 1-10 0 8.3 8.3 0 0 1 16.6 0"/><path d="M4 19.5a10.5 10.5 0 0 1-2-6.5"/></svg>',q:'<span class="hb-q">?</span>'};
@@ -563,14 +563,14 @@ function pm(){
  const sm=chosen||m[0];
  const mo=JSON.parse(JSON.stringify(sm));mo.maxHp=mo.hp;return mo
 }
-function showBossMenu(){const box=document.getElementById('monster-select');const mn=document.getElementById('main-menu');if(!box)return;if(mn)mn.style.display='none';box.style.display='block';box.innerHTML=`<div class="monster-select-title">보스</div><div style="text-align:center;margin:8px 0 12px;font-weight:800">🎟️ 보스 티켓: ${p.bossTickets||0}장</div>`;const info=document.createElement('div');info.style.cssText='text-align:center;padding:10px;border:1px solid #ffd1d1;border-radius:10px;background:#fff7f7;margin-bottom:8px';info.innerHTML='<strong>최종 보스 · HP 1400 · 공격력 140</strong><small style="display:block;margin-top:4px">⚔️ 무기 종류 제한 없음 + ∞ 인피니티 갑옷 필요</small>';box.appendChild(info);const b=document.createElement('button');b.className='button';b.innerText='보스 도전 (티켓 1장)';b.onclick=challengeBoss;box.appendChild(b);const close=document.createElement('button');close.className='button';close.innerText='돌아가기';close.onclick=hideMonsterSelect;box.appendChild(close)}
+function showBossMenu(){const box=document.getElementById('monster-select');const mn=document.getElementById('main-menu');if(!box)return;if(mn)mn.style.display='none';box.style.display='block';box.innerHTML=`<div class="monster-select-title">보스</div><div style="text-align:center;margin:8px 0 12px;font-weight:800">🎟️ 보스 티켓: ${p.bossTickets||0}장</div>`;const info=document.createElement('div');info.style.cssText='text-align:center;padding:10px;border:1px solid #ffd1d1;border-radius:10px;background:#fff7f7;margin-bottom:8px';info.innerHTML='<strong>마왕 · HP 6000 · 공격력 190</strong><small style="display:block;margin-top:4px">⚔️ 무기 종류 제한 없음 + ∞ 인피니티 갑옷 필요</small>';box.appendChild(info);const b=document.createElement('button');b.className='button';b.innerText='보스 도전 (티켓 1장)';b.onclick=challengeBoss;box.appendChild(b);const close=document.createElement('button');close.className='button';close.innerText='돌아가기';close.onclick=hideMonsterSelect;box.appendChild(close)}
 function todayKey(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function showCoinRush(){const box=document.getElementById('monster-select');const mn=document.getElementById('main-menu');if(!box)return;if(mn)mn.style.display='none';box.style.display='block';box.innerHTML='';const used=p.coinRushDate===todayKey();const title=document.createElement('div');title.className='monster-select-title';title.innerText='코인 러쉬';box.appendChild(title);const info=document.createElement('div');info.style.cssText='text-align:center;padding:12px;border:1px solid #ffe08a;border-radius:10px;background:#fffaf0;margin-bottom:10px';info.innerHTML=used?'오늘은 이미 코인 러쉬를 완료했습니다.':'20초 동안 코인 허수아비를 공격하세요!<br><small>가한 데미지 1 = 코인 2</small>';box.appendChild(info);if(!used){const b=document.createElement('button');b.className='button';b.innerText='코인 러쉬 시작';b.onclick=startCoinRush;box.appendChild(b)}const close=document.createElement('button');close.className='button';close.innerText='돌아가기';close.onclick=hideMonsterSelect;box.appendChild(close)}
 function startCoinRush(){if(coinRushActive)return;if(p.coinRushDate===todayKey()){al('💰 오늘의 코인 러쉬는 이미 완료했습니다.');return}coinRushActive=true;coinRushEnd=Date.now()+20000;coinRushDamage=0;gs='coin_rush';const box=document.getElementById('monster-select');box.innerHTML='';const title=document.createElement('div');title.className='monster-select-title';title.innerText='코인 러쉬';box.appendChild(title);const info=document.createElement('div');info.id='coin-rush-info';info.style.cssText='text-align:center;padding:14px;border:1px solid #ffd166;border-radius:10px;background:#fffaf0;margin-bottom:10px';box.appendChild(info);const b=document.createElement('button');b.className='button';b.innerText='공격';b.onclick=pat;box.appendChild(b);coinRushTimer=setInterval(updateCoinRush,100);updateCoinRush();al('💰 코인 러쉬 시작! 20초 동안 허수아비를 공격하세요!');sg()}
 function updateCoinRush(){if(!coinRushActive)return;const left=Math.max(0,coinRushEnd-Date.now());const info=document.getElementById('coin-rush-info');if(info)info.innerHTML=`<strong>🪵 코인 허수아비</strong><div style="font-size:1.35em;margin:6px 0">남은 시간: ${(left/1000).toFixed(1)}초</div><div>누적 데미지: ${coinRushDamage.toLocaleString()}<br>획득 코인: ${(coinRushDamage*2).toLocaleString()}</div>`;if(left<=0)finishCoinRush()}
 function coinRushHit(){if(!coinRushActive)return;const left=coinRushEnd-Date.now();if(left<=0){finishCoinRush();return}const crit=Math.random()*100<Math.min(100,5+(p.criticalTraining||0)+(Number(p.weapon?.enchantCritPct)||0)+(p.weapon?.rarity==='Transcendent'?50:0));let dmg=(p.weapon?.damage||1)+(p.baseDamageTraining||0);dmg=Math.floor(dmg*(1+(Number(p.weapon?.enchantAttackPct)||0)/100));if(crit){dmg*=2;al(`💥 코인 러쉬 치명타! ${dmg} 데미지!`,true)}else al(`⚔️ 허수아비에게 ${dmg} 데미지!`);coinRushDamage+=dmg;sg();updateCoinRush()}
 function finishCoinRush(){if(!coinRushActive)return;coinRushActive=false;if(coinRushTimer){clearInterval(coinRushTimer);coinRushTimer=null}const earned=coinRushDamage;const reward=earned*2;addCoins(reward);p.coinRushDate=todayKey();sg();al(`💰 코인 러쉬 종료! 총 ${earned.toLocaleString()} 데미지 → 코인 ${reward.toLocaleString()} 획득!`);gs='village';hideMonsterSelect();saveCombatResult();uu()}
-function challengeBoss(){if((p.bossTickets||0)<1){al('🎟️ 보스 티켓이 없습니다! 랜덤 박스에서 획득할 수 있습니다.');return}p.bossTickets--;bossBattle=true;cm={name:'최종 보스',hp:1400,maxHp:1400,attack:140,coins:10000,exp:1000,weaponDrops:[]};gs='combat';hideMonsterSelect();p.hp=p.maxHp;al('👹 최종 보스가 나타났습니다! 🎟️ 보스 티켓 1장 사용!');uu()}
+function challengeBoss(){if((p.bossTickets||0)<1){al('🎟️ 보스 티켓이 없습니다! 랜덤 박스에서 획득할 수 있습니다.');return}p.bossTickets--;bossBattle=true;cm={name:'마왕',hp:6000,maxHp:6000,attack:190,coins:10000,exp:1000,weaponDrops:[]};gs='combat';hideMonsterSelect();p.hp=p.maxHp;al('👹 마왕이 나타났습니다! 🎟️ 보스 티켓 1장 사용!');uu()}
 function hcb(){if(gs==='coin_rush'){coinRushHit();return}if(gs==='combat'){if(p.autoSkillUpgradeBought&&p.autoSkillEnabled&&p.equippedSkill&&SKILL_INFO[p.equippedSkill]){const inf=SKILL_INFO[p.equippedSkill];const shouldCast=inf.kind==='buff'?(Number(p.furyTurns)||0)<=0:((inf.kind==='block'||inf.kind==='parry')?(!p.nextBlock&&!p.nextParry):true);const skillCost=p.skillCostReduction?10:20;if(shouldCast&&(p.stamina||0)>=skillCost){useEquippedSkill();return}}pat();return}if(gs==='main'){
  if(!p.selectedRegion||!REGION_DATA[p.selectedRegion]){showMonsterSelect();al('🎯 먼저 지역을 선택하세요.');return}
  if(p.stamina<1){al('⚠️ 행동력이 부족합니다!');return}
@@ -589,10 +589,10 @@ function hcb(){if(gs==='coin_rush'){coinRushHit();return}if(gs==='combat'){if(p.
  else if(r<.65){const be=5+(p.level*2);const e=Math.floor(be*(.5+Math.random()*1.5));if(p.level>=50){addCoins(e*2);al(`💰 최대 레벨 보너스! 코인 ${e*2*((p.coinDoubleEnd||0)>Date.now()?2:1)}개를 획득했다!`)}else{p.exp+=e;al(`✨ 경험치 ${e}를 획득했다!`);clu()}}
  else if(inEtherealForest){const c=Math.floor(5000+Math.random()*15001);addCoins(c);al(`💰 코인 ${c}개를 발견했다!`)}
  else if(inOtherworldMountain){const c=Math.floor((5000+Math.random()*15001)*1.5);addCoins(c);al(`💰 코인 ${c*((p.coinDoubleEnd||0)>Date.now()?2:1)}개를 발견했다!`)}else if(r<.85)hwr();else har();uu();sg()}}
-function hwr(){const lt=Math.floor(p.level/10);let rp=[];if(lt>=4)rp=['A','S','SSS'];else if(lt>=3)rp=['B','A','S'];else if(lt>=2)rp=['C','B','A'];else if(lt>=1)rp=['D','C','B'];else rp=['D','C'];const sr=rp[Math.floor(Math.random()*rp.length)];const wo=w.filter(wp=>wp.rarity===sr&&wp.dropRate>0);if(wo.length>0){const wp=wo[Math.floor(Math.random()*wo.length)];const nw={type:'weapon',name:wp.name,damage:wp.damage,rarity:wp.rarity,upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false};p.inventory.push(nw);al(`💠 ${wp.name}을(를) 발견했다!`)}}
+function hwr(){const lt=Math.floor(p.level/10);let rp=[];if(lt>=4)rp=['A','S','SSS'];else if(lt>=3)rp=['B','A','S'];else if(lt>=2)rp=['C','B','A'];else if(lt>=1)rp=['D','C','B'];else rp=['D','C'];let sr=rp[Math.floor(Math.random()*rp.length)];if(sr==='SSS'&&(p.selectedRegion==='숲'||p.selectedRegion==='높은 산'))sr='S';const wo=w.filter(wp=>wp.rarity===sr&&wp.dropRate>0);if(wo.length>0){const wp=wo[Math.floor(Math.random()*wo.length)];const nw={type:'weapon',name:wp.name,damage:wp.damage,rarity:wp.rarity,upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false};p.inventory.push(nw);al(`💠 ${wp.name}을(를) 발견했다!`)}}
 function har(){const lt=Math.floor(p.level/10);let rp=[];if(lt>=4)rp=['A','S'];else if(lt>=3)rp=['B','A','S'];else if(lt>=2)rp=['C','B','A'];else rp=['C','B'];const sr=rp[Math.floor(Math.random()*rp.length)];const ao=a.filter(ar=>ar.rarity===sr&&ar.dropRate>0);if(ao.length>0){const ar=ao[Math.floor(Math.random()*ao.length)];const na={type:'armor',name:ar.name,defense:ar.defense,rarity:ar.rarity,upgrade:0,transcend:0,isLocked:false};p.inventory.push(na);al(`🛡️ ${ar.name}을(를) 발견했다!`)}}
 function getBaseAttackPower(){let dmg=(p.weapon?.damage||1)+(p.baseDamageTraining||0);dmg=Math.floor(dmg*(1+(Number(p.weapon?.enchantAttackPct)||0)/100));return Math.max(1,dmg)}
-function consumeFuryTurn(){if((p.furyTurns||0)>0){p.furyTurns--;if(p.furyTurns===0)al('분노 효과가 끝났습니다.')}}
+function consumeFuryTurn(){}
 function calculateCombatDamage(multiplier=1){let power=getBaseAttackPower();if((p.furyTurns||0)>0)power=Math.floor(power*1.5);let dmg=Math.floor(power*multiplier);const critChance=Math.min(100,5+(p.criticalTraining||0)+(Number(p.weapon?.enchantCritPct)||0)+(p.weapon?.rarity==='Transcendent'?50:0));const critical=Math.random()*100<critChance;if(critical)dmg*=2;consumeFuryTurn();return{damage:Math.max(1,dmg),critical}}
 function monAtkAnim(){const mi=document.getElementById('monster-info');if(!mi||!cm)return;const ar=mi.querySelector('.mon-art');if(!ar)return;
  const b=cm.name.replace('뒤틀린 ',''),T={'슬라임':'j','드래곤':'f','보이드 드래곤':'f','아고니':'f','어둠의 군주':'c','심연의 군주':'c','타락천사':'c'}[b]||'m';
@@ -610,7 +610,7 @@ function enemyTurnAfterPlayerAction(skipUIUpdate=false){if(gs!=='combat'||!cm)re
  else if(p.nextBlock){p.nextBlock=false;al(`${cm.name}의 공격을 막았습니다!`)}
  else{const evade=Number(p.armor?.enchantEvadePct)||0;if(Math.random()*100<evade){al(`${cm.name}의 공격을 회피!`)}else{const armorDef=Math.floor((p.armor?.defense||0)*(1+(Number(p.armor?.enchantDefensePct)||0)/100));const incoming=Math.max(0,cm.attack-armorDef);p.hp-=incoming;al(`🔴 ${cm.name}의 공격! ${incoming} 데미지 받음!`);if(p.hp<=0){ec(false);return}}}
  if(gs!=='combat'||!cm)return;
- if((cm.fireTurns||0)>0){const fireDamage=Math.max(1,cm.fireDamage||1);cm.hp-=fireDamage;cm.fireTurns--;al(`🔥 화상 지속 피해 ${fireDamage}! 남은 지속 턴: ${cm.fireTurns}`);if(cm.hp<=0){ec(true);return}}
+ if((cm.fireTurns||0)>0){const fireDamage=Math.max(1,cm.fireDamage||1);cm.hp-=fireDamage;cm.fireTurns--;al(`🔥 화상 지속 피해 ${fireDamage}! 남은 지속 시간: ${cm.fireTurns}초`);if(cm.hp<=0){ec(true);return}}
  if(!skipUIUpdate){uu();sg()}
 }
 function pat(){if(gs==='coin_rush'){coinRushHit();return}if(gs!=='combat'||!cm)return;const result=calculateCombatDamage(1);if(result.critical)al(`💥 치명타! ${result.damage} 데미지!`,true);else al(`⚔️ ${result.damage} 데미지!`);cm.hp-=result.damage;if(cm.hp<=0){ec(true);return}enemyTurnAfterPlayerAction();uu();sg()}
@@ -619,11 +619,11 @@ function useEquippedSkill(){
  const name=p.equippedSkill,info=SKILL_INFO[name];if(!name||!info){al('인벤토리의 스킬 탭에서 스킬을 먼저 장착하세요.');return}
  const skillCost=p.skillCostReduction?10:20;if((p.stamina||0)<skillCost){al(`행동력이 부족합니다. 스킬 사용에는 행동력 ${skillCost}이 필요합니다. (현재 ${p.stamina})`);return}
  p.stamina-=skillCost;al(`${name} 스킬 사용! 행동력 ${skillCost} 소모.`);
- if(info.kind==='buff'){p.furyTurns=5;al('분노 효과 발동! 앞으로 5턴 동안 공격력이 1.5배가 됩니다. 공격 버튼을 눌러 공격하세요.',true);sg();uu();return}
+ if(info.kind==='buff'){p.furyTurns=5;al('분노 효과 발동! 앞으로 5초 동안 공격력이 1.5배가 됩니다. 공격 버튼을 눌러 공격하세요.',true);sg();uu();return}
  if(info.kind==='block'){p.nextBlock=true;p.nextParry=false;al('다음에 받는 몬스터의 공격을 막을 준비를 했습니다.');sg();uu();return}
  if(info.kind==='parry'){p.nextParry=true;p.nextBlock=false;al('다음에 받는 몬스터의 공격을 반사할 준비를 했습니다.');sg();uu();return}
  if(info.kind==='burn'){
-  let power=getBaseAttackPower();if((p.furyTurns||0)>0)power=Math.floor(power*1.5);cm.fireDamage=Math.max(1,Math.floor(power*0.3));cm.fireTurns=4;consumeFuryTurn();al(`파이어 슬래시! ${cm.name}에게 턴마다 ${cm.fireDamage} 화상 피해를 4턴 동안 입힙니다.`,true);enemyTurnAfterPlayerAction(true);sg();uu();return
+  let power=getBaseAttackPower();if((p.furyTurns||0)>0)power=Math.floor(power*1.5);cm.fireDamage=Math.max(1,Math.floor(power*0.3));cm.fireTurns=4;consumeFuryTurn();al(`파이어 슬래시! ${cm.name}에게 1초마다 ${cm.fireDamage} 화상 피해를 4초 동안 입힙니다.`,true);enemyTurnAfterPlayerAction(true);sg();uu();return
  }
  const result=calculateCombatDamage(info.mult||1);if(result.critical)al(`💥 ${name} 치명타! ${result.damage} 데미지!`,true);else al(`${name}! ${result.damage} 데미지!`,true);cm.hp-=result.damage;if(cm.hp<=0){ec(true);return}enemyTurnAfterPlayerAction(true);uu();sg()
 }
@@ -645,7 +645,7 @@ function dropEternalLoot(boosted=false){
  else{const def=Math.floor(base.defense*(secret?1.5:2));item={type:'armor',name:base.name.replace(/\s*\([^)]*급\)/,'').trim(),defense:def,baseDefense:def,baseRarity:base.rarity,rarity:'Eternal',upgrade:0,transcend:0,isLocked:false,enchantDefensePct:0,enchantEvadePct:0}}
  p.inventory.push(item);al(`🌌 [Eternal급] ${item.name} 획득! ${type==='weapon'?'공격력 '+item.damage:'방어력 '+item.defense}`,true)
 }
-function ec(pw){if(pw&&bossBattle){rewardSkillBook(true);al('👑 최종 보스 처치!');const bossCoins=500000;al(`💰 코인 +${bossCoins}, 경험치 +1000, 마정석 +3`);p.coins+=bossCoins;if(p.level<50){p.exp+=1000;clu()}p.mageStones=(p.mageStones||0)+msx(3);p.hp=p.maxHp;bossBattle=false;clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu();return}if(!pw&&bossBattle){al('☠️ 최종 보스에게 패배했습니다...');p.hp=p.maxHp;bossBattle=false;clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu();return}if(pw){rewardSkillBook();al(`🎉 ${cm.name} 처치!`);const mn=cm.name;const twisted=mn==='뒤틀린 슬라임'||mn==='뒤틀린 오크'||mn==='뒤틀린 골렘'||mn==='뒤틀린 드래곤';const mountainTwisted=mn==='뒤틀린 골렘'||mn==='뒤틀린 드래곤';if(twisted){const stones=1+Math.floor(Math.random()*2);p.mageStones=(p.mageStones||0)+msx(stones);al(`💎 뒤틀린 몬스터 보상: 마정석 ${stones}개 획득!`);if(p.level<50){p.exp+=cm.exp;al(`✨ 경험치 +${cm.exp}`);clu()}}else if(p.level>=50){const bonus=mn==='보이드 드래곤'?0:cm.exp*2;const battleCoins=cm.coins+bonus;const shownBattleCoins=battleCoins*((p.coinDoubleEnd||0)>Date.now()?2:1);al(`💰 코인 +${shownBattleCoins}${bonus?' , 최대 레벨 보너스 포함':''}`);addCoins(battleCoins)}else{const shownBattleCoins=cm.coins*((p.coinDoubleEnd||0)>Date.now()?2:1);al(`💰 코인 +${shownBattleCoins}, 경험치 +${cm.exp}`);addCoins(cm.coins);p.exp+=cm.exp;clu()}p.hp=p.maxHp;if(twisted){if(Math.random()<Math.min(1,(mountainTwisted?0.20:0.10)+Math.min(8,Number(p.eternalDropUpgrade)||0)/100))dropEternalLoot(mountainTwisted);else al('🌫️ 뒤틀린 몬스터를 처치했지만 Eternal 장비는 나오지 않았다.')}else if(mn==='종말의 심판자'&&Math.random()<.005){const ia=a.find(ar=>ar.rarity==='Secret');const ni={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false};p.inventory.push(ni);al(`✨ [SECRET] 인피니티 갑옷을 획득했습니다!`)}if(mn==='보이드 드래곤'){if(Math.random()<0.01){p.mageStones=(p.mageStones||0)+msx(1);al('💎 보이드 드래곤에게서 마정석 1개를 획득했습니다!')}if(Math.random()<0.01){p.bossTickets=(p.bossTickets||0)+1;al('🎟️ 보이드 드래곤에게서 보스 티켓 1개를 획득했습니다!')}const swc=w.filter(wp=>wp.rarity==='SSS');if(swc.length){const wtd=swc[Math.floor(Math.random()*swc.length)];const nw={type:'weapon',name:wtd.name,damage:wtd.damage,rarity:'SSS',upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false,enchantAttackPct:0,enchantCritPct:0};p.inventory.push(nw);al(`💠 [확정] SSS급 무기 획득: ${nw.name}`)}const sac=a.filter(ar=>ar.rarity==='S');if(sac.length){const atd=sac[Math.floor(Math.random()*sac.length)];const na={type:'armor',name:atd.name,defense:atd.defense,rarity:'S',upgrade:0,transcend:0,isLocked:false,enchantDefensePct:0,enchantEvadePct:0};p.inventory.push(na);al(`🛡️ [확정] S급 갑옷 획득: ${na.name}`)}if(Math.random()<.001){const sw=w.filter(wp=>wp.rarity==='Secret');const wtd=sw[Math.floor(Math.random()*sw.length)];const nw={...wtd,type:'weapon',upgrade:0,transcend:0,isDescended:false,isLocked:false,isPlated:false,isRainbow:false,enchantAttackPct:0,enchantCritPct:0};p.inventory.push(nw);al(`🌌 [SECRET 0.1%] ${nw.name}을(를) 획득했습니다!`)}if(Math.random()<.01){const ia=a.find(ar=>ar.rarity==='Secret');const na={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false,enchantDefensePct:0,enchantEvadePct:0};p.inventory.push(na);al(`✨ [SECRET 1%] 인피니티 갑옷을 획득했습니다!`)}}else if(mn==='타락천사'||mn==='아고니'){const swc=w.filter(wp=>wp.rarity==='SSS'&&cm.weaponDrops.includes(wp.name));if(swc.length>0){const wtd=swc[Math.floor(Math.random()*swc.length)];const nw={type:'weapon',name:wtd.name,damage:wtd.damage,rarity:wtd.rarity,upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false};p.inventory.push(nw);al(`💠 [확정] 무기 획득: ${nw.name}`)}const sac=a.filter(ar=>ar.rarity==='S');if(sac.length>0){const atd=sac[Math.floor(Math.random()*sac.length)];const na={type:'armor',name:atd.name,defense:atd.defense,rarity:atd.rarity,upgrade:0,transcend:0,isLocked:false};p.inventory.push(na);al(`🛡️ [확정] 갑옷 획득: ${na.name}`)}if(Math.random()<.01){const ia=a.find(ar=>ar.rarity==='Secret');const na={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false};p.inventory.push(na);al(`✨ [SECRET] 인피니티 갑옷을 획득했습니다!`)}}else if((p.selectedRegion||'').startsWith('이세계 ')){}else{if(cm.weaponDrops&&cm.weaponDrops.length>0){let dr=gwdfc(cm.weaponDrops);if(dr){p.inventory.push(dr);al(`💠 무기 획득: ${dr.name}`)}}if(Math.random()<.1){let atd=null;if(mn==='슬라임'||mn==='오크')atd=a.find(ar=>ar.rarity==='C');else if(mn==='골렘')atd=a.find(ar=>ar.rarity==='B');else if(mn==='드래곤')atd=a.find(ar=>ar.rarity==='A');else if(mn==='어둠의 군주'||mn==='심연의 군주'||mn==='종말의 심판자')atd=a.find(ar=>ar.rarity==='S');if(atd){const ni={type:'armor',name:atd.name,defense:atd.defense,rarity:atd.rarity,upgrade:0,transcend:0,isLocked:false};p.inventory.push(ni);al(`🛡️ 갑옷 획득: ${ni.name}`)}}}}else{al('☠️ 전투에서 패배... 체력 회복.');p.hp=p.maxHp}clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu()}
+function ec(pw){if(pw&&bossBattle){rewardSkillBook(true);al('👑 마왕 처치!');const bossCoins=500000;al(`💰 코인 +${bossCoins}, 경험치 +1000, 마정석 +3`);p.coins+=bossCoins;if(p.level<50){p.exp+=1000;clu()}p.mageStones=(p.mageStones||0)+msx(3);p.hp=p.maxHp;bossBattle=false;clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu();return}if(!pw&&bossBattle){al('☠️ 마왕에게 패배했습니다...');p.hp=p.maxHp;bossBattle=false;clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu();return}if(pw){rewardSkillBook();al(`🎉 ${cm.name} 처치!`);const mn=cm.name;const twisted=mn==='뒤틀린 슬라임'||mn==='뒤틀린 오크'||mn==='뒤틀린 골렘'||mn==='뒤틀린 드래곤';const mountainTwisted=mn==='뒤틀린 골렘'||mn==='뒤틀린 드래곤';if(twisted){const stones=1+Math.floor(Math.random()*2);p.mageStones=(p.mageStones||0)+msx(stones);al(`💎 뒤틀린 몬스터 보상: 마정석 ${stones}개 획득!`);if(p.level<50){p.exp+=cm.exp;al(`✨ 경험치 +${cm.exp}`);clu()}}else if(p.level>=50){const bonus=mn==='보이드 드래곤'?0:cm.exp*2;const battleCoins=cm.coins+bonus;const shownBattleCoins=battleCoins*((p.coinDoubleEnd||0)>Date.now()?2:1);al(`💰 코인 +${shownBattleCoins}${bonus?' , 최대 레벨 보너스 포함':''}`);addCoins(battleCoins)}else{const shownBattleCoins=cm.coins*((p.coinDoubleEnd||0)>Date.now()?2:1);al(`💰 코인 +${shownBattleCoins}, 경험치 +${cm.exp}`);addCoins(cm.coins);p.exp+=cm.exp;clu()}p.hp=p.maxHp;if(twisted){if(Math.random()<Math.min(1,(mountainTwisted?0.20:0.10)+Math.min(8,Number(p.eternalDropUpgrade)||0)/100))dropEternalLoot(mountainTwisted);else al('🌫️ 뒤틀린 몬스터를 처치했지만 Eternal 장비는 나오지 않았다.')}else if(mn==='종말의 심판자'&&Math.random()<.005){const ia=a.find(ar=>ar.rarity==='Secret');const ni={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false};p.inventory.push(ni);al(`✨ [SECRET] 인피니티 갑옷을 획득했습니다!`)}if(mn==='보이드 드래곤'){if(Math.random()<0.01){p.mageStones=(p.mageStones||0)+msx(1);al('💎 보이드 드래곤에게서 마정석 1개를 획득했습니다!')}if(Math.random()<0.01){p.bossTickets=(p.bossTickets||0)+1;al('🎟️ 보이드 드래곤에게서 보스 티켓 1개를 획득했습니다!')}const swc=w.filter(wp=>wp.rarity==='SSS');if(swc.length){const wtd=swc[Math.floor(Math.random()*swc.length)];const nw={type:'weapon',name:wtd.name,damage:wtd.damage,rarity:'SSS',upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false,enchantAttackPct:0,enchantCritPct:0};p.inventory.push(nw);al(`💠 [확정] SSS급 무기 획득: ${nw.name}`)}const sac=a.filter(ar=>ar.rarity==='S');if(sac.length){const atd=sac[Math.floor(Math.random()*sac.length)];const na={type:'armor',name:atd.name,defense:atd.defense,rarity:'S',upgrade:0,transcend:0,isLocked:false,enchantDefensePct:0,enchantEvadePct:0};p.inventory.push(na);al(`🛡️ [확정] S급 갑옷 획득: ${na.name}`)}if(Math.random()<.001){const sw=w.filter(wp=>wp.rarity==='Secret');const wtd=sw[Math.floor(Math.random()*sw.length)];const nw={...wtd,type:'weapon',upgrade:0,transcend:0,isDescended:false,isLocked:false,isPlated:false,isRainbow:false,enchantAttackPct:0,enchantCritPct:0};p.inventory.push(nw);al(`🌌 [SECRET 0.1%] ${nw.name}을(를) 획득했습니다!`)}if(Math.random()<.01){const ia=a.find(ar=>ar.rarity==='Secret');const na={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false,enchantDefensePct:0,enchantEvadePct:0};p.inventory.push(na);al(`✨ [SECRET 1%] 인피니티 갑옷을 획득했습니다!`)}}else if(mn==='타락천사'||mn==='아고니'){const swc=w.filter(wp=>wp.rarity==='SSS'&&cm.weaponDrops.includes(wp.name));if(swc.length>0){const wtd=swc[Math.floor(Math.random()*swc.length)];const nw={type:'weapon',name:wtd.name,damage:wtd.damage,rarity:wtd.rarity,upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false};p.inventory.push(nw);al(`💠 [확정] 무기 획득: ${nw.name}`)}const sac=a.filter(ar=>ar.rarity==='S');if(sac.length>0){const atd=sac[Math.floor(Math.random()*sac.length)];const na={type:'armor',name:atd.name,defense:atd.defense,rarity:atd.rarity,upgrade:0,transcend:0,isLocked:false};p.inventory.push(na);al(`🛡️ [확정] 갑옷 획득: ${na.name}`)}if(Math.random()<.01){const ia=a.find(ar=>ar.rarity==='Secret');const na={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false};p.inventory.push(na);al(`✨ [SECRET] 인피니티 갑옷을 획득했습니다!`)}}else if((p.selectedRegion||'').startsWith('이세계 ')){}else{if(cm.weaponDrops&&cm.weaponDrops.length>0){let dr=gwdfc(cm.weaponDrops);if(dr){p.inventory.push(dr);al(`💠 무기 획득: ${dr.name}`)}}if(Math.random()<.1){let atd=null;if(mn==='슬라임'||mn==='오크')atd=a.find(ar=>ar.rarity==='C');else if(mn==='골렘')atd=a.find(ar=>ar.rarity==='B');else if(mn==='드래곤')atd=a.find(ar=>ar.rarity==='A');else if(mn==='어둠의 군주'||mn==='심연의 군주'||mn==='종말의 심판자')atd=a.find(ar=>ar.rarity==='S');if(atd){const ni={type:'armor',name:atd.name,defense:atd.defense,rarity:atd.rarity,upgrade:0,transcend:0,isLocked:false};p.inventory.push(ni);al(`🛡️ 갑옷 획득: ${ni.name}`)}}}}else{al('☠️ 전투에서 패배... 체력 회복.');p.hp=p.maxHp}clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu()}
 function gwdfc(ln){const ca=w.filter(wp=>ln.includes(wp.name)&&wp.dropRate>0);if(ca.length===0)return null;const t=ca.reduce((s,c)=>s+c.dropRate,0);let r=Math.random()*t;for(const c of ca){r-=c.dropRate;if(r<=0)return{type:'weapon',name:c.name,damage:c.damage,rarity:c.rarity,upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false}}return null}
 function clu(){if(p.level>=50){p.level=50;p.exp=0;p.expToNextLevel=0;p.maxStamina=100;p.maxHp=150;return}if(p.exp>=p.expToNextLevel){p.exp-=p.expToNextLevel;p.level++;p.maxHp++;p.hp++;p.expToNextLevel=(p.level*15)+50;p.maxStamina=Math.min(p.rapidStaminaTraining?200:100,p.maxStamina+1);al(`🎉 레벨업! ${p.level} 레벨 달성!`);clu()}}
 function showMageMine(){if(!p.mageMineUnlocked){const cost=10;if((p.mageStones||0)<cost){al(`💎 마정석이 부족합니다! 광산 해금에는 마정석 ${cost}개가 필요합니다.`);return}if(!confirm(`💎 마정석 광산을 해금하시겠습니까?\n비용: 마정석 ${cost}개`))return;p.mageStones-=cost;p.mageMineUnlocked=true;al('⛏️ 마정석 광산을 해금했습니다!');}gs='mage_mine';uu()}
@@ -943,7 +943,7 @@ document.getElementById('cv-weapon-tab').onclick=()=>{cvType='weapon';updateVisu
  function L(t){al(t);var l=document.getElementById('log');if(l&&l.lastChild)l.lastChild.classList.add('log-tip')}
  window.tip=function(){};
  window.startTutorial=function(){p.tut={intro:1};L('📜 마을 위쪽 게시판에 가보세요!')};
- var HELP={'기본':['조이스틱으로 움직이고 오른쪽 큰 버튼으로 공격해요.','돌아다니며 코인과 경험치를 주워요.','몬스터는 저절로 나타나고, 가까이 오면 공격해요.','행동력은 스킬에 쓰이고 시간이 지나면 회복돼요.','코인으로 마을 상점에서 장비를 살 수 있어요.'],
+ var HELP={'기본':['조이스틱으로 움직이고 오른쪽 큰 버튼으로 공격해요.','대쉬 버튼(행동력 5)을 누르면 보는 방향으로 빠르게 쓕 이동해요. 컴퓨터는 Shift 키예요.','돌아다니며 코인과 경험치를 주워요.','몬스터는 저절로 나타나고, 가까이 오면 공격해요.','행동력은 스킬에 쓰이고 시간이 지나면 회복돼요.','코인으로 마을 상점에서 장비를 살 수 있어요.'],
  '스킬':['몬스터를 잡으면 가끔 스킬북이 나와요.','인벤토리에서 스킬북을 펼쳐 스킬을 배워요.','배운 스킬은 인벤토리에서 장착해요.','파란 스킬 버튼을 누르면 스킬을 써요.','스킬은 행동력을 20 쓰고, 상급일수록 강해요.'],
  '성장':['레벨이 오르면 체력과 행동력이 늘어요.','훈련에서 공격력과 치명타를 키울 수 있어요.','대장간에서 장비를 강화할 수 있어요.','마을의 코인 러쉬는 하루 한 번 도전해요.'],
  '지역·보스':['지역 입구의 해금 문 앞에서 버튼을 눌러 지역을 해금해요. 해금 전에는 들어갈 수 없어요.','지역마다 만나는 몬스터와 보상이 달라요.','높은 산은 1,000코인이면 열려요.','보스는 마왕성 앞에서 티켓을 내면 마왕의 방으로 이동해 도전할 수 있어요. 끝나면 마을로 돌아와요.','보스 티켓은 랜덤 박스에서 얻을 수 있어요.']};
@@ -1059,6 +1059,23 @@ const su=()=>skB.classList.remove('on');skB.addEventListener('pointerup',su);skB
 addEventListener('keydown',e=>{if(!R.on||blocked())return;keys[e.code]=1;if(e.code==='Space'||e.code==='KeyJ'){held=true;buf=true;e.preventDefault()}if(e.code==='KeyK')sbuf=true});
 addEventListener('keyup',e=>{keys[e.code]=0;if(e.code==='Space'||e.code==='KeyJ')held=false});
 rn.addEventListener('contextmenu',e=>e.preventDefault());
+/* ---------- 💨 대쉬 (행동력 5) ---------- */
+let dbuf=false;
+document.head.insertAdjacentHTML('beforeend','<style>#rdash{position:absolute;right:122px;bottom:calc(112px + env(safe-area-inset-bottom,0px));width:64px;height:64px;border-radius:50%;border:3px solid rgba(255,255,255,.6);background:rgba(40,170,200,.6);display:flex;align-items:center;justify-content:center;color:#fff;touch-action:none;pointer-events:auto;transition:transform .06s}#rdash.on{transform:scale(.9);background:rgba(60,200,230,.9)}#rdash svg{width:40px;height:40px;pointer-events:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35))}</style>');
+const dB=document.createElement('div');dB.id='rdash';dB.innerHTML='<svg viewBox="0 0 48 48" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M15 9 L30 24 L15 39" stroke-width="6"/><path d="M28 9 L43 24 L28 39" stroke-width="6" opacity=".75"/><path d="M3 17 H10 M1 24 H8 M3 31 H10" stroke-width="3" opacity=".6"/></svg>';$('rctl').appendChild(dB);
+dB.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();dbuf=true;dB.classList.add('on')});
+const du=()=>dB.classList.remove('on');dB.addEventListener('pointerup',du);dB.addEventListener('pointercancel',du);
+addEventListener('keydown',e=>{if(!R.on||blocked())return;if(e.code==='ShiftLeft'||e.code==='ShiftRight'||e.code==='KeyL'){dbuf=true;e.preventDefault()}});
+function doDash(ix,iy,live){
+ if(!live||(P.ds||0)>0||(P.dc||0)>0)return;
+ if(P.at>=0&&P.skn)return;
+ if((p.stamina||0)<5){pop('행동력 부족',P.x,P.y-80,'#fff');return}
+ p.stamina-=5;
+ let dx=ix,dy=iy,m=Math.hypot(dx,dy);if(m<.2){dx=P.face;dy=0}else{dx/=m;dy/=m}
+ P.dx=dx;P.dy=dy;P.ds=.16;P.dc=.3;if(Math.abs(dx)>.2)P.face=dx>0?1:-1;
+ P.at=-1;P.cw=0;P.nodmg=false;
+ spark(P.x,P.y-18,12,'#cfe8ff',170,3,0,0);
+}
 /* ---------- 지역 테마 ---------- */
 const TH={
 '숲':{bg:'#4f8c4b',t:['#5a9a52','#549350'],ob:'tree',oc:['#2f7a3a','#4aa655'],trk:'#6b4a2e',d:'grass',p:.32},
@@ -1425,9 +1442,9 @@ function skillFX(nm,hits){
 }
 function pop(t,x,y,c,b){R.dn.push({x:x,y:y,l:.9,t:t,c:c||'#fff',b:b})}
 /* ---------- 몬스터 ---------- */
-const SZ={'슬라임':64,'오크':88,'골렘':108,'드래곤':150,'어둠의 군주':124,'심연의 군주':124,'종말의 심판자':124,'타락천사':130,'아고니':130,'보이드 드래곤':170,'최종 보스':160};
-const SPD={'슬라임':56.0,'오크':73.5,'골렘':43.4,'드래곤':59.5,'어둠의 군주':66.5,'심연의 군주':70.0,'종말의 심판자':73.5,'타락천사':80.5,'아고니':77.0,'보이드 드래곤':70.0,'최종 보스':77.0};
-const BC={'슬라임':'#58c96a','오크':'#8fb35a','골렘':'#9a9ea6','드래곤':'#d9574f','어둠의 군주':'#5a3a85','심연의 군주':'#2f5fa8','종말의 심판자':'#d6b13a','타락천사':'#dcdcf5','아고니':'#e8553a','보이드 드래곤':'#6a2cff','최종 보스':'#b5192f'};
+const SZ={'슬라임':64,'오크':88,'골렘':108,'드래곤':150,'어둠의 군주':124,'심연의 군주':124,'종말의 심판자':124,'타락천사':130,'아고니':130,'보이드 드래곤':170,'마왕':160};
+const SPD={'슬라임':56.0,'오크':73.5,'골렘':43.4,'드래곤':59.5,'어둠의 군주':66.5,'심연의 군주':70.0,'종말의 심판자':73.5,'타락천사':80.5,'아고니':77.0,'보이드 드래곤':70.0,'마왕':77.0};
+const BC={'슬라임':'#58c96a','오크':'#8fb35a','골렘':'#9a9ea6','드래곤':'#d9574f','어둠의 군주':'#5a3a85','심연의 군주':'#2f5fa8','종말의 심판자':'#d6b13a','타락천사':'#dcdcf5','아고니':'#e8553a','보이드 드래곤':'#6a2cff','마왕':'#b5192f'};
 const spr={};
 function sprite(nm){
  if(spr[nm])return spr[nm];
@@ -1439,7 +1456,7 @@ function sprite(nm){
  img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg.replace('<svg ','<svg width="240" height="'+vh*2+'" '));
  spr[nm]=o;return o;
 }
-const FLYM={'드래곤':1,'보이드 드래곤':1,'타락천사':1,'심연의 군주':1,'어둠의 군주':1,'종말의 심판자':1,'최종 보스':1};
+const FLYM={'드래곤':1,'보이드 드래곤':1,'타락천사':1,'심연의 군주':1,'어둠의 군주':1,'종말의 심판자':1,'마왕':1};
 function monMotion(c,e){const b=e.m.name.replace('뒤틀린 ',''),t=e.t;
  if(b==='슬라임'){const h=Math.abs(Math.sin(t*4)),q=Math.pow(1-h,3);c.translate(0,-h*12);c.scale(1+.2*q-.08*h,1-.2*q+.1*h)}
  else{const w=Math.sin(t*5);c.scale(1-.012*w,1+.025*w);if(FLYM[b])c.translate(0,-5-4*Math.sin(t*2.4));if(b!=='골렘'&&b!=='드래곤'&&b!=='보이드 드래곤')c.rotate(Math.sin(t*2.2)*.03)}}
@@ -1617,7 +1634,7 @@ function openCastle(){
  R.flash=.5;R.fc='#000';
  panel.innerHTML='';ptitle('🏰 마왕성');
  const info=document.createElement('div');info.style.cssText='text-align:center;padding:10px;border:1px solid #ffd1d1;border-radius:10px;background:#fff7f7;margin-bottom:8px';
- info.innerHTML='<div style="font-weight:800;margin-bottom:6px">🎟️ 보스 티켓: '+(p.bossTickets||0)+'장</div><strong>최종 보스 · HP 1400 · 공격력 140</strong><small style="display:block;margin-top:4px">⚔️ 무기 종류 제한 없음 + ∞ 인피니티 갑옷 필요</small>';
+ info.innerHTML='<div style="font-weight:800;margin-bottom:6px">🎟️ 보스 티켓: '+(p.bossTickets||0)+'장</div><strong>마왕 · HP 6000 · 공격력 190</strong><small style="display:block;margin-top:4px">⚔️ 무기 종류 제한 없음 + ∞ 인피니티 갑옷 필요</small>';
  panel.appendChild(info);
  pbtn('🎟️ 티켓 제출 · 마왕의 방으로 (1장)',()=>{if((p.bossTickets||0)<1){toast('🎟️ 보스 티켓이 없어요! 랜덤 박스에서 얻을 수 있어요');return}closeP();tp(ARENA.x,ARENA.y+160);challengeBoss()});
  pbtn('나가기',closeP,'rpx');panel.style.display='block';
@@ -1770,6 +1787,73 @@ function enemyHit(e){
  p.hp-=inc;pop('-'+inc,P.x,P.y-80,'#ff6b6b',1);R.shake=Math.max(R.shake,8);spark(P.x,P.y-30,8,'#ff6b6b',200,3);
  if(p.hp<=0){p.hp=0;R.end={t:1.2,win:false,e:e}}
 }
+/* ---------- 👹 마왕 보스 패턴 ---------- */
+const BZ=[],BP=[];
+function bossHit(e,mult){const a0=e.m.attack;e.m.attack=Math.max(1,Math.round(a0*mult));try{enemyHit(e)}finally{e.m.attack=a0}}
+function bzCirc(x,y,r,tt,mult,follow,delay){BZ.push({k:'c',x:x,y:y,r:r,t:-(delay||0),tt:tt,m:mult,f:follow||null})}
+function bzLine(x,y,a,len,w,tt,mult){BZ.push({k:'l',x:x,y:y,a:a,len:len,w:w,t:0,tt:tt,m:mult})}
+function segDist(px,py,x0,y0,x1,y1){const vx=x1-x0,vy=y1-y0,l2=vx*vx+vy*vy||1;let t=((px-x0)*vx+(py-y0)*vy)/l2;t=Math.max(0,Math.min(1,t));return Math.hypot(px-(x0+vx*t),py-(y0+vy*t))}
+function bzBurst(e,h){
+ if(h.k==='c'){spark(h.x,h.y-6,26,'#ff5a3a',320,4,1,200);spark(h.x,h.y-6,14,'#ffd54a',240,3,0,100);R.shake=Math.max(R.shake,13);
+  if(Math.hypot(P.x-h.x,P.y-h.y)<h.r+10)bossHit(e,h.m)}
+ else{const x1=h.x+Math.cos(h.a)*h.len,y1=h.y+Math.sin(h.a)*h.len;for(let i=0;i<7;i++){const t=i/6;spark(h.x+(x1-h.x)*t,h.y+(y1-h.y)*t-6,5,'#ff5a3a',200,3,1,120)}R.shake=Math.max(R.shake,15);
+  if(segDist(P.x,P.y,h.x,h.y,x1,y1)<h.w/2+12)bossHit(e,h.m)}
+}
+function bossStep(e,dt){
+ for(let i=BZ.length-1;i>=0;i--){const h=BZ[i];if(h.f){h.x=h.f.x;h.y=h.f.y}h.t+=dt;if(h.t>=h.tt){BZ.splice(i,1);bzBurst(e,h)}}
+ for(let i=BP.length-1;i>=0;i--){const q=BP[i];q.x+=q.vx*dt;q.y+=q.vy*dt;q.l-=dt;
+  if(Math.hypot(P.x-q.x,(P.y-26)-q.y)<q.r+14){BP.splice(i,1);spark(q.x,q.y,10,'#ff7a3a',220,3,1,80);bossHit(e,q.m);continue}
+  if(q.l<=0||Math.hypot(q.x-ARENA.x,q.y-ARENA.y)>ARENA.r+120)BP.splice(i,1)}
+}
+function bossPick(B,ph,d){
+ const L=[],add=(n,w)=>{if(n!==B.last)L.push([n,w])};
+ if(d<340)add('claw',4);add('slam',3);add('barrage',3);if(d>200)add('charge',3);
+ if(ph>=2){add('nova',2.5);add('rain',3)}if(ph>=3){add('rain',1.5);add('charge',1.5)}
+ let tot=0;for(const x of L)tot+=x[1];let r=rnd()*tot;for(const x of L){r-=x[1];if(r<=0)return x[0]}return L[0][0]
+}
+function bossCast(e,B,ph,dx,dy,d,pat){
+ B.last=pat;const I=ph-1;
+ if(pat==='claw'){bzCirc(e.x,e.y,e.sz*1.05,.6,1,e);if(ph>=3)bzCirc(e.x,e.y,e.sz*1.1,.6,1,e,.7);B.st='rec';B.t=ph>=3?1.5:.95}
+ else if(pat==='slam'){const n=[1,3,5][I];for(let i=0;i<n;i++){const ox=i?(rnd()-.5)*300:0,oy=i?(rnd()-.5)*240:0;bzCirc(P.x+ox,P.y+oy,125,1,1,null,i*.45)}B.st='rec';B.t=1+(n-1)*.45+.35}
+ else if(pat==='nova'){bzCirc(e.x,e.y,235,1.15,1,e);B.st='rec';B.t=1.5}
+ else if(pat==='charge'){const a=Math.atan2(dy,dx),len=640;B.a=a;B.x0=e.x;B.y0=e.y;B.x1=e.x+Math.cos(a)*len*.85;B.y1=e.y+Math.sin(a)*len*.85;bzLine(e.x,e.y,a,len,130,.85,1.1);B.st='dashwind';B.t=.85}
+ else if(pat==='barrage'){B.st='barrage';B.t=.65;B.w=[1,2,3][I]}
+ else if(pat==='rain'){const n=[4,6,9][I];for(let i=0;i<n;i++)bzCirc(P.x+(rnd()-.5)*520,P.y+(rnd()-.5)*420,95,.9,.6,null,i*.18);B.st='rec';B.t=n*.18+1}
+}
+function bossAI(e,dt,dx,dy,d){
+ const B=e.B||(e.B={st:'chase',t:1.5,last:'',ph:1,w:0});
+ const hpr=e.m.hp/e.m.maxHp,ph=hpr>.66?1:hpr>.33?2:3,spd=[1,1.2,1.45][ph-1];
+ if(ph>B.ph){B.ph=ph;B.st='rec';B.t=1.1;BZ.length=0;BP.length=0;pop(ph===2?'마왕이 분노한다!':'마왕이 폭주한다!',e.x,e.y-e.sz*1.15,'#ff4d4d',1);R.shake=Math.max(R.shake,22);spark(e.x,e.y-40,40,'#ff3b30',380,4,1,0)}
+ bossStep(e,dt);
+ if(B.st==='chase'){
+  if(d>e.rng*.7){e.vx+=dx/d*e.sp*5*dt*spd;e.vy+=dy/d*e.sp*5*dt*spd}
+  B.t-=dt;if(B.t<=0)bossCast(e,B,ph,dx,dy,d,bossPick(B,ph,d))
+ }else if(B.st==='dashwind'){
+  if(rnd()<dt*25)spark(e.x,e.y-30,1,'#ff5a3a',120,3,1,0);
+  B.t-=dt;if(B.t<=0){B.st='dash';B.dt=0;B.x0=e.x;B.y0=e.y}
+ }else if(B.st==='dash'){
+  B.dt+=dt;const k=Math.min(1,B.dt/.25),ke=1-(1-k)*(1-k);e.x=B.x0+(B.x1-B.x0)*ke;e.y=B.y0+(B.y1-B.y0)*ke;e.vx=e.vy=0;
+  if(rnd()<.8)spark(e.x,e.y-20,2,'#ff7a3a',100,3,0,0);
+  if(k>=1){B.st='rec';B.t=.75}
+ }else if(B.st==='barrage'){
+  if(rnd()<dt*30)spark(e.x,e.y-e.sz*.4,1,'#ffb02e',120,3,1,0);
+  B.t-=dt;if(B.t<=0){
+   const n=[3,5,7][ph-1],a0=Math.atan2((P.y-20)-(e.y-e.sz*.4),P.x-e.x),sp=[330,370,410][ph-1];
+   for(let i=0;i<n;i++){const a=a0+(n>1?(i/(n-1)-.5)*.95:0);BP.push({x:e.x,y:e.y-e.sz*.4,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,r:20,l:3.2,m:.5})}
+   R.shake=Math.max(R.shake,6);B.w--;if(B.w>0)B.t=.55;else{B.st='rec';B.t=.7}}
+ }else{
+  B.t-=dt;if(B.t<=0){B.st='chase';B.t=[1.4,1,.65][ph-1]}
+ }
+}
+function drawBossHaz(){
+ if(!(bossBattle&&gs==='combat')){if(BZ.length)BZ.length=0;if(BP.length)BP.length=0;return}
+ ctx.save();
+ for(const h of BZ){if(h.t<0)continue;const u=Math.min(1,h.t/h.tt);
+  if(h.k==='c'){ctx.globalAlpha=.14+.2*u;ctx.fillStyle='#ff2a2a';ctx.beginPath();ctx.arc(h.x,h.y,h.r,0,PI2);ctx.fill();ctx.globalAlpha=.3+.4*u;ctx.fillStyle='#ff5a3a';ctx.beginPath();ctx.arc(h.x,h.y,h.r*u,0,PI2);ctx.fill();ctx.globalAlpha=.9;ctx.strokeStyle='#ff6a5a';ctx.lineWidth=3;ctx.beginPath();ctx.arc(h.x,h.y,h.r,0,PI2);ctx.stroke()}
+  else{ctx.save();ctx.translate(h.x,h.y);ctx.rotate(h.a);ctx.globalAlpha=.14+.2*u;ctx.fillStyle='#ff2a2a';ctx.fillRect(0,-h.w/2,h.len,h.w);ctx.globalAlpha=.3+.4*u;ctx.fillStyle='#ff5a3a';ctx.fillRect(0,-h.w/2,h.len*u,h.w);ctx.globalAlpha=.9;ctx.strokeStyle='#ff6a5a';ctx.lineWidth=3;ctx.strokeRect(0,-h.w/2,h.len,h.w);ctx.restore()}}
+ for(const q of BP){ctx.globalAlpha=.35;ctx.fillStyle='#ff4d2a';ctx.beginPath();ctx.arc(q.x,q.y,q.r*1.6,0,PI2);ctx.fill();ctx.globalAlpha=1;ctx.fillStyle='#ffb02e';ctx.beginPath();ctx.arc(q.x,q.y,q.r,0,PI2);ctx.fill();ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(q.x,q.y,q.r*.45,0,PI2);ctx.fill()}
+ ctx.restore();
+}
 function strike(){
  const c=P.cb,sm=P.sm,sk=P.skn,spin=c===2,big=spin||!!sm,thr=isThr(),W=R.W,rch=W.reach+(big?12:0)+(thr?22:0)+(sk?(SKR[sk]||0):0),mult=sm||(spin?1.5:1);
  P.sm=0;
@@ -1781,7 +1865,7 @@ function strike(){
   const dx=(e.x-P.x)*P.face,dy=e.y-P.y;
   if(dx>(big?-55:-12)&&dx<rch+e.sz*.35&&Math.abs(dy)<(thr?32:46)+(sk==='가로 베기'?40:0)+e.sz*.22){
    n++;fxh.push(e);const r=calculateCombatDamage(mult);e.m.hp-=r.damage;e.fl=.15;e.agg=true;
-   e.vx=(e.x<P.x?-1:1)*KB[c]*(120/(e.sz+40)+.4);e.vy=dy*2;
+   e.vx=(e.x<P.x?-1:1)*KB[c]*(120/(e.sz+40)+.4);e.vy=dy*2;if(e.forced&&bossBattle){e.vx*=.12;e.vy*=.12}
    pop(r.damage+(r.critical?'!':''),e.x,e.y-e.sz*.9,r.critical?'#ff5252':(big?'#ffd54a':'#fff'),r.critical||big);
    hitFX(e.x,e.y-e.sz*.3,c,big,thr);R.shake=Math.max(R.shake,SH[c]+R.W.tier);
    if(e.m.hp<=0)die(e);
@@ -1829,6 +1913,7 @@ function collect(k){
 function update(dt,blk){
  worldStep(blk);PT.step(dt);
  if(R.hs>0){R.hs-=dt;dt*=.15}
+ if(!blk&&(p.furyTurns||0)>0){p.furyTurns=Math.max(0,p.furyTurns-dt);if(p.furyTurns<=0){p.furyTurns=0;al('분노 효과가 끝났습니다.')}}
  R.T+=dt;R.sk=Math.max(0,R.sk-dt);
  let ix=J.x,iy=J.y;
  if(!blk){if(keys.KeyA||keys.ArrowLeft)ix-=1;if(keys.KeyD||keys.ArrowRight)ix+=1;if(keys.KeyW||keys.ArrowUp)iy-=1;if(keys.KeyS||keys.ArrowDown)iy+=1}
@@ -1842,10 +1927,12 @@ function update(dt,blk){
    const ok=inf.kind==='buff'?(Number(p.furyTurns)||0)<=0:((inf.kind==='block'||inf.kind==='parry')?(!p.nextBlock&&!p.nextParry):true);
    if(ok&&need&&(p.stamina||0)>=(p.skillCostReduction?10:20))sbuf=true}
   if(sbuf){sbuf=false;skill()}
+  if(dbuf){dbuf=false;doDash(ix,iy,live)}
   if((buf||held)&&P.at<0){P.cb=P.cw>0?(P.cb+1)%3:0;P.at=0;P.hit=false;P.skn=null;P.nodmg=false;buf=false;if(Math.abs(ix)>.3)P.face=ix>0?1:-1;P.vx+=P.face*([150,170,330][P.cb]+(isThr()?(P.cb===1?150:60):0))}
- }else{sbuf=false;buf=false}
+ }else{sbuf=false;buf=false;dbuf=false}
+ P.dc=Math.max(0,(P.dc||0)-dt);
  const sp=P.at>=0?.45:1,k=Math.min(1,dt*9);
- P.vx+=(ix*MAXS*sp-P.vx)*k;P.vy+=(iy*MAXS*.8*sp-P.vy)*k;{const ox=P.x,oy=P.y,nx=ox+P.vx*dt,ny=oy+P.vy*dt;if(!walk(ox,oy)||walk(nx,ny)){P.x=nx;P.y=ny}else if(walk(nx,oy)){P.x=nx;P.vy=0}else if(walk(ox,ny)){P.y=ny;P.vx=0}else{P.vx=P.vy=0}P.ox=ox;P.oy=oy}
+ if((P.ds||0)>0){P.ds-=dt;P.vx=P.dx*800;P.vy=P.dy*800*.8;spark(P.x,P.y-18,1,'#cfe8ff',40,3,0,0);if(P.ds<=0){P.ds=0;P.vx*=.25;P.vy*=.25}}else{P.vx+=(ix*MAXS*sp-P.vx)*k;P.vy+=(iy*MAXS*.8*sp-P.vy)*k}{const ox=P.x,oy=P.y,nx=ox+P.vx*dt,ny=oy+P.vy*dt;if(!walk(ox,oy)||walk(nx,ny)){P.x=nx;P.y=ny}else if(walk(nx,oy)){P.x=nx;P.vy=0}else if(walk(ox,ny)){P.y=ny;P.vx=0}else{P.vx=P.vy=0}P.ox=ox;P.oy=oy}
  for(let i=Math.floor(P.x/190)-1;i<=Math.floor(P.x/190)+1;i++)for(let j=Math.floor(P.y/190)-1;j<=Math.floor(P.y/190)+1;j++){const o=obAt(i,j);if(!o)continue;const dx=P.x-o.x,dy=P.y-o.y,d=Math.hypot(dx,dy),rr=(o.th.ob==='rock'||o.th.ob==='crys'||o.th.ob==='ast')?22:15;if(d<rr&&d>0){P.x=o.x+dx/d*rr;P.y=o.y+dy/d*rr}}
  for(const h of VDEC){if(h[0]!=='house')continue;const x0=h[1]-32,x1=h[1]+32,y0=h[2]-22,y1=h[2]+6,pr=10,cx=Math.max(x0,Math.min(x1,P.x)),cy=Math.max(y0,Math.min(y1,P.y)),dx=P.x-cx,dy=P.y-cy,dd=Math.hypot(dx,dy);
   if(dd>0){if(dd<pr){P.x=cx+dx/dd*pr;P.y=cy+dy/dd*pr}}
@@ -1877,7 +1964,7 @@ function update(dt,blk){
   e.t+=dt;e.fl=Math.max(0,e.fl-dt);e.cd-=dt;e.atkT=Math.max(0,(e.atkT||0)-dt);
   const PTg=(!e.forced&&PT.on)?PT.pick(e,dt):null,gx=PTg?PTg.x:P.x,gy=PTg?PTg.y:P.y,dx=gx-e.x,dy=gy-e.y,d=Math.hypot(dx,dy)||1;e.tgx=PTg?gx:null;e.tgy=PTg?gy:null;
   if(!e.agg&&(PTg?PTg.dm:d)<380)e.agg=true;
-  if(e.wind>0){e.wind-=dt;if(e.wind<=0){if(d<e.rng*1.5){if(PTg&&PTg.id)PT.hurt(PTg.id,e);else enemyHit(e)}e.cd=1.3;e.atkT=.32;e.cd=1.3;if(d<e.rng*1.5)ring(e.x,e.y,10,e.rng*2,.25,'#ff5252',3)}}
+  if(e.forced&&bossBattle){bossAI(e,dt,dx,dy,d)}else if(e.wind>0){e.wind-=dt;if(e.wind<=0){if(d<e.rng*1.5){if(PTg&&PTg.id)PT.hurt(PTg.id,e);else enemyHit(e)}e.cd=1.3;e.atkT=.32;e.cd=1.3;if(d<e.rng*1.5)ring(e.x,e.y,10,e.rng*2,.25,'#ff5252',3)}}
   else{
    const hop=e.sp<49?Math.max(0,Math.sin(e.t*5)):1;
    if(e.agg){if(d>e.rng*.8&&e.fl<=0){e.vx+=dx/d*e.sp*5*dt*hop;e.vy+=dy/d*e.sp*5*dt*hop}if(d<e.rng&&e.cd<=0)e.wind=.5}
@@ -1911,9 +1998,9 @@ function draw(){
  for(const lm of LMS)if(Math.abs(lm.x-cam.x)<900&&Math.abs(lm.y-cam.y)<1100)L.push({y:lm.y,f:()=>landmark(lm)});for(const sp of SPOTS)if(Math.abs(sp.x-cam.x)<420&&Math.abs(sp.y-cam.y)<620)L.push({y:sp.y,f:()=>drawSpot(sp)});for(const d of VDEC)if(Math.abs(d[1]-cam.x)<420&&Math.abs(d[2]-cam.y)<620)L.push({y:d[2],f:()=>drawDecor(d)});
  L.sort((a,b)=>a.y-b.y);for(const o of L)o.f();
  for(const q of R.pt){ctx.globalAlpha=Math.min(1,q.l/q.m);ctx.fillStyle=q.c;if(q.sh){ctx.beginPath();ctx.moveTo(q.x,q.y-q.s*1.6);ctx.lineTo(q.x+q.s*.6,q.y);ctx.lineTo(q.x,q.y+q.s*1.6);ctx.lineTo(q.x-q.s*.6,q.y);ctx.fill();ctx.fillRect(q.x-q.s*1.6,q.y-q.s*.3,q.s*3.2,q.s*.6)}else ctx.fillRect(q.x-q.s/2,q.y-q.s/2,q.s,q.s)}
- ctx.globalAlpha=1;drawFx();
+ ctx.globalAlpha=1;drawFx();drawBossHaz();
  ctx.textAlign='center';
- {const ef=[];if((p.furyTurns||0)>0)ef.push('분노 '+p.furyTurns);if(p.nextBlock)ef.push('막기');if(p.nextParry)ef.push('패리');if(ef.length){ctx.font='bold 11px system-ui,sans-serif';ctx.lineWidth=3;ctx.strokeStyle='rgba(0,0,0,.6)';ctx.fillStyle='#fff';const t=ef.join(' · ');ctx.strokeText(t,P.x,P.y-72);ctx.fillText(t,P.x,P.y-72)}}
+ {const ef=[];if((p.furyTurns||0)>0)ef.push('분노 '+Math.ceil(p.furyTurns)+'초');if(p.nextBlock)ef.push('막기');if(p.nextParry)ef.push('패리');if(ef.length){ctx.font='bold 11px system-ui,sans-serif';ctx.lineWidth=3;ctx.strokeStyle='rgba(0,0,0,.6)';ctx.fillStyle='#fff';const t=ef.join(' · ');ctx.strokeText(t,P.x,P.y-72);ctx.fillText(t,P.x,P.y-72)}}
  for(const d of R.dn){ctx.globalAlpha=Math.min(1,d.l*3);ctx.font=(d.b?'bold 22px':'bold 16px')+' system-ui,sans-serif';ctx.lineWidth=3;ctx.strokeStyle='rgba(0,0,0,.6)';ctx.fillStyle=d.c;ctx.strokeText(d.t,d.x,d.y);ctx.fillText(d.t,d.x,d.y)}ctx.globalAlpha=1;
  if(false&&R.flash>0){ctx.setTransform(DPR,0,0,DPR,0,0);ctx.globalAlpha=Math.min(.35,R.flash);ctx.fillStyle=R.fc;ctx.fillRect(0,0,VW,VH);ctx.globalAlpha=1}
 }
@@ -2349,6 +2436,35 @@ const _us=useEquippedSkill;useEquippedSkill=function(){if(R.on&&(gs==='main'||gs
 })();
 </script>
 
+<style id="bossbar-css">
+#bossbar{position:fixed;left:50%;top:var(--hm-top,64px);transform:translateX(-50%);width:min(420px,68vw);z-index:60;pointer-events:none;display:none;text-align:center;font-family:Arial,sans-serif}
+#bossbar .bb-name{display:flex;justify-content:space-between;align-items:baseline;color:#fff;font-weight:800;font-size:13px;text-shadow:0 1px 3px rgba(0,0,0,.9),0 0 8px rgba(120,0,20,.8);margin-bottom:2px;padding:0 2px}
+#bossbar .bb-track{position:relative;height:16px;border-radius:8px;overflow:hidden;background:rgba(20,6,10,.82);border:2px solid #2a0a12;box-shadow:0 2px 8px rgba(0,0,0,.45)}
+#bossbar .bb-track i{position:absolute;left:0;top:0;bottom:0;display:block}
+#bb-lag{background:#fff3;width:100%}
+#bb-fill{background:linear-gradient(90deg,#8b0f23,#e0283f);width:100%;transition:width .12s linear}
+#bossbar .bb-m{position:absolute;top:0;bottom:0;width:2px;background:rgba(255,255,255,.55);z-index:2}
+#bb-hp{color:#fff;font-size:11px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.9);margin-top:2px}
+</style>
+<script>
+/* 마왕 보스바 */
+(function(){
+ var el=document.createElement('div');el.id='bossbar';
+ el.innerHTML='<div class="bb-name"><span>👹 마왕</span><span id="bb-ph"></span></div><div class="bb-track"><i id="bb-lag"></i><i id="bb-fill"></i><b class="bb-m" style="left:66.6%"></b><b class="bb-m" style="left:33.3%"></b></div><div id="bb-hp"></div>';
+ document.body.appendChild(el);
+ var fill=document.getElementById('bb-fill'),lag=document.getElementById('bb-lag'),hp=document.getElementById('bb-hp'),ph=document.getElementById('bb-ph'),lv=100;
+ setInterval(function(){
+  var on=false,c=null;
+  try{on=bossBattle&&gs==='combat'&&cm&&cm.maxHp>0;c=cm}catch(e){}
+  if(!on){el.style.display='none';lv=100;return}
+  var pct=Math.max(0,Math.min(100,c.hp/c.maxHp*100));
+  el.style.display='block';fill.style.width=pct+'%';
+  lv=pct>=lv?pct:Math.max(pct,lv-2.5);lag.style.width=lv+'%';
+  hp.textContent=Math.max(0,Math.ceil(c.hp)).toLocaleString()+' / '+c.maxHp.toLocaleString();
+  ph.textContent=pct>66.6?'1페이즈':pct>33.3?'2페이즈 · 분노':'3페이즈 · 폭주';
+ },100);
+})();
+</script>
 <style id="top-layer-fix">
 #rnote,#rtoast{z-index:2147483647!important}
 #drop-pop{z-index:2147483647!important}
