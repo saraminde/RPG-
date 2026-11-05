@@ -271,7 +271,7 @@ h1{letter-spacing:.12em;color:#4b5565}
 </head>
 <body>
 <div id="status-bar">
-<div class="status-group"><span id="hp"><span class="vbar"><span id="hpFill"></span></span><span id="hpText"><span id="hpVal">100</span>/<span id="maxHp">100</span></span></span><span id="stamina"><span class="vbar"><span id="staminaFill"></span></span><span id="staminaText"><span id="staminaVal">50</span>/<span id="maxStamina">50</span></span></span></div><div class="status-group"><span id="level">LV: <span id="levelVal">1</span></span><span id="coins" title="코인" aria-label="코인"><i class="ico ico-coin" aria-hidden="true"></i><span id="coinsVal">100</span></span></div><span id="exp">경험치: <span id="expVal">0</span>/<span id="expToNext">65</span></span><span id="mage-stones" title="마정석" aria-label="마정석" style="display:none"><i class="ico ico-gem" aria-hidden="true"></i><span id="mageStonesVal">0</span></span><span id="coin-double-status" style="display:none"></span>
+<div class="status-group"><span id="hp"><span class="vbar"><span id="hpFill"></span></span><span id="hpText"><span id="hpVal">100</span>/<span id="maxHp">100</span></span></span><span id="stamina"><span class="vbar"><span id="staminaFill"></span></span><span id="staminaText"><span id="staminaVal">50</span>/<span id="maxStamina">50</span></span></span></div><div class="status-group"><span id="level">LV: <span id="levelVal">1</span></span><span id="coins" title="코인" aria-label="코인"><i class="ico ico-coin" aria-hidden="true"></i><span id="coinsVal">100</span></span></div><span id="exp">XP: <span id="expVal">0</span>/<span id="expToNext">65</span></span><span id="mage-stones" title="마정석" aria-label="마정석" style="display:none"><i class="ico ico-gem" aria-hidden="true"></i><span id="mageStonesVal">0</span></span><span id="coin-double-status" style="display:none"></span>
 </div>
 <div id="game-container">
 <div id="log"></div>
@@ -599,7 +599,7 @@ function hcb(){if(gs==='coin_rush'){coinRushHit();return}if(gs==='combat'){if(p.
  const r=Math.random();
  if(r<.3){selectedMonster=chooseRegionMonster().name;p.selectedMonster=selectedMonster;cm=pm();gs='combat';hideMonsterSelect();al(`${cm.name}이(가) 나타났다!`)}
  else if(r<.5){const bc=inEtherealForest?5000+(p.level*100):inOtherworldMountain?Math.floor((5000+(p.level*100))*1.5):10+(p.level*5);const c=Math.floor(bc*(.5+Math.random()*1.5));addCoins(c);al(`코인 ${c}개를 발견했다!`)}
- else if(r<.65){const be=5+(p.level*2);const e=Math.floor(be*(.5+Math.random()*1.5));if(p.level>=50){addCoins(e*2);al(`최대 레벨 보너스! 코인 ${e*2*((p.coinDoubleEnd||0)>Date.now()?2:1)}개를 획득했다!`)}else{p.exp+=e;al(`경험치 ${e}를 획득했다!`);clu()}}
+ else if(r<.65){const be=5+(p.level*2);const e=Math.floor(be*(.5+Math.random()*1.5));if(p.level>=50){addCoins(e*2);al(`최대 레벨 보너스! 코인 ${e*2*((p.coinDoubleEnd||0)>Date.now()?2:1)}개를 획득했다!`)}else{p.exp+=e;al(`XP ${e}를 획득했다!`);clu()}}
  else if(inEtherealForest){const c=Math.floor(5000+Math.random()*15001);addCoins(c);al(`코인 ${c}개를 발견했다!`)}
  else if(inOtherworldMountain){const c=Math.floor((5000+Math.random()*15001)*1.5);addCoins(c);al(`코인 ${c*((p.coinDoubleEnd||0)>Date.now()?2:1)}개를 발견했다!`)}else if(r<.85)hwr();else har();uu();sg()}}
 function hwr(){const lt=Math.floor(p.level/10);let rp=[];if(lt>=4)rp=['A','S','SSS'];else if(lt>=3)rp=['B','A','S'];else if(lt>=2)rp=['C','B','A'];else if(lt>=1)rp=['D','C','B'];else rp=['D','C'];let sr=rp[Math.floor(Math.random()*rp.length)];if(sr==='SSS'&&(p.selectedRegion==='숲'||p.selectedRegion==='높은 산'))sr='S';const wo=w.filter(wp=>wp.rarity===sr&&wp.dropRate>0);if(wo.length>0){const wp=wo[Math.floor(Math.random()*wo.length)];const nw={type:'weapon',name:wp.name,damage:wp.damage,rarity:wp.rarity,upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false};p.inventory.push(nw);al(`${wp.name}을(를) 발견했다!`)}}
@@ -657,7 +657,7 @@ function dropEternalLoot(boosted=false){
  else{const def=Math.floor(base.defense*(secret?1.5:2));item={type:'armor',name:base.name.replace(/\s*\([^)]*급\)/,'').trim(),defense:def,baseDefense:def,baseRarity:base.rarity,rarity:'Eternal',upgrade:0,transcend:0,isLocked:false,enchantDefensePct:0,enchantEvadePct:0}}
  p.inventory.push(item);al(`[Eternal급] ${item.name} 획득! ${type==='weapon'?'공격력 '+item.damage:'방어력 '+item.defense}`,true)
 }
-function ec(pw){if(pw&&bossBattle){rewardSkillBook(true);al('마왕 처치!');const bossCoins=500000;al(`코인 +${bossCoins}, 경험치 +1000, 마정석 +3`);p.coins+=bossCoins;if(p.level<50){p.exp+=1000;clu()}p.mageStones=(p.mageStones||0)+msx(3);p.hp=p.maxHp;bossBattle=false;clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu();return}if(!pw&&bossBattle){al('마왕에게 패배했습니다...');p.hp=p.maxHp;bossBattle=false;clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu();return}if(pw){rewardSkillBook();al(`${cm.name} 처치!`);const mn=cm.name;const twisted=mn==='뒤틀린 슬라임'||mn==='뒤틀린 오크'||mn==='뒤틀린 골렘'||mn==='뒤틀린 드래곤';const mountainTwisted=mn==='뒤틀린 골렘'||mn==='뒤틀린 드래곤';if(twisted){const stones=1+Math.floor(Math.random()*2);p.mageStones=(p.mageStones||0)+msx(stones);al(`뒤틀린 몬스터 보상: 마정석 ${stones}개 획득!`);if(p.level<50){p.exp+=cm.exp;al(`경험치 +${cm.exp}`);clu()}}else if(p.level>=50){const bonus=mn==='보이드 드래곤'?0:cm.exp*2;const battleCoins=cm.coins+bonus;const shownBattleCoins=battleCoins*((p.coinDoubleEnd||0)>Date.now()?2:1);al(`코인 +${shownBattleCoins}${bonus?' , 최대 레벨 보너스 포함':''}`);addCoins(battleCoins)}else{const shownBattleCoins=cm.coins*((p.coinDoubleEnd||0)>Date.now()?2:1);al(`코인 +${shownBattleCoins}, 경험치 +${cm.exp}`);addCoins(cm.coins);p.exp+=cm.exp;clu()}p.hp=p.maxHp;if(twisted){if(Math.random()<Math.min(1,(mountainTwisted?0.20:0.10)+Math.min(8,Number(p.eternalDropUpgrade)||0)/100))dropEternalLoot(mountainTwisted);else al('뒤틀린 몬스터를 처치했지만 Eternal 장비는 나오지 않았다.')}else if(mn==='종말의 심판자'&&Math.random()<.005){const ia=a.find(ar=>ar.rarity==='Secret');const ni={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false};p.inventory.push(ni);al(`[SECRET] 인피니티 갑옷을 획득했습니다!`)}if(mn==='보이드 드래곤'){if(Math.random()<0.01){p.mageStones=(p.mageStones||0)+msx(1);al('보이드 드래곤에게서 마정석 1개를 획득했습니다!')}if(Math.random()<0.01){p.bossTickets=(p.bossTickets||0)+1;al('🎟️ 보이드 드래곤에게서 보스 티켓 1개를 획득했습니다!')}const swc=w.filter(wp=>wp.rarity==='SSS');if(swc.length){const wtd=swc[Math.floor(Math.random()*swc.length)];const nw={type:'weapon',name:wtd.name,damage:wtd.damage,rarity:'SSS',upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false,enchantAttackPct:0,enchantCritPct:0};p.inventory.push(nw);al(`[확정] SSS급 무기 획득: ${nw.name}`)}const sac=a.filter(ar=>ar.rarity==='S');if(sac.length){const atd=sac[Math.floor(Math.random()*sac.length)];const na={type:'armor',name:atd.name,defense:atd.defense,rarity:'S',upgrade:0,transcend:0,isLocked:false,enchantDefensePct:0,enchantEvadePct:0};p.inventory.push(na);al(`[확정] S급 갑옷 획득: ${na.name}`)}if(Math.random()<.001){const sw=w.filter(wp=>wp.rarity==='Secret');const wtd=sw[Math.floor(Math.random()*sw.length)];const nw={...wtd,type:'weapon',upgrade:0,transcend:0,isDescended:false,isLocked:false,isPlated:false,isRainbow:false,enchantAttackPct:0,enchantCritPct:0};p.inventory.push(nw);al(`[SECRET 0.1%] ${nw.name}을(를) 획득했습니다!`)}if(Math.random()<.01){const ia=a.find(ar=>ar.rarity==='Secret');const na={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false,enchantDefensePct:0,enchantEvadePct:0};p.inventory.push(na);al(`[SECRET 1%] 인피니티 갑옷을 획득했습니다!`)}}else if(mn==='타락천사'||mn==='아고니'){const swc=w.filter(wp=>wp.rarity==='SSS'&&cm.weaponDrops.includes(wp.name));if(swc.length>0){const wtd=swc[Math.floor(Math.random()*swc.length)];const nw={type:'weapon',name:wtd.name,damage:wtd.damage,rarity:wtd.rarity,upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false};p.inventory.push(nw);al(`[확정] 무기 획득: ${nw.name}`)}const sac=a.filter(ar=>ar.rarity==='S');if(sac.length>0){const atd=sac[Math.floor(Math.random()*sac.length)];const na={type:'armor',name:atd.name,defense:atd.defense,rarity:atd.rarity,upgrade:0,transcend:0,isLocked:false};p.inventory.push(na);al(`[확정] 갑옷 획득: ${na.name}`)}if(Math.random()<.01){const ia=a.find(ar=>ar.rarity==='Secret');const na={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false};p.inventory.push(na);al(`[SECRET] 인피니티 갑옷을 획득했습니다!`)}}else if((p.selectedRegion||'').startsWith('이세계 ')){}else{if(cm.weaponDrops&&cm.weaponDrops.length>0){let dr=gwdfc(cm.weaponDrops);if(dr){p.inventory.push(dr);al(`무기 획득: ${dr.name}`)}}if(Math.random()<.1){let atd=null;if(mn==='슬라임'||mn==='오크')atd=a.find(ar=>ar.rarity==='C');else if(mn==='골렘')atd=a.find(ar=>ar.rarity==='B');else if(mn==='드래곤')atd=a.find(ar=>ar.rarity==='A');else if(mn==='어둠의 군주'||mn==='심연의 군주'||mn==='종말의 심판자')atd=a.find(ar=>ar.rarity==='S');if(atd){const ni={type:'armor',name:atd.name,defense:atd.defense,rarity:atd.rarity,upgrade:0,transcend:0,isLocked:false};p.inventory.push(ni);al(`갑옷 획득: ${ni.name}`)}}}}else{al('전투에서 패배... 체력 회복.');p.hp=p.maxHp}clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu()}
+function ec(pw){if(pw&&bossBattle){rewardSkillBook(true);al('마왕 처치!');const bossCoins=500000;al(`코인 +${bossCoins}, XP +1000, 마정석 +3`);p.coins+=bossCoins;if(p.level<50){p.exp+=1000;clu()}p.mageStones=(p.mageStones||0)+msx(3);p.hp=p.maxHp;bossBattle=false;clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu();return}if(!pw&&bossBattle){al('마왕에게 패배했습니다...');p.hp=p.maxHp;bossBattle=false;clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu();return}if(pw){rewardSkillBook();al(`${cm.name} 처치!`);const mn=cm.name;const twisted=mn==='뒤틀린 슬라임'||mn==='뒤틀린 오크'||mn==='뒤틀린 골렘'||mn==='뒤틀린 드래곤';const mountainTwisted=mn==='뒤틀린 골렘'||mn==='뒤틀린 드래곤';if(twisted){const stones=1+Math.floor(Math.random()*2);p.mageStones=(p.mageStones||0)+msx(stones);al(`뒤틀린 몬스터 보상: 마정석 ${stones}개 획득!`);if(p.level<50){p.exp+=cm.exp;al(`XP +${cm.exp}`);clu()}}else if(p.level>=50){const bonus=mn==='보이드 드래곤'?0:cm.exp*2;const battleCoins=cm.coins+bonus;const shownBattleCoins=battleCoins*((p.coinDoubleEnd||0)>Date.now()?2:1);al(`코인 +${shownBattleCoins}${bonus?' , 최대 레벨 보너스 포함':''}`);addCoins(battleCoins)}else{const shownBattleCoins=cm.coins*((p.coinDoubleEnd||0)>Date.now()?2:1);al(`코인 +${shownBattleCoins}, XP +${cm.exp}`);addCoins(cm.coins);p.exp+=cm.exp;clu()}p.hp=p.maxHp;if(twisted){if(Math.random()<Math.min(1,(mountainTwisted?0.20:0.10)+Math.min(8,Number(p.eternalDropUpgrade)||0)/100))dropEternalLoot(mountainTwisted);else al('뒤틀린 몬스터를 처치했지만 Eternal 장비는 나오지 않았다.')}else if(mn==='종말의 심판자'&&Math.random()<.005){const ia=a.find(ar=>ar.rarity==='Secret');const ni={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false};p.inventory.push(ni);al(`[SECRET] 인피니티 갑옷을 획득했습니다!`)}if(mn==='보이드 드래곤'){if(Math.random()<0.01){p.mageStones=(p.mageStones||0)+msx(1);al('보이드 드래곤에게서 마정석 1개를 획득했습니다!')}if(Math.random()<0.01){p.bossTickets=(p.bossTickets||0)+1;al('🎟️ 보이드 드래곤에게서 보스 티켓 1개를 획득했습니다!')}const swc=w.filter(wp=>wp.rarity==='SSS');if(swc.length){const wtd=swc[Math.floor(Math.random()*swc.length)];const nw={type:'weapon',name:wtd.name,damage:wtd.damage,rarity:'SSS',upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false,enchantAttackPct:0,enchantCritPct:0};p.inventory.push(nw);al(`[확정] SSS급 무기 획득: ${nw.name}`)}const sac=a.filter(ar=>ar.rarity==='S');if(sac.length){const atd=sac[Math.floor(Math.random()*sac.length)];const na={type:'armor',name:atd.name,defense:atd.defense,rarity:'S',upgrade:0,transcend:0,isLocked:false,enchantDefensePct:0,enchantEvadePct:0};p.inventory.push(na);al(`[확정] S급 갑옷 획득: ${na.name}`)}if(Math.random()<.001){const sw=w.filter(wp=>wp.rarity==='Secret');const wtd=sw[Math.floor(Math.random()*sw.length)];const nw={...wtd,type:'weapon',upgrade:0,transcend:0,isDescended:false,isLocked:false,isPlated:false,isRainbow:false,enchantAttackPct:0,enchantCritPct:0};p.inventory.push(nw);al(`[SECRET 0.1%] ${nw.name}을(를) 획득했습니다!`)}if(Math.random()<.01){const ia=a.find(ar=>ar.rarity==='Secret');const na={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false,enchantDefensePct:0,enchantEvadePct:0};p.inventory.push(na);al(`[SECRET 1%] 인피니티 갑옷을 획득했습니다!`)}}else if(mn==='타락천사'||mn==='아고니'){const swc=w.filter(wp=>wp.rarity==='SSS'&&cm.weaponDrops.includes(wp.name));if(swc.length>0){const wtd=swc[Math.floor(Math.random()*swc.length)];const nw={type:'weapon',name:wtd.name,damage:wtd.damage,rarity:wtd.rarity,upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false};p.inventory.push(nw);al(`[확정] 무기 획득: ${nw.name}`)}const sac=a.filter(ar=>ar.rarity==='S');if(sac.length>0){const atd=sac[Math.floor(Math.random()*sac.length)];const na={type:'armor',name:atd.name,defense:atd.defense,rarity:atd.rarity,upgrade:0,transcend:0,isLocked:false};p.inventory.push(na);al(`[확정] 갑옷 획득: ${na.name}`)}if(Math.random()<.01){const ia=a.find(ar=>ar.rarity==='Secret');const na={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false};p.inventory.push(na);al(`[SECRET] 인피니티 갑옷을 획득했습니다!`)}}else if((p.selectedRegion||'').startsWith('이세계 ')){}else{if(cm.weaponDrops&&cm.weaponDrops.length>0){let dr=gwdfc(cm.weaponDrops);if(dr){p.inventory.push(dr);al(`무기 획득: ${dr.name}`)}}if(Math.random()<.1){let atd=null;if(mn==='슬라임'||mn==='오크')atd=a.find(ar=>ar.rarity==='C');else if(mn==='골렘')atd=a.find(ar=>ar.rarity==='B');else if(mn==='드래곤')atd=a.find(ar=>ar.rarity==='A');else if(mn==='어둠의 군주'||mn==='심연의 군주'||mn==='종말의 심판자')atd=a.find(ar=>ar.rarity==='S');if(atd){const ni={type:'armor',name:atd.name,defense:atd.defense,rarity:atd.rarity,upgrade:0,transcend:0,isLocked:false};p.inventory.push(ni);al(`갑옷 획득: ${ni.name}`)}}}}else{al('전투에서 패배... 체력 회복.');p.hp=p.maxHp}clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu()}
 function gwdfc(ln){const ca=w.filter(wp=>ln.includes(wp.name)&&wp.dropRate>0);if(ca.length===0)return null;const t=ca.reduce((s,c)=>s+c.dropRate,0);let r=Math.random()*t;for(const c of ca){r-=c.dropRate;if(r<=0)return{type:'weapon',name:c.name,damage:c.damage,rarity:c.rarity,upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false}}return null}
 function clu(){if(p.level>=50){p.level=50;p.exp=0;p.expToNextLevel=0;p.maxStamina=100;p.maxHp=150;return}if(p.exp>=p.expToNextLevel){p.exp-=p.expToNextLevel;p.level++;p.maxHp++;p.hp++;p.expToNextLevel=(p.level*15)+50;p.maxStamina=Math.min(p.rapidStaminaTraining?200:100,p.maxStamina+1);al(`레벨업! ${p.level} 레벨 달성!`);clu()}}
 function showMageMine(){if(!p.mageMineUnlocked){const cost=10;if((p.mageStones||0)<cost){al(`마정석이 부족합니다! 광산 해금에는 마정석 ${cost}개가 필요합니다.`);return}if(!confirm(`마정석 광산을 해금하시겠습니까?\n비용: 마정석 ${cost}개`))return;p.mageStones-=cost;p.mageMineUnlocked=true;al('마정석 광산을 해금했습니다!');}gs='mage_mine';uu()}
@@ -956,7 +956,7 @@ document.getElementById('cv-weapon-tab').onclick=()=>{cvType='weapon';updateVisu
  function L(t){al(t);var l=document.getElementById('log');if(l&&l.lastChild)l.lastChild.classList.add('log-tip')}
  window.tip=function(){};
  window.startTutorial=function(){p.tut={intro:1};L('마을 위쪽 게시판에 가보세요!')};
- var HELP={'기본':['조이스틱으로 움직이고 오른쪽 큰 버튼으로 공격해요.','대쉬 버튼(행동력 5)을 누르면 보는 방향으로 빠르게 쓕 이동해요. 컴퓨터는 Shift 키예요.','돌아다니며 코인과 경험치를 주워요.','몬스터는 저절로 나타나고, 가까이 오면 공격해요.','행동력은 스킬에 쓰이고 시간이 지나면 회복돼요.','코인으로 마을 상점에서 장비를 살 수 있어요.'],
+ var HELP={'기본':['조이스틱으로 움직이고 오른쪽 큰 버튼으로 공격해요.','대쉬 버튼(행동력 5)을 누르면 보는 방향으로 빠르게 쓕 이동해요. 컴퓨터는 Shift 키예요.','돌아다니며 코인과 XP를 주워요.','몬스터는 저절로 나타나고, 가까이 오면 공격해요.','행동력은 스킬에 쓰이고 시간이 지나면 회복돼요.','코인으로 마을 상점에서 장비를 살 수 있어요.'],
  '스킬':['몬스터를 잡으면 가끔 스킬북이 나와요.','인벤토리에서 스킬북을 펼쳐 스킬을 배워요.','배운 스킬은 인벤토리에서 장착해요.','파란 스킬 버튼을 누르면 스킬을 써요.','스킬은 행동력을 20 쓰고, 상급일수록 강해요.'],
  '성장':['레벨이 오르면 체력과 행동력이 늘어요.','훈련에서 공격력과 치명타를 키울 수 있어요.','대장간에서 장비를 강화할 수 있어요.','마을의 코인 러쉬는 하루 한 번 도전해요.'],
  '지역·보스':['지역 입구의 해금 문 앞에서 버튼을 눌러 지역을 해금해요. 해금 전에는 들어갈 수 없어요.','지역마다 만나는 몬스터와 보상이 달라요.','높은 산은 1,000코인이면 열려요.','보스는 마왕성 앞에서 티켓을 내면 마왕의 방으로 이동해 도전할 수 있어요. 끝나면 마을로 돌아와요.','보스 티켓은 랜덤 박스에서 얻을 수 있어요.']};
@@ -964,7 +964,7 @@ document.getElementById('cv-weapon-tab').onclick=()=>{cvType='weapon';updateVisu
   cb(mn,'저장 데이터 초기화',function(){if(!confirm('저장된 진행 상황을 모두 지우고 처음부터 시작할까요?'))return;if(!confirm('정말 삭제할까요? 되돌릴 수 없어요.'))return;try{localStorage.removeItem('textRpgSave')}catch(e){}saveCombatResult=function(){};location.reload()});
   cb(mn,'돌아가기',function(){gs='village';uu()})};
  var _h=hcb;hcb=function(){var was=gs;_h.apply(this,arguments);if(was==='main'&&gs==='combat')tip('fight','몬스터가 나타났어요! 오른쪽 큰 버튼으로 공격하세요.');if(p&&p.stamina<=5)tip('stam','행동력이 거의 없어요. 시간이 지나면 저절로 회복돼요.')};
- var _e=ec;ec=function(w){var r=_e.apply(this,arguments);if(w){tip('win','승리! 코인과 경험치를 얻었어요. 마을 상점에서 장비를 살 수 있어요.');tip('equip','새 무기는 인벤토리에서 장착해야 공격력이 올라요.')}else tip('lose','졌다면 장비를 강화하거나 훈련으로 더 강해져 보세요.');return r};
+ var _e=ec;ec=function(w){var r=_e.apply(this,arguments);if(w){tip('win','승리! 코인과 XP를 얻었어요. 마을 상점에서 장비를 살 수 있어요.');tip('equip','새 무기는 인벤토리에서 장착해야 공격력이 올라요.')}else tip('lose','졌다면 장비를 강화하거나 훈련으로 더 강해져 보세요.');return r};
  var _b=rewardSkillBook;rewardSkillBook=function(){var n=p.inventory.length;_b.apply(this,arguments);if(p.inventory.length>n)tip('book','스킬북은 인벤토리에서 펼쳐 스킬을 배우고 장착해요.')};
  var _c=clu;clu=function(){var v=p.level;_c.apply(this,arguments);if(p.level>v)tip('lvl','레벨이 오르면 체력과 행동력 최대치가 늘어요.')};
  setInterval(function(){if(gs!=='combat'&&gs!=='coin_rush'&&p&&p.weapon)saveCombatResult()},20000);
@@ -1850,7 +1850,7 @@ function reward(e){
  const c0=p.coins,s0=p.mageStones||0;cm=e.m;gs='combat';
  let _need=0;const _uu0=uu;uu=function(){_need=1};try{ec(true)}catch(x){console.error(x)}finally{uu=_uu0;if(_need)setTimeout(function(){try{uu()}catch(x){}},120)}
  if(gs==='combat')gs='main';if(!bossBattle)cm=null;
- const dc=p.coins-c0,ds=(p.mageStones||0)-s0,ex=(e.m.exp&&p.level<50)?e.m.exp:0;let oy=14;if(dc>0){pop('+'+dc,e.x,e.y-e.sz-oy,'#ffd54a',1,'coin');oy+=30}if(ex>0){pop('경험치 +'+ex,e.x,e.y-e.sz-oy,'#6ee7b7',1,'exp');oy+=30}if(ds>0)pop('+'+ds,e.x,e.y-e.sz-oy,'#c084fc',1,'gem');
+ const dc=p.coins-c0,ds=(p.mageStones||0)-s0,ex=(e.m.exp&&p.level<50)?e.m.exp:0;let oy=14;if(dc>0){pop('+'+dc,e.x,e.y-e.sz-oy,'#ffd54a',1,'coin');oy+=30}if(ex>0){pop('XP +'+ex,e.x,e.y-e.sz-oy,'#6ee7b7',1,'exp');oy+=30}if(ds>0)pop('+'+ds,e.x,e.y-e.sz-oy,'#c084fc',1,'gem');
 }
 function dealRaw(e,d){e.m.hp-=d;e.fl=.15;e.agg=true;pop(Math.round(d),e.x,e.y-e.sz*.9,'#fff');if(e.m.hp<=0)die(e)}
 function die(e){
@@ -1986,7 +1986,7 @@ function spawnPk(){
 function collect(k){
  const rg=p.selectedRegion||'숲',pl=(p.level||1);
  if(k.t==='coin'){const bc=rg==='이세계 숲'?5000+pl*100:rg==='이세계 산'?Math.floor((5000+pl*100)*1.5):10+pl*5,c=Math.floor(bc*(.5+rnd()*1.5));addCoins(c);const sc=c*((p.coinDoubleEnd||0)>Date.now()?2:1);al('코인 '+sc+'개를 발견했다!');pop('+'+sc,k.x,k.y-30,'#ffd54a',1,'coin');spark(k.x,k.y-12,10,'#ffd54a',140,2.6,1)}
- else if(k.t==='exp'){const be=5+pl*2,e=Math.floor(be*(.5+rnd()*1.5));if(pl>=50){addCoins(e*2);al('최대 레벨 보너스! 코인 '+e*2*((p.coinDoubleEnd||0)>Date.now()?2:1)+'개를 획득했다!')}else{p.exp+=e;al('경험치 '+e+'를 획득했다!');clu()}pop('경험치 +'+e,k.x,k.y-30,'#6ee7b7',1,'exp');spark(k.x,k.y-12,10,'#6ee7b7',140,2.6,1)}
+ else if(k.t==='exp'){const be=5+pl*2,e=Math.floor(be*(.5+rnd()*1.5));if(pl>=50){addCoins(e*2);al('최대 레벨 보너스! 코인 '+e*2*((p.coinDoubleEnd||0)>Date.now()?2:1)+'개를 획득했다!')}else{p.exp+=e;al('XP '+e+'를 획득했다!');clu()}pop('XP +'+e,k.x,k.y-30,'#6ee7b7',1,'exp');spark(k.x,k.y-12,10,'#6ee7b7',140,2.6,1)}
  else if(k.t==='gem'){p.mageStones=(p.mageStones||0)+msx(1);al('마정석 1개를 발견했다!');pop('+1',k.x,k.y-30,'#c084fc',1,'gem');spark(k.x,k.y-12,12,'#c084fc',160,2.6,1)}
  else{if(rnd()<.5)hwr();else har();pop('보물상자',k.x,k.y-30,'#ffbe6e',1);spark(k.x,k.y-12,12,'#ffbe6e',160,2.6,1)}
  dirty();
@@ -2071,9 +2071,8 @@ function dnPill(d){
  ctx.save();ctx.translate(d.x,d.y);ctx.scale(a,a);
  ctx.font='800 14px system-ui,sans-serif';ctx.textAlign='left';ctx.textBaseline='middle';
  const tw=ctx.measureText(d.t).width,iw=ic?15:0,gp=ic?6:0,pd=9,w=pd*2+iw+gp+tw,h=24,x0=-w/2,y0=-h/2;
- if(!L){ctx.shadowColor='rgba(16,24,40,.28)';ctx.shadowBlur=6;ctx.shadowOffsetY=2}
- ctx.fillStyle='rgba(255,255,255,.92)';ctx.beginPath();ctx.roundRect(x0,y0,w,h,12);ctx.fill();
- ctx.shadowColor='transparent';ctx.shadowBlur=0;ctx.shadowOffsetY=0;
+ /* 흰 배경 제거: 아이콘 + 글씨만 표시 */
+ if(!L){ctx.shadowColor='rgba(0,0,0,.45)';ctx.shadowBlur=4;ctx.shadowOffsetY=1}
  const cx=x0+pd+iw/2;
  if(d.k==='coin'){
   let g=ctx.createRadialGradient(cx-2.6,-2.6,0,cx,0,7.5);g.addColorStop(0,'#fff3b0');g.addColorStop(.38,'#ffd23f');g.addColorStop(.72,'#f0a800');g.addColorStop(1,'#c98300');
@@ -2085,7 +2084,10 @@ function dnPill(d){
   ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(cx,-gh);ctx.lineTo(cx+gw,0);ctx.lineTo(cx,gh);ctx.lineTo(cx-gw,0);ctx.closePath();ctx.fill();
   ctx.fillStyle='rgba(255,255,255,.38)';ctx.beginPath();ctx.moveTo(cx,-gh);ctx.lineTo(cx,gh);ctx.lineTo(cx-gw,0);ctx.closePath();ctx.fill();
  }
- ctx.fillStyle=d.k==='exp'?'#0f766e':'#171a21';ctx.fillText(d.t,x0+pd+iw+gp,1);
+ const tc=d.k==='coin'?'#ffd23f':d.k==='gem'?'#c084fc':'#0f766e',tx=x0+pd+iw+gp;
+ ctx.shadowColor='transparent';ctx.shadowBlur=0;ctx.shadowOffsetY=0;
+ ctx.lineJoin='round';ctx.lineWidth=3.5;ctx.strokeStyle=d.k==='exp'?'rgba(255,255,255,.9)':'rgba(0,0,0,.65)';ctx.strokeText(d.t,tx,1);
+ ctx.fillStyle=tc;ctx.fillText(d.t,tx,1);
  ctx.restore();
 }
 function draw(){
@@ -2318,7 +2320,7 @@ const PT={on:false,host:false,busy:false,code:'',id:'',peer:null,hc:null,conns:n
   }
  }
  /* ----- 인원별 몬스터 스폰: 파티 전체 기준 1명 1x / 2명 1.7x / 3명 2.4x / 4명 3x ----- */
- const SPAWN_MULT=[1,1.7,2.4,3],BASE_CAP=3,BASE_INT=2.5;
+ const SPAWN_MULT=[1,2,3,4],BASE_CAP=5,BASE_INT=2.5;
  function nearby(){
   const ids=[PT.id||''],now=Date.now();
   for(const mm of PT.mem.values())if(now-mm.seen<3000&&Math.hypot(mm.x-P.x,mm.y-P.y)<1500)ids.push(mm.id);
@@ -2407,7 +2409,7 @@ const PT={on:false,host:false,busy:false,code:'',id:'',peer:null,hc:null,conns:n
    txt('pt-sub','연결 중이에요… 잠시만 기다려 주세요.');
    pbtn('취소',()=>{const pr=PT.peer;PT.peer=null;PT.busy=false;try{pr&&pr.destroy()}catch(e){}render()},'rpx');
   }else{
-   txt('pt-sub','친구와 같은 지역에서 함께 사냥하세요. 서로의 몬스터를 같이 잡고, 처치 보상(코인·경험치·드롭)을 모두가 받아요. 최대 '+MAXP+'명.');
+   txt('pt-sub','친구와 같은 지역에서 함께 사냥하세요. 서로의 몬스터를 같이 잡고, 처치 보상(코인·XP·드롭)을 모두가 받아요. 최대 '+MAXP+'명.');
    const ni=document.createElement('input');ni.className='pt-in';ni.maxLength=10;ni.placeholder='닉네임';ni.value=PT.nick;ni.addEventListener('input',()=>{PT.nick=ni.value.trim().slice(0,10)||'모험가';try{localStorage.setItem('trpgPartyNick',PT.nick)}catch(e){}});panel.appendChild(ni);
    pbtn('파티 만들기',()=>create());
    const ci=document.createElement('input');ci.className='pt-in';ci.maxLength=4;ci.placeholder='파티 코드 4자리';ci.value=PT.joinCode;ci.autocapitalize='characters';ci.autocomplete='off';ci.style.textTransform='uppercase';ci.addEventListener('input',()=>{PT.joinCode=ci.value.toUpperCase()});ci.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();join(ci.value)}});panel.appendChild(ci);
@@ -2437,8 +2439,8 @@ function toast(t){
  rnQ.push(t);while(rnQ.length>6)rnQ.shift();if(!rnBusy)rnNext();
 }
 document.head.insertAdjacentHTML('beforeend','<style>#rtoast{display:none!important}#rnote{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 74px);transform:translateX(-50%);width:min(420px,90vw);z-index:90;pointer-events:none;display:flex;flex-direction:column;align-items:center}.rn-win{box-sizing:border-box;max-width:100%;padding:8px 14px;border-radius:8px;background:rgba(30,30,34,.88);color:#fff;font-weight:600;font-size:13px;line-height:1.4;text-align:center;white-space:pre-wrap;word-break:keep-all;opacity:0;transition:opacity .18s ease}.rn-win.in{opacity:1}.rn-win.out{opacity:0}</style>');
-const okMsg=t=>!!t&&!/피해|데미지|치명타|막았|회피|반사/.test(t)&&!/^(코인 \d+개를 발견|경험치 \d+|최대 레벨 보너스)/.test(t);
-const noise=t=>/처치!|^코인 \+|^경험치 \+|Eternal 장비는 나오지 않았다|뒤틀린 몬스터 보상/.test(t);
+const okMsg=t=>!!t&&!/피해|데미지|치명타|막았|회피|반사/.test(t)&&!/^(코인 \d+개를 발견|마정석 \d+개를 발견했다|XP \d+|최대 레벨 보너스)/.test(t);
+const noise=t=>/처치!|^코인 \+|^XP \+|Eternal 장비는 나오지 않았다|뒤틀린 몬스터 보상/.test(t);
 const _al=al;al=function(t,c){if(noise(String(t).replace(/<[^>]*>/g,'')))return;const r=_al.apply(this,arguments);try{const x=String(t).replace(/<[^>]*>/g,'');if(okMsg(x))toast(x)}catch(e){}return r};
 document.querySelectorAll('#log .log-entry').forEach(e=>{const x=e.textContent;if(okMsg(x))toast(x)});
 const _hc=hcb;hcb=function(){if(R.on&&(gs==='main'||gs==='combat')){if(!R.end)buf=true;return}return _hc.apply(this,arguments)};
@@ -2977,6 +2979,13 @@ body.world #monster-select:not(:empty){background:var(--u-card)!important;border
 #set-box .sp-sw::after{content:'';position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(16,24,40,.3);transition:transform .18s}
 #set-box .sp-sw.on{background:var(--u-acc)}
 #set-box .sp-sw.on::after{transform:translateX(20px)}
+/* 설정 버튼: 파티 버튼 바로 아래(오른쪽) */
+#main-menu.home-grid .hb-set{position:fixed!important;left:auto!important;right:calc(8px + env(safe-area-inset-right,0px));top:calc(var(--hm-top,calc(env(safe-area-inset-top,0px) + 96px)) + 52px)}
+#set-box .sp-code{display:flex;gap:6px;margin-top:8px}
+#set-box .sp-code input{flex:1;min-width:0;box-sizing:border-box;height:38px;padding:0 10px;border:1px solid var(--line-2,#d3d8e0);border-radius:10px;font-size:14px;background:#fff;color:var(--ink,#171a21);outline:none}
+#set-box .sp-code button{flex:none;height:38px;padding:0 14px;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer}
+#set-box .sp-msg{min-height:16px;margin-top:6px;font-size:12px;font-weight:700;color:var(--muted,#6b7280)}
+#set-box .sp-msg.ok{color:#0f766e}#set-box .sp-msg.err{color:#c8403f}
 #set-box .sp-close{display:block;width:100%;min-height:44px;margin-top:4px;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer}
 </style>
 <script>
@@ -3002,11 +3011,34 @@ body.world #monster-select:not(:empty){background:var(--u-card)!important;border
    '<div class="sp-desc">멀리 볼수록 화면에 더 넓은 지역이 보여요.</div></div>'+
    '<div class="sp-row"><div class="sp-head"><span>이펙트 간소화</span><button type="button" class="sp-sw" role="switch" aria-label="이펙트 간소화"></button></div>'+
    '<div class="sp-desc">햇빛 효과, 캐릭터 그림자, 화면 흔들림을 끄고 파티클을 줄여요. 게임이 끊길 때 켜 보세요.</div></div>'+
+   '<div class="sp-row"><div class="sp-head"><span>코드 입력</span></div>'+
+   '<div class="sp-code"><input type="text" class="sp-code-in" placeholder="코드를 입력하세요" autocomplete="off" autocapitalize="characters" spellcheck="false"><button type="button" class="sp-code-go">사용</button></div>'+
+   '<div class="sp-msg"></div></div>'+
    '<button type="button" class="sp-close">닫기</button></div>';
   document.body.appendChild(pop);
   rng=pop.querySelector('input');val=pop.querySelector('.sp-val');sw=pop.querySelector('.sp-sw');
   rng.addEventListener('input',function(){C.view=+rng.value;paint();apply();save()});
   sw.addEventListener('click',function(){C.lite=!C.lite;paint();apply();save()});
+  (function(){
+   var inp=pop.querySelector('.sp-code-in'),go=pop.querySelector('.sp-code-go'),msg=pop.querySelector('.sp-msg');
+   function say(t,ok){msg.textContent=t;msg.className='sp-msg '+(ok?'ok':'err')}
+   function redeem(){
+    var c=inp.value.replace(/\s+/g,'').toUpperCase();if(!c){say('코드를 입력해 주세요.',false);return}
+    var CODES={
+     'ZERODIVIDE1212':function(){p.inventory.push({type:'weapon',name:'제로 디바이드',damage:3000,rarity:'Transcendent',upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false,isPlated:false,isRainbow:false,enchantAttackPct:0,enchantCritPct:0,bonusCritChance:50});return '제로 디바이드를 획득했어요! 인벤토리를 확인하세요.'},
+     'COINCOIN코인코인1212':function(){p.coins=(Number(p.coins)||0)+5000000;return '5,000,000 코인을 획득했어요!'}
+    };
+    if(!CODES[c]){say('올바르지 않은 코드예요.',false);return}
+    if(!Array.isArray(p.usedCodes))p.usedCodes=[];
+    if(p.usedCodes.indexOf(c)>=0){say('이미 사용한 코드예요.',false);return}
+    p.usedCodes.push(c);var r=CODES[c]();
+    try{saveCombatResult()}catch(e){}try{uu()}catch(e){}
+    inp.value='';say(r,true);
+   }
+   go.addEventListener('click',redeem);
+   inp.addEventListener('keydown',function(e){e.stopPropagation();if(e.key==='Enter')redeem()});
+   inp.addEventListener('keyup',function(e){e.stopPropagation()});
+  })();
   pop.querySelector('.sp-close').addEventListener('click',close);
   pop.addEventListener('click',function(e){if(e.target===pop)close()});
   addEventListener('keydown',function(e){if(e.key==='Escape'&&pop.classList.contains('on'))close()});
