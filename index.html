@@ -438,7 +438,7 @@ const RR={'D':0,'C':1,'B':2,'A':3,'S':4,'SSS':5,'Secret':6,'Void':7,'Eternal':8,
 const RM=['D','C','B','A','S','SSS','Secret','Void','Eternal','Transcendent'];
 let p={},cm=null,gs='main',si,svi,selectedMonster=null,bossBattle=false,coinRushActive=false,coinRushEnd=0,coinRushDamage=0,coinRushTimer=null,coinDoubleTimer=null;
 function st(h){const d=document.createElement('div');d.innerHTML=h;return d.textContent||d.innerText||''}
-function al(t,c=false){const l=document.getElementById('log'),e=document.createElement('div');e.className='log-entry'+(c?' log-critical':'');e.innerHTML=t;l.appendChild(e);while(l.children.length>5)l.removeChild(l.firstChild);l.scrollTop=l.scrollHeight}
+function al(t,c=false){const l=document.getElementById('log'),e=document.createElement('div');e.className='log-entry'+(c?' log-critical':'');e.innerHTML=t;l.appendChild(e);while(l.children.length>5)l.removeChild(l.firstChild);l.scrollTop=l.scrollHeight} function nt(t,c){al(t,c);try{if(window.gameToast)window.gameToast(String(t),true)}catch(e){}}
 var _sgT=null;
 function sg(){if(_sgT)return;_sgT=setTimeout(function(){_sgT=null;try{if(p&&p.weapon&&typeof p.hp==='number')saveCombatResult()}catch(e){}},250)}
 function saveCombatResult(){if(!window.__loaded||window.__saveLocked||Date.now()<(window.__saveBlockUntil||0)||!p||typeof p.hp!=='number'||!p.weapon)return;try{localStorage.setItem('textRpgSave',JSON.stringify(p))}catch(e){}}
@@ -448,7 +448,7 @@ function updateCoinDoubleUI(){const el=document.getElementById('coin-double-stat
 function msx(n){return n*((p.mageDoubleEnd||0)>Date.now()?2:1)}
 function addCoins(amount){const n=Number(amount)||0;p.coins+=Math.floor(n*((p.coinDoubleEnd||0)>Date.now()?2:1));}
 function uu(){if(p&&typeof p.hp==='number')sg();if(!selectedMonster)selectedMonster=p.selectedMonster||'슬라임';p.selectedMonster=selectedMonster;const gc=document.getElementById('game-container');if(gc)gc.classList.toggle('combat-mode',gs==='combat');document.getElementById('hpVal').innerText=p.hp;document.getElementById('maxHp').innerText=p.maxHp;document.getElementById('staminaVal').innerText=p.stamina;document.getElementById('maxStamina').innerText=p.maxStamina;const hpRatio=Math.max(0,Math.min(1,(Number(p.hp)||0)/(Number(p.maxHp)||1)));const staminaRatio=Math.max(0,Math.min(1,(Number(p.stamina)||0)/(Number(p.maxStamina)||1)));document.getElementById('hpFill').style.width=(hpRatio*100)+'%';document.getElementById('staminaFill').style.width=(staminaRatio*100)+'%';if(p.level>=50){document.getElementById('levelVal').innerText='MAX';document.getElementById('levelVal').className='max-level';document.getElementById('exp').style.display='none'}else{document.getElementById('levelVal').innerText=p.level;document.getElementById('levelVal').className='';document.getElementById('exp').style.display='inline'}document.getElementById('expVal').innerText=p.exp;document.getElementById('expToNext').innerText=p.expToNextLevel;document.getElementById('coinsVal').innerText=p.coins;const ms=document.getElementById('mage-stones');if(ms){const n=Number(p.mageStones)||0;ms.style.display=n>0?'inline-block':'none';document.getElementById('mageStonesVal').innerText=n}rm();ucb();umi()}
-function ucb(){const b=document.getElementById('combat-button');if(gs==='main'||gs==='combat'||gs==='merchant'){b.classList.remove('disabled');b.disabled=false}else{b.classList.add('disabled');b.disabled=true}}
+function ucb(){const b=document.getElementById('combat-button'),bc=document.getElementById('combat-button-container');if(gs==='main'||gs==='combat'||gs==='merchant'){b.classList.remove('disabled');b.disabled=false;if(bc)bc.style.display=''}else{b.classList.add('disabled');b.disabled=true;if(bc)bc.style.display='none'}}
 const MON_DRAGON=(c)=>`<path d="M52 56 L8 18 L20 52 L6 60 L26 72 L52 74Z" fill="${c.wing}" stroke="${c.line}" stroke-width="3" stroke-linejoin="round"/><path d="M68 56 L112 18 L100 52 L114 60 L94 72 L68 74Z" fill="${c.wing}" stroke="${c.line}" stroke-width="3" stroke-linejoin="round"/><ellipse cx="60" cy="84" rx="26" ry="22" fill="${c.body}" stroke="${c.line}" stroke-width="3"/><ellipse cx="60" cy="92" rx="15" ry="13" fill="${c.belly}"/><path d="M34 46 Q60 12 86 46 L82 64 Q60 74 38 64Z" fill="${c.head}" stroke="${c.line}" stroke-width="3" stroke-linejoin="round"/><ellipse cx="60" cy="60" rx="15" ry="9" fill="${c.snout}"/><circle cx="54" cy="59" r="1.8" fill="${c.line}"/><circle cx="66" cy="59" r="1.8" fill="${c.line}"/><path d="M42 32 L33 6 L53 27Z" fill="${c.horn}" stroke="${c.line}" stroke-width="2"/><path d="M78 32 L87 6 L67 27Z" fill="${c.horn}" stroke="${c.line}" stroke-width="2"/><ellipse cx="46" cy="45" rx="6" ry="4.5" fill="${c.eye}"/><ellipse cx="74" cy="45" rx="6" ry="4.5" fill="${c.eye}"/><ellipse cx="46" cy="45" rx="1.8" ry="4" fill="#111"/><ellipse cx="74" cy="45" rx="1.8" ry="4" fill="#111"/><path d="M38 38 L54 43 M82 38 L66 43" stroke="${c.line}" stroke-width="3.5" stroke-linecap="round"/><path d="M50 67 L53 73 L56 67 M64 67 L67 73 L70 67" fill="#fff" stroke="#fff" stroke-width="1"/>`;
 const MON_CSS='<style>.an{transform-box:fill-box}'+
 '@keyframes kHop{0%,100%{transform:none}12%{transform:scale(1.16,.8)}30%{transform:translateY(-12px) scale(.9,1.14)}50%{transform:translateY(-27px) scale(.96,1.06)}72%{transform:translateY(-10px) scale(.92,1.12)}86%{transform:scale(1.18,.78)}}'+
@@ -554,7 +554,7 @@ const hpPct=Math.max(0,Math.min(100,cm.hp/cm.maxHp*100));
 mi.querySelector('.mon-meta').innerHTML=`<div class="mon-top"><span class="mon-name">${cm.name}</span><span class="mon-atk">ATK ${cm.attack}</span></div><div class="mon-hp ${hpPct<=25?'low':hpPct<=50?'mid':''}"><i style="width:${hpPct}%"></i></div><div class="mon-hpnum">${Math.max(0,cm.hp)} / ${cm.maxHp}</div>`;
 mi.querySelector('.mon-fx').textContent=[p.equippedSkill?'스킬: '+p.equippedSkill:'',...effects].filter(Boolean).join(' · ');
 }else mi.style.display='none'}
-function rm(){const mn=document.getElementById('main-menu');const gc=document.getElementById('game-container');if(gc)gc.classList.toggle('weapon-enhance-mode',gs==='weapon_enhancement');mn.innerHTML='';if(gs==='enhancement'||gs==='weapon_enhancement'||gs==='armor_enhancement'){mn.className='enhancement-page'}else mn.className='';if(gs==='main'){mn.classList.add('home-grid');hb(cb(mn,'인벤토리',()=>oi()),'bag');hb(cb(mn,'순간이동',()=>worldMap()),'map');hb(cb(mn,'설정',()=>{if(window.openSettings)window.openSettings()}),'set');}else if(gs==='help'){helpMenu(mn)}else if(gs==='rift'){cb(mn,'지역 선택',()=>showMonsterSelect(true));cb(mn,'업그레이드',()=>{gs='rift_upgrades';uu()});cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='rift_upgrades'){if(!p.autoSkillUpgradeBought){cb(mn,'자동 스킬 사용 해금 (마정석 20개)',buyAutoSkillUpgrade)}else{const row=document.createElement('div');row.className='rift-upgrade-row';const copy=document.createElement('div');copy.className='rift-upgrade-copy';copy.innerHTML='자동 스킬 사용<span class="rift-upgrade-sub">전투 중 장착 스킬을 자동으로 사용합니다.</span>';row.appendChild(copy);const label=document.createElement('label');label.className='switch-control';label.setAttribute('aria-label','자동 스킬 사용 켜기 또는 끄기');const input=document.createElement('input');input.type='checkbox';input.checked=!!p.autoSkillEnabled;input.addEventListener('change',()=>{p.autoSkillEnabled=input.checked;saveCombatResult();al(p.autoSkillEnabled?'자동 스킬 사용을 켰습니다.':'자동 스킬 사용을 껐습니다.');uu()});const track=document.createElement('span');track.className='switch-track';label.appendChild(input);label.appendChild(track);row.appendChild(label);mn.appendChild(row)}cb(mn,`이터널 장비 드롭 확률 증가 +1% (마정석 10개) · 현재 +${Math.min(8,Number(p.eternalDropUpgrade)||0)}% / 최대 +8%`,buyEternalDropUpgrade);cb(mn,`스킬 사용 행동력 10 감소 (마정석 50개)${p.skillCostReduction?' · 구매 완료':''}`,buySkillCostUpgrade);cb(mn,'돌아가기',()=>{gs='rift';uu()})}else if(gs==='village'){cb(mn,'상점',()=>os());cb(mn,'대장간',()=>oe());cb(mn,'마정석 광산',()=>showMageMine());cb(mn,'도움말',()=>{gs='help';uu()});cb(mn,'코인 러쉬',()=>showCoinRush());cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='shop'){cb(mn,'무기 구매 (100코인)',()=>pw());cb(mn,'갑옷 구매 (200코인)',()=>pa());cb(mn,'마정석 뽑기 (마정석 1개)',()=>drawMageStone());cb(mn,'행동력 포션 (10000코인)',()=>psp());cb(mn,'코인 두배 포션 (10000코인)',()=>buyCoinDoublePotion());cb(mn,'랜덤 박스 (300000코인)',()=>randomBox());cb(mn,'잠금 메뉴',()=>olm());cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='lock_menu'){cb(mn,'무기 잠금 (100코인)',()=>lw());cb(mn,'무기 잠금 해제 (500코인)',()=>ulw());cb(mn,'갑옷 잠금 (100코인)',()=>la());cb(mn,'갑옷 잠금 해제 (500코인)',()=>ula());cb(mn,'돌아가기',()=>{gs='shop';uu()})}else if(gs==='training'){cb(mn,'공격력 훈련 (1000코인)',()=>td());cb(mn,'행동력 회복 훈련 ('+((Number(p.staminaRecoveryTraining)||0)>=3?'최대 단계':(Number(p.staminaRecoveryTraining)||0)>=2?'마정석 5개':'5000코인')+')',()=>ts());cb(mn,'치명타 훈련 (2000코인)',()=>tc());cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='enhancement'){cb(mn,'무기',()=>ewp());cb(mn,'갑옷',()=>eap());cb(mn,'제작',()=>craftPage());cb(mn,'외형 커스텀 (100000코인)',()=>openVisualCustom());cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='weapon_enhancement'){cbHold(mn,'무기 강화 (100코인)',ucw);cb(mn,'무기 인첸트 (10000코인)',()=>enchantWeapon());cbHold(mn,'무기 합성',fw);cbHold(mn,'무기 각성',tw);cb(mn,'무기 강림',()=>dw());cb(mn,'축복',()=>bw());cb(mn,'도금',()=>plating());cb(mn,'레인보우',()=>rainbow());cb(mn,'돌아가기',()=>{gs='enhancement';uu()})}else if(gs==='armor_enhancement'){cbHold(mn,'갑옷 강화 (100코인)',uca);cbHold(mn,'갑옷 합성',fa);cbHold(mn,'갑옷 각성',ta);cb(mn,'갑옷 인첸트 (10000코인)',()=>enchantArmor());cb(mn,'돌아가기',()=>{gs='enhancement';uu()})}else if(gs==='crafting'){cb(mn,'1번째 제작 · 공허 지배자',craftVoidWeapon);cb(mn,'2번째 제작 · 공허 갑옷',craftVoidArmor);cb(mn,'3번째 제작 · 이터널 소드',craftEternalSword);cb(mn,'4번째 제작 · 제로 디바이드',craftZeroDivide);cb(mn,'돌아가기',()=>{gs='enhancement';uu()})}else if(gs==='mage_mine'){{const _mb=cb(mn,'마정석 광맥 캐기',mineMageStone);if(_mb&&_mb.style!==undefined)_mb.innerHTML='마정석 광맥 캐기<small style="display:block;margin-top:3px;font-size:11px;font-weight:700;opacity:.75">마정석 1% · 보스 티켓 1% · 꽝 98%</small>'};cb(mn,'돌아가기',()=>{gs='main';uu()})}}
+function rm(){const mn=document.getElementById('main-menu');const gc=document.getElementById('game-container');if(gc)gc.classList.toggle('weapon-enhance-mode',gs==='weapon_enhancement');mn.innerHTML='';if(gs==='enhancement'||gs==='weapon_enhancement'||gs==='armor_enhancement'){mn.className='enhancement-page'}else mn.className='';if(gs==='main'){mn.classList.add('home-grid');hb(cb(mn,'인벤토리',()=>oi()),'bag');hb(cb(mn,'순간이동',()=>worldMap()),'map');hb(cb(mn,'설정',()=>{if(window.openSettings)window.openSettings()}),'set');}else if(gs==='help'){helpMenu(mn)}else if(gs==='rift'){cb(mn,'지역 선택',()=>showMonsterSelect(true));cb(mn,'업그레이드',()=>{gs='rift_upgrades';uu()});cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='rift_upgrades'){if(!p.autoSkillUpgradeBought){cb(mn,'자동 스킬 사용 해금 (마정석 20개)',buyAutoSkillUpgrade)}else{const row=document.createElement('div');row.className='rift-upgrade-row';const copy=document.createElement('div');copy.className='rift-upgrade-copy';copy.innerHTML='자동 스킬 사용<span class="rift-upgrade-sub">전투 중 장착 스킬을 자동으로 사용합니다.</span>';row.appendChild(copy);const label=document.createElement('label');label.className='switch-control';label.setAttribute('aria-label','자동 스킬 사용 켜기 또는 끄기');const input=document.createElement('input');input.type='checkbox';input.checked=!!p.autoSkillEnabled;input.addEventListener('change',()=>{p.autoSkillEnabled=input.checked;saveCombatResult();al(p.autoSkillEnabled?'자동 스킬 사용을 켰습니다.':'자동 스킬 사용을 껐습니다.');uu()});const track=document.createElement('span');track.className='switch-track';label.appendChild(input);label.appendChild(track);row.appendChild(label);mn.appendChild(row)}cb(mn,`이터널 장비 드롭 확률 증가 +1% (마정석 10개) · 현재 +${Math.min(8,Number(p.eternalDropUpgrade)||0)}% / 최대 +8%`,buyEternalDropUpgrade);cb(mn,`스킬 사용 행동력 10 감소 (마정석 50개)${p.skillCostReduction?' · 구매 완료':''}`,buySkillCostUpgrade);cb(mn,'돌아가기',()=>{gs='rift';uu()})}else if(gs==='village'){cb(mn,'상점',()=>os());cb(mn,'대장간',()=>oe());cb(mn,'마정석 광산',()=>showMageMine());cb(mn,'도움말',()=>{gs='help';uu()});cb(mn,'코인 러쉬',()=>showCoinRush());cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='shop'){cb(mn,'무기 구매 (100코인)',()=>pw());cb(mn,'갑옷 구매 (200코인)',()=>pa());cb(mn,'마정석 뽑기 (마정석 1개)',()=>drawMageStone());cb(mn,'행동력 포션 (2000코인)',()=>psp());cb(mn,'코인 두배 포션 (2000코인)',()=>buyCoinDoublePotion());cb(mn,'랜덤 박스 (300000코인)',()=>randomBox());cb(mn,'잠금 메뉴',()=>olm());cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='lock_menu'){cb(mn,'무기 잠금 (100코인)',()=>lw());cb(mn,'무기 잠금 해제 (500코인)',()=>ulw());cb(mn,'갑옷 잠금 (100코인)',()=>la());cb(mn,'갑옷 잠금 해제 (500코인)',()=>ula());cb(mn,'돌아가기',()=>{gs='shop';uu()})}else if(gs==='training'){cb(mn,'공격력 훈련 (1000코인)',()=>td());cb(mn,'행동력 회복 훈련 ('+((Number(p.staminaRecoveryTraining)||0)>=3?'최대 단계':(Number(p.staminaRecoveryTraining)||0)>=2?'마정석 5개':'5000코인')+')',()=>ts());cb(mn,'치명타 훈련 (2000코인)',()=>tc());cb(mn,'체력 회복 훈련 ('+((Number(p.hpRegenTraining)||0)>=2?'최대 단계':(Number(p.hpRegenTraining)||0)===1?'6000코인':'3000코인')+')',()=>trh());cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='enhancement'){cb(mn,'무기',()=>ewp());cb(mn,'갑옷',()=>eap());cb(mn,'제작',()=>craftPage());cb(mn,'외형 커스텀 (100000코인)',()=>openVisualCustom());cb(mn,'돌아가기',()=>{gs='main';uu()})}else if(gs==='weapon_enhancement'){cbHold(mn,'무기 강화 (100코인)',ucw);cb(mn,'무기 인첸트 (10000코인)',()=>enchantWeapon());cbHold(mn,'무기 합성',fw);cbHold(mn,'무기 각성',tw);cb(mn,'무기 강림',()=>dw());cb(mn,'축복',()=>bw());cb(mn,'도금',()=>plating());cb(mn,'레인보우',()=>rainbow());cb(mn,'돌아가기',()=>{gs='enhancement';uu()})}else if(gs==='armor_enhancement'){cbHold(mn,'갑옷 강화 (100코인)',uca);cbHold(mn,'갑옷 합성',fa);cbHold(mn,'갑옷 각성',ta);cb(mn,'갑옷 인첸트 (10000코인)',()=>enchantArmor());cb(mn,'돌아가기',()=>{gs='enhancement';uu()})}else if(gs==='crafting'){cb(mn,'1번째 제작 · 공허 지배자',craftVoidWeapon);cb(mn,'2번째 제작 · 공허 갑옷',craftVoidArmor);cb(mn,'3번째 제작 · 이터널 소드',craftEternalSword);cb(mn,'4번째 제작 · 제로 디바이드',craftZeroDivide);cb(mn,'돌아가기',()=>{gs='enhancement';uu()})}else if(gs==='mage_mine'){{const _mb=cb(mn,'마정석 광맥 캐기',mineMageStone);if(_mb&&_mb.style!==undefined)_mb.innerHTML='마정석 광맥 캐기<small style="display:block;margin-top:3px;font-size:11px;font-weight:700;opacity:.75">마정석 1% · 보스 티켓 1% · 꽝 98%</small>'};cb(mn,'돌아가기',()=>{gs='main';uu()})}}
 function cleanButtonLabel(tx){return String(tx).replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu,'').trim()}
 function cb(pr,tx,h){const b=document.createElement('button');b.className='button';b.innerText=cleanButtonLabel(tx);b.onclick=()=>{let before='';try{before=JSON.stringify(p)}catch(e){}h();if(gs!=='combat'&&gs!=='coin_rush'){try{if(before!==JSON.stringify(p))saveCombatResult()}catch(e){}}};pr.appendChild(b);return b}
 const HOME_ICONS={set:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.11-1.56 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.56-1.03H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.56-1.11 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1-1.56V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.56 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.56 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.56 1z"/></svg>',bag:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 8V6.5a3.5 3.5 0 0 1 7 0V8"/><rect x="4" y="8" width="16" height="13" rx="3.5"/><path d="M4 14h16"/><path d="M10 14v2.2h4V14"/></svg>',village:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1.5 12.5 7.5 6.5l6 6"/><path d="M3.5 11.5V19h8v-7.5"/><path d="M6.5 19v-4h2v4"/><path d="M13.5 15l4.5-4.5 4.5 4.5"/><path d="M15 14.5V19h6v-4.5"/><path d="M1 19h22"/></svg>',run:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="15.5" cy="4.5" r="2"/><path d="M14 7.5 11.5 13"/><path d="M13.7 8.7l4 2.3"/><path d="M13.3 8.5 9 9.5 8 12.5"/><path d="M11.5 13l3.5 2.5-.5 4.5"/><path d="M11.5 13l-2.7 3.4-3.3 2"/></svg>',map:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5l6-2.5 6 2.5 6-2.5V18l-6 2.5-6-2.5-6 2.5z"/><path d="M9 4v14"/><path d="M15 6.5v14"/></svg>',boss:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 10c0-3.2 2.9-5.5 6.5-5.5s6.5 2.3 6.5 5.5v3c0 4-2.9 7-6.5 7s-6.5-3-6.5-7z"/><path d="M5.8 8.5 3.5 2.8 9 5.5"/><path d="M18.2 8.5l2.3-5.700L15 5.5"/><path d="M8.5 10.8l2.8 1.2"/><path d="M15.5 10.8 12.700 12"/><path d="M9 16.2l1.5 1.6 1.5-1.6 1.5 1.6 1.5-1.6"/></svg>',rift:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a1.7 1.7 0 0 1 3.4 0 5 5 0 0 1-10 0 8.3 8.3 0 0 1 16.6 0"/><path d="M4 19.5a10.5 10.5 0 0 1-2-6.5"/></svg>',q:'<span class="hb-q">?</span>'};
@@ -668,22 +668,22 @@ function dropEternalLoot(boosted=false){
  else{const def=Math.floor(base.defense*(secret?1.5:2));item={type:'armor',name:base.name.replace(/\s*\([^)]*급\)/,'').trim(),defense:def,baseDefense:def,baseRarity:base.rarity,rarity:'Eternal',upgrade:0,transcend:0,isLocked:false,enchantDefensePct:0,enchantEvadePct:0}}
  p.inventory.push(item);al(`[Eternal급] ${item.name} 획득! ${type==='weapon'?'공격력 '+item.damage:'방어력 '+item.defense}`,true)
 }
-function ec(pw){if(pw&&bossBattle){rewardSkillBook(true);al('마왕 처치!');const bossCoins=500000;al(`코인 +${bossCoins}, XP +1000, 마정석 +3`);p.coins+=bossCoins;if(p.level<50){p.exp+=1000;clu()}p.mageStones=(p.mageStones||0)+msx(3);p.hp=p.maxHp;bossBattle=false;clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu();return}if(!pw&&bossBattle){al('마왕에게 패배했습니다...');p.hp=p.maxHp;bossBattle=false;clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu();return}if(pw){rewardSkillBook();al(`${cm.name} 처치!`);const mn=cm.name;const twisted=mn==='뒤틀린 슬라임'||mn==='뒤틀린 오크'||mn==='뒤틀린 골렘'||mn==='뒤틀린 드래곤';const mountainTwisted=mn==='뒤틀린 골렘'||mn==='뒤틀린 드래곤';if(twisted){const stones=1+Math.floor(Math.random()*2);p.mageStones=(p.mageStones||0)+msx(stones);al(`뒤틀린 몬스터 보상: 마정석 ${stones}개 획득!`);if(p.level<50){p.exp+=cm.exp;al(`XP +${cm.exp}`);clu()}}else if(p.level>=50){const bonus=mn==='보이드 드래곤'?0:cm.exp*2;const battleCoins=cm.coins+bonus;const shownBattleCoins=battleCoins*((p.coinDoubleEnd||0)>Date.now()?2:1);al(`코인 +${shownBattleCoins}${bonus?' , 최대 레벨 보너스 포함':''}`);addCoins(battleCoins)}else{const shownBattleCoins=cm.coins*((p.coinDoubleEnd||0)>Date.now()?2:1);al(`코인 +${shownBattleCoins}, XP +${cm.exp}`);addCoins(cm.coins);p.exp+=cm.exp;clu()}p.hp=p.maxHp;if(twisted){if(Math.random()<Math.min(1,(mountainTwisted?0.20:0.10)+Math.min(8,Number(p.eternalDropUpgrade)||0)/100))dropEternalLoot(mountainTwisted);else al('뒤틀린 몬스터를 처치했지만 Eternal 장비는 나오지 않았다.')}else if(mn==='종말의 심판자'&&Math.random()<.005){const ia=a.find(ar=>ar.rarity==='Secret');const ni={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false};p.inventory.push(ni);al(`[SECRET] 인피니티 갑옷을 획득했습니다!`)}if(mn==='보이드 드래곤'){if(Math.random()<0.01){p.mageStones=(p.mageStones||0)+msx(1);al('보이드 드래곤에게서 마정석 1개를 획득했습니다!')}if(Math.random()<0.01){p.bossTickets=(p.bossTickets||0)+1;al('🎟️ 보이드 드래곤에게서 보스 티켓 1개를 획득했습니다!')}const swc=w.filter(wp=>wp.rarity==='SSS');if(swc.length){const wtd=swc[Math.floor(Math.random()*swc.length)];const nw={type:'weapon',name:wtd.name,damage:wtd.damage,rarity:'SSS',upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false,enchantAttackPct:0,enchantCritPct:0};p.inventory.push(nw);al(`[확정] SSS급 무기 획득: ${nw.name}`)}const sac=a.filter(ar=>ar.rarity==='S');if(sac.length){const atd=sac[Math.floor(Math.random()*sac.length)];const na={type:'armor',name:atd.name,defense:atd.defense,rarity:'S',upgrade:0,transcend:0,isLocked:false,enchantDefensePct:0,enchantEvadePct:0};p.inventory.push(na);al(`[확정] S급 갑옷 획득: ${na.name}`)}if(Math.random()<.001){const sw=w.filter(wp=>wp.rarity==='Secret');const wtd=sw[Math.floor(Math.random()*sw.length)];const nw={...wtd,type:'weapon',upgrade:0,transcend:0,isDescended:false,isLocked:false,isPlated:false,isRainbow:false,enchantAttackPct:0,enchantCritPct:0};p.inventory.push(nw);al(`[SECRET 0.1%] ${nw.name}을(를) 획득했습니다!`)}if(Math.random()<.01){const ia=a.find(ar=>ar.rarity==='Secret');const na={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false,enchantDefensePct:0,enchantEvadePct:0};p.inventory.push(na);al(`[SECRET 1%] 인피니티 갑옷을 획득했습니다!`)}}else if(mn==='타락천사'||mn==='아고니'){const swc=w.filter(wp=>wp.rarity==='SSS'&&cm.weaponDrops.includes(wp.name));if(swc.length>0){const wtd=swc[Math.floor(Math.random()*swc.length)];const nw={type:'weapon',name:wtd.name,damage:wtd.damage,rarity:wtd.rarity,upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false};p.inventory.push(nw);al(`[확정] 무기 획득: ${nw.name}`)}const sac=a.filter(ar=>ar.rarity==='S');if(sac.length>0){const atd=sac[Math.floor(Math.random()*sac.length)];const na={type:'armor',name:atd.name,defense:atd.defense,rarity:atd.rarity,upgrade:0,transcend:0,isLocked:false};p.inventory.push(na);al(`[확정] 갑옷 획득: ${na.name}`)}if(Math.random()<.01){const ia=a.find(ar=>ar.rarity==='Secret');const na={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false};p.inventory.push(na);al(`[SECRET] 인피니티 갑옷을 획득했습니다!`)}}else if((p.selectedRegion||'').startsWith('이세계 ')){}else{if(cm.weaponDrops&&cm.weaponDrops.length>0){let dr=gwdfc(cm.weaponDrops);if(dr){p.inventory.push(dr);al(`무기 획득: ${dr.name}`)}}if(Math.random()<.1){let atd=null;if(mn==='슬라임'||mn==='오크')atd=a.find(ar=>ar.rarity==='C');else if(mn==='골렘')atd=a.find(ar=>ar.rarity==='B');else if(mn==='드래곤')atd=a.find(ar=>ar.rarity==='A');else if(mn==='어둠의 군주'||mn==='심연의 군주'||mn==='종말의 심판자')atd=a.find(ar=>ar.rarity==='S');if(atd){const ni={type:'armor',name:atd.name,defense:atd.defense,rarity:atd.rarity,upgrade:0,transcend:0,isLocked:false};p.inventory.push(ni);al(`갑옷 획득: ${ni.name}`)}}}}else{al('전투에서 패배... 체력 회복.');p.hp=p.maxHp}clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu()}
+function ec(pw){if(pw&&bossBattle){rewardSkillBook(true);al('마왕 처치!');const bossCoins=500000;al(`코인 +${bossCoins}, XP +1000, 마정석 +3`);p.coins+=bossCoins;if(p.level<50){p.exp+=1000;clu()}p.mageStones=(p.mageStones||0)+msx(3);p.hp=p.maxHp;bossBattle=false;clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu();return}if(!pw&&bossBattle){al('마왕에게 패배했습니다...');p.hp=p.maxHp;bossBattle=false;clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu();return}if(pw){rewardSkillBook();al(`${cm.name} 처치!`);const mn=cm.name;const twisted=mn==='뒤틀린 슬라임'||mn==='뒤틀린 오크'||mn==='뒤틀린 골렘'||mn==='뒤틀린 드래곤';const mountainTwisted=mn==='뒤틀린 골렘'||mn==='뒤틀린 드래곤';if(twisted){const stones=1+Math.floor(Math.random()*2);p.mageStones=(p.mageStones||0)+msx(stones);al(`뒤틀린 몬스터 보상: 마정석 ${stones}개 획득!`);if(p.level<50){p.exp+=cm.exp;al(`XP +${cm.exp}`);clu()}}else if(p.level>=50){const bonus=mn==='보이드 드래곤'?0:cm.exp*2;const battleCoins=cm.coins+bonus;const shownBattleCoins=battleCoins*((p.coinDoubleEnd||0)>Date.now()?2:1);al(`코인 +${shownBattleCoins}${bonus?' , 최대 레벨 보너스 포함':''}`);addCoins(battleCoins)}else{const shownBattleCoins=cm.coins*((p.coinDoubleEnd||0)>Date.now()?2:1);al(`코인 +${shownBattleCoins}, XP +${cm.exp}`);addCoins(cm.coins);p.exp+=cm.exp;clu()}p.hp=Math.min(p.maxHp,(Number(p.hp)||0)+Math.max(1,Math.ceil(p.maxHp*.2)));if(twisted){if(Math.random()<Math.min(1,(mountainTwisted?0.20:0.10)+Math.min(8,Number(p.eternalDropUpgrade)||0)/100))dropEternalLoot(mountainTwisted);else al('뒤틀린 몬스터를 처치했지만 Eternal 장비는 나오지 않았다.')}else if(mn==='종말의 심판자'&&Math.random()<.005){const ia=a.find(ar=>ar.rarity==='Secret');const ni={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false};p.inventory.push(ni);al(`[SECRET] 인피니티 갑옷을 획득했습니다!`)}if(mn==='보이드 드래곤'){if(Math.random()<0.01){p.mageStones=(p.mageStones||0)+msx(1);al('보이드 드래곤에게서 마정석 1개를 획득했습니다!')}if(Math.random()<0.01){p.bossTickets=(p.bossTickets||0)+1;al('🎟️ 보이드 드래곤에게서 보스 티켓 1개를 획득했습니다!')}const swc=w.filter(wp=>wp.rarity==='SSS');if(swc.length){const wtd=swc[Math.floor(Math.random()*swc.length)];const nw={type:'weapon',name:wtd.name,damage:wtd.damage,rarity:'SSS',upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false,enchantAttackPct:0,enchantCritPct:0};p.inventory.push(nw);al(`[확정] SSS급 무기 획득: ${nw.name}`)}const sac=a.filter(ar=>ar.rarity==='S');if(sac.length){const atd=sac[Math.floor(Math.random()*sac.length)];const na={type:'armor',name:atd.name,defense:atd.defense,rarity:'S',upgrade:0,transcend:0,isLocked:false,enchantDefensePct:0,enchantEvadePct:0};p.inventory.push(na);al(`[확정] S급 갑옷 획득: ${na.name}`)}if(Math.random()<.001){const sw=w.filter(wp=>wp.rarity==='Secret');const wtd=sw[Math.floor(Math.random()*sw.length)];const nw={...wtd,type:'weapon',upgrade:0,transcend:0,isDescended:false,isLocked:false,isPlated:false,isRainbow:false,enchantAttackPct:0,enchantCritPct:0};p.inventory.push(nw);al(`[SECRET 0.1%] ${nw.name}을(를) 획득했습니다!`)}if(Math.random()<.01){const ia=a.find(ar=>ar.rarity==='Secret');const na={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false,enchantDefensePct:0,enchantEvadePct:0};p.inventory.push(na);al(`[SECRET 1%] 인피니티 갑옷을 획득했습니다!`)}}else if(mn==='타락천사'||mn==='아고니'){const swc=w.filter(wp=>wp.rarity==='SSS'&&cm.weaponDrops.includes(wp.name));if(swc.length>0){const wtd=swc[Math.floor(Math.random()*swc.length)];const nw={type:'weapon',name:wtd.name,damage:wtd.damage,rarity:wtd.rarity,upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false};p.inventory.push(nw);al(`[확정] 무기 획득: ${nw.name}`)}const sac=a.filter(ar=>ar.rarity==='S');if(sac.length>0){const atd=sac[Math.floor(Math.random()*sac.length)];const na={type:'armor',name:atd.name,defense:atd.defense,rarity:atd.rarity,upgrade:0,transcend:0,isLocked:false};p.inventory.push(na);al(`[확정] 갑옷 획득: ${na.name}`)}if(Math.random()<.01){const ia=a.find(ar=>ar.rarity==='Secret');const na={...ia,type:'armor',upgrade:0,transcend:0,isLocked:false};p.inventory.push(na);al(`[SECRET] 인피니티 갑옷을 획득했습니다!`)}}else if((p.selectedRegion||'').startsWith('이세계 ')){}else{if(cm.weaponDrops&&cm.weaponDrops.length>0){let dr=gwdfc(cm.weaponDrops);if(dr){p.inventory.push(dr);al(`무기 획득: ${dr.name}`)}}if(Math.random()<.1){let atd=null;if(mn==='슬라임'||mn==='오크')atd=a.find(ar=>ar.rarity==='C');else if(mn==='골렘')atd=a.find(ar=>ar.rarity==='B');else if(mn==='드래곤')atd=a.find(ar=>ar.rarity==='A');else if(mn==='어둠의 군주'||mn==='심연의 군주'||mn==='종말의 심판자')atd=a.find(ar=>ar.rarity==='S');if(atd){const ni={type:'armor',name:atd.name,defense:atd.defense,rarity:atd.rarity,upgrade:0,transcend:0,isLocked:false};p.inventory.push(ni);al(`갑옷 획득: ${ni.name}`)}}}}else{al('전투에서 패배... 체력 회복.');p.hp=p.maxHp}clearCombatSkillState();gs='main';cm=null;saveCombatResult();uu()}
 function gwdfc(ln){const ca=w.filter(wp=>ln.includes(wp.name)&&wp.dropRate>0);if(ca.length===0)return null;const t=ca.reduce((s,c)=>s+c.dropRate,0);let r=Math.random()*t;for(const c of ca){r-=c.dropRate;if(r<=0)return{type:'weapon',name:c.name,damage:c.damage,rarity:c.rarity,upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false}}return null}
 function clu(){if(p.level>=50){p.level=50;p.exp=0;p.expToNextLevel=0;p.maxStamina=100;p.maxHp=150;return}if(p.exp>=p.expToNextLevel){p.exp-=p.expToNextLevel;p.level++;p.maxHp++;p.hp++;p.expToNextLevel=(p.level*15)+50;p.maxStamina=Math.min(p.rapidStaminaTraining?200:100,p.maxStamina+1);al(`레벨업! ${p.level} 레벨 달성!`);clu()}}
 function showMageMine(){if(!p.mageMineUnlocked){const cost=10;if((p.mageStones||0)<cost){al(`마정석이 부족합니다! 광산 해금에는 마정석 ${cost}개가 필요합니다.`);return}if(!confirm(`마정석 광산을 해금하시겠습니까?\n비용: 마정석 ${cost}개`))return;p.mageStones-=cost;p.mageMineUnlocked=true;al('마정석 광산을 해금했습니다!');}gs='mage_mine';uu()}
 function mineMageStone(){if(!p.mageMineUnlocked){al('먼저 마정석 광산을 해금해주세요.');return}const r=Math.random();let _m;if(r<0.01){const _n=msx(1);p.mageStones=(p.mageStones||0)+_n;_m='💎 마정석 '+_n+'개를 발견했어요!';al('마정석 광맥에서 마정석 1개를 발견했습니다!')}else if(r<0.02){p.bossTickets=(p.bossTickets||0)+1;_m='🎟️ 보스 티켓 1장을 발견했어요!';al('🎟️ 마정석 광맥에서 보스 티켓 1개를 발견했습니다!')}else{_m='광맥을 캤지만 아무것도 나오지 않았어요...';al('광맥을 캤지만 아무것도 나오지 않았습니다...');}try{window.gameToast(_m,true)}catch(e){}sg();uu()}
 function drawMageStone(){const cost=1;if((p.mageStones||0)<cost){al(`마정석이 부족합니다! 마정석 뽑기에는 ${cost}개가 필요합니다.`);return}if(!confirm(`마정석 뽑기를 진행하시겠습니까?\n비용: 마정석 ${cost}개\n무기 60% / 갑옷 40%`))return;p.mageStones-=cost;if(Math.random()<.6){const r=Math.random();let item;if(r<.02)item=voidWeapons[0];else if(r<.1660)item=voidWeapons[2];else if(r<.5309)item=voidWeapons[3];else item=voidWeapons[4];const ni={type:'weapon',name:item.name,damage:item.damage,rarity:'Void',upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false,isPlated:false,isRainbow:false,enchantAttackPct:0,enchantCritPct:0};p.inventory.push(ni);al(`[무기 60%] ${st(gdn(ni))} 획득! (공격력 ${item.damage})`)}else{const r=Math.random();let item;if(r<.3333)item=voidArmors[1];else item=voidArmors[2];const ni={type:'armor',name:item.name,defense:item.defense,rarity:'Void',upgrade:0,transcend:0,isLocked:false,enchantDefensePct:0,enchantEvadePct:0};p.inventory.push(ni);al(`[갑옷 40%] ${st(gdn(ni))} 획득! (방어력 ${item.defense})`)}sg();uu()}
 function os(){gs='shop';uu()}
-function buyCoinDoublePotion(){const c=10000;if((p.coinDoubleEnd||0)>Date.now()){al('코인 두배 포션 효과가 이미 적용 중입니다!');return}if(p.coins<c){al(`코인이 부족합니다! (코인 두배 포션 ${c.toLocaleString()}코인 필요)`);return}p.coins-=c;p.coinDoubleEnd=Date.now()+300000;al('코인 두배 포션을 사용했습니다! 5분 동안 코인을 2배로 획득합니다!');sg();uu();updateCoinDoubleUI()}
-function psp(){const c=10000;if(p.coins<c){al(`코인이 부족합니다! (${c}코인 필요)`);return}if(p.stamina>=p.maxStamina){al('행동력이 이미 가득 차 있습니다.');return}p.coins-=c;p.stamina=p.maxStamina;al('행동력을 모두 회복했습니다!');uu();sg()}
+function buyCoinDoublePotion(){const c=2000;if((p.coinDoubleEnd||0)>Date.now()){nt('코인 두배 포션 효과가 이미 적용 중입니다!');return}if(p.coins<c){nt(`코인이 부족합니다! (코인 두배 포션 ${c.toLocaleString()}코인 필요)`);return}p.coins-=c;p.coinDoubleEnd=Date.now()+300000;nt('코인 두배 포션을 사용했습니다! 5분 동안 코인을 2배로 획득합니다!');sg();uu();updateCoinDoubleUI()}
+function psp(){const c=2000;if(p.coins<c){nt(`코인이 부족합니다! (${c}코인 필요)`);return}if(p.stamina>=p.maxStamina){nt('행동력이 이미 가득 차 있습니다.');return}p.coins-=c;p.stamina=p.maxStamina;nt('행동력을 모두 회복했습니다!');uu();sg()}
 function pw(){if(p.coins<100){al('코인 부족! (무기 구매 100코인)');return}p.coins-=100;const ww=w.filter(wp=>wp.dropRate>0);const tw=ww.reduce((s,wp)=>s+wp.dropRate,0);let r=Math.random()*tw;let pk=ww[ww.length-1];for(const wp of ww){r-=wp.dropRate;if(r<=0){pk=wp;break}}const it={type:'weapon',name:pk.name,damage:pk.damage,rarity:pk.rarity,upgrade:0,transcend:0,successChance:100,isDescended:false,isLocked:false};p.inventory.push(it);al(`${pk.name} 구매!`);uu()}
 function pa(){if(p.coins<200){al('코인 부족! (갑옷 구매 200코인)');return}p.coins-=200;const wa=a.filter(ar=>ar.dropRate>0);const tw=wa.reduce((s,ar)=>s+ar.dropRate,0);let r=Math.random()*tw;let pk=wa[wa.length-1];for(const ar of wa){r-=ar.dropRate;if(r<=0){pk=ar;break}}const it={type:'armor',name:pk.name,defense:pk.defense,rarity:pk.rarity,upgrade:0,transcend:0,isLocked:false};p.inventory.push(it);al(`${pk.name} 구매!`);uu()}
 function olm(){gs='lock_menu';al('잠금 메뉴');uu()}
-function lw(){const c=100;if(p.coins<c){al(`코인이 부족합니다! (${c}코인 필요)`);return}if(!p.weapon||p.weapon.name==='나무검 (D급)'){al('장착한 무기가 없습니다!');return}if(p.weapon.isLocked){al('이미 잠긴 무기입니다!');return}p.coins-=c;p.weapon.isLocked=true;al('무기를 잠갔습니다!');sg();uu()}
-function ulw(){const c=500;if(p.coins<c){al(`코인이 부족합니다! (${c}코인 필요)`);return}if(!p.weapon||p.weapon.name==='나무검 (D급)'){al('장착한 무기가 없습니다!');return}if(!p.weapon.isLocked){al('장착한 무기는 잠겨있지 않습니다!');return}p.coins-=c;p.weapon.isLocked=false;al('무기 잠금을 해제했습니다!');sg();uu()}
-function la(){const c=100;if(p.coins<c){al(`코인이 부족합니다! (${c}코인 필요)`);return}if(!p.armor||p.armor.name==='없음'){al('장착한 갑옷이 없습니다!');return}if(p.armor.isLocked){al('이미 잠긴 갑옷입니다!');return}p.coins-=c;p.armor.isLocked=true;al('갑옷을 잠갔습니다!');sg();uu()}
-function ula(){const c=500;if(p.coins<c){al(`코인이 부족합니다! (${c}코인 필요)`);return}if(!p.armor||p.armor.name==='없음'){al('장착한 갑옷이 없습니다!');return}if(!p.armor.isLocked){al('장착한 갑옷은 잠겨있지 않습니다!');return}p.coins-=c;p.armor.isLocked=false;al('갑옷 잠금을 해제했습니다!');sg();uu()}
+function lw(){const c=100;if(p.coins<c){nt(`코인이 부족합니다! (${c}코인 필요)`);return}if(!p.weapon||p.weapon.name==='나무검 (D급)'){nt('장착한 무기가 없습니다!');return}if(p.weapon.isLocked){nt('이미 잠긴 무기입니다!');return}p.coins-=c;p.weapon.isLocked=true;nt('🔒 무기를 잠갔습니다!');sg();uu()}
+function ulw(){const c=500;if(p.coins<c){nt(`코인이 부족합니다! (${c}코인 필요)`);return}if(!p.weapon||p.weapon.name==='나무검 (D급)'){nt('장착한 무기가 없습니다!');return}if(!p.weapon.isLocked){nt('장착한 무기는 잠겨있지 않습니다!');return}p.coins-=c;p.weapon.isLocked=false;nt('🔓 무기 잠금을 해제했습니다!');sg();uu()}
+function la(){const c=100;if(p.coins<c){nt(`코인이 부족합니다! (${c}코인 필요)`);return}if(!p.armor||p.armor.name==='없음'){nt('장착한 갑옷이 없습니다!');return}if(p.armor.isLocked){nt('이미 잠긴 갑옷입니다!');return}p.coins-=c;p.armor.isLocked=true;nt('🔒 갑옷을 잠갔습니다!');sg();uu()}
+function ula(){const c=500;if(p.coins<c){nt(`코인이 부족합니다! (${c}코인 필요)`);return}if(!p.armor||p.armor.name==='없음'){nt('장착한 갑옷이 없습니다!');return}if(!p.armor.isLocked){nt('장착한 갑옷은 잠겨있지 않습니다!');return}p.coins-=c;p.armor.isLocked=false;nt('🔓 갑옷 잠금을 해제했습니다!');sg();uu()}
 function getShownWeaponDamage(it){return Math.floor((it?.damage||0)*(1+(Number(it?.enchantAttackPct)||0)/100));}
 function getShownArmorDefense(it){return Math.floor((it?.defense||0)*(1+(Number(it?.enchantDefensePct)||0)/100));}
 function oi(){const el=document.getElementById('inventory-modal');if(el){el.style.display='block';ri()}}
@@ -771,6 +771,7 @@ function ot(){gs='training';al('훈련소에 도착했습니다.');uu()}
 function td(){const c=1000;if(p.baseDamageTraining>=5){al('더 이상 공격력을 훈련할 수 없습니다. (최대 5단계)');return}if(p.coins<c){al(`코인이 부족합니다! (${c}코인 필요)`);return}p.coins-=c;p.baseDamageTraining+=1;al(`공격력 훈련 완료! 기본 공격력 +1 (현재: +${p.baseDamageTraining})`);uu()}
 function ts(){const stage=Number(p.staminaRecoveryTraining)||0;if(stage>=3){al('행동력 회복 훈련은 이미 최대 3단계입니다.');return}if(stage<2){const c=5000;if(p.coins<c){al(`코인이 부족합니다! (${c}코인 필요)`);return}p.coins-=c;p.staminaRecoveryTraining=stage+1;clearInterval(si);si=setInterval(rs,3000-p.staminaRecoveryTraining*1000);al(`행동력 회복 훈련 ${p.staminaRecoveryTraining}단계 완료! 회복 간격 ${3000-p.staminaRecoveryTraining*1000}ms`)}else{const c=5;if((p.mageStones||0)<c){al('마정석이 부족합니다! (3단계 훈련에는 마정석 5개 필요)');return}if(!confirm('행동력 회복 훈련을 3단계로 올릴까요?\n비용: 마정석 5개\n효과: 행동력 0.5초마다 1 회복'))return;p.mageStones-=c;p.staminaRecoveryTraining=3;p.maxStamina=200;p.stamina=Math.min(200,Math.max(0,Number(p.stamina)||0));clearInterval(si);si=setInterval(rs,500);al('행동력 회복 훈련 3단계 완료! 최대 행동력 200, 0.5초마다 행동력 1 회복!')}sg();uu()}
 function tr(){ts()}
+function trh(){const st=Number(p.hpRegenTraining)||0;if(st>=2){al('체력 회복 훈련은 이미 최대 2단계입니다.');return}const c=st===0?3000:6000;if(p.coins<c){al(`코인이 부족합니다! (${c}코인 필요)`);return}p.coins-=c;p.hpRegenTraining=st+1;al(`체력 회복 훈련 ${p.hpRegenTraining}단계 완료! 1초에 체력 ${1+p.hpRegenTraining} 회복`);sg();uu()}
 function tc(){const c=2000;if(p.criticalTraining>=5){al('더 이상 치명타 훈련을 할 수 없습니다. (최대 5단계)');return}if(p.coins<c){al(`코인이 부족합니다! (${c}코인 필요)`);return}p.coins-=c;p.criticalTraining+=1;al(`치명타 훈련 완료! 치명타 확률 +1% (현재: ${5+p.criticalTraining}%)`);uu()}
 let cvType='weapon',cvSelectedIndex=0;function visualItems(t){let a=[];if(t==='weapon'){if(p.weapon&&p.weapon.type==='weapon')a.push({item:p.weapon,label:'장착: '+p.weapon.name});p.inventory.forEach((x,i)=>{if(x.type==='weapon')a.push({item:x,index:i,label:x.name})})}else{if(p.armor&&p.armor.type==='armor'&&p.armor.name!=='없음')a.push({item:p.armor,label:'장착: '+p.armor.name});p.inventory.forEach((x,i)=>{if(x.type==='armor')a.push({item:x,index:i,label:x.name})})}return a}function isVisualCustomItem(it){return !!(it&&it.visualCustom);}
 function openVisualCustom(){if((p.coins||0)<100000){al('코인이 부족합니다! (100,000코인 필요)');return}cvType='weapon';document.getElementById('custom-visual-modal').classList.add('open');updateVisualCustom()}function closeVisualCustom(){document.getElementById('custom-visual-modal').classList.remove('open')}function updateVisualCustom(){let s=document.getElementById('cv-item-select'),a=visualItems(cvType);s.innerHTML='';a.forEach((x,i)=>{let o=document.createElement('option');o.value=i;o.textContent=x.label;s.appendChild(o)});loadVisualFields()}function loadVisualFields(){let a=visualItems(cvType),i=+document.getElementById('cv-item-select').value,d=a[i]?.item?.visualCustom||{};document.getElementById('cv-color').value=d.color||'#ffffff';document.getElementById('cv-glow-color').value=d.glowColor||'#8b5cf6';document.getElementById('cv-rainbow').checked=!!d.rainbow;document.getElementById('cv-glow').checked=d.glow!==false;document.getElementById('cv-bold').checked=d.bold!==false;previewVisualCustom()}function previewVisualCustom(){let n=document.getElementById('cv-preview-name'),g=document.getElementById('cv-glow-color').value;n.style.color=document.getElementById('cv-color').value;n.style.fontWeight=document.getElementById('cv-bold').checked?'900':'400';n.style.textShadow=document.getElementById('cv-glow').checked?'0 0 6px '+g+',0 0 14px '+g+',0 0 24px '+g:'none';n.style.animation=document.getElementById('cv-rainbow').checked?'cvRainbow 4s linear infinite':'none'}function applyVisualCustom(){let a=visualItems(cvType),i=+document.getElementById('cv-item-select').value;if(!a[i])return;if((p.coins||0)<100000)return; a[i].item.visualCustom={color:document.getElementById('cv-color').value,glowColor:document.getElementById('cv-glow-color').value,rainbow:document.getElementById('cv-rainbow').checked,glow:document.getElementById('cv-glow').checked,bold:document.getElementById('cv-bold').checked};p.coins-=100000;sg();closeVisualCustom();uu();al('외형 커스텀 적용 완료! (100,000코인 사용)')}function oe(){gs='enhancement';al('대장간에 도착했습니다.');uu()}
@@ -975,7 +976,7 @@ document.getElementById('cv-weapon-tab').onclick=()=>{cvType='weapon';updateVisu
  window.startTutorial=function(){p.tut={intro:1};L('마을 위쪽 게시판에 가보세요!')};
  var HELP={'기본':['조이스틱으로 움직이고 오른쪽 큰 버튼으로 공격해요.','대쉬 버튼(행동력 5)을 누르면 보는 방향으로 빠르게 쓕 이동해요. 컴퓨터는 Shift 키예요.','돌아다니며 코인과 XP를 주워요.','몬스터는 저절로 나타나고, 가까이 오면 공격해요.','행동력은 스킬에 쓰이고 시간이 지나면 회복돼요.','코인으로 마을 상점에서 장비를 살 수 있어요.'],
  '스킬':['몬스터를 잡으면 가끔 스킬북이 나와요.','인벤토리에서 스킬북을 펼쳐 스킬을 배워요.','배운 스킬은 인벤토리에서 장착해요.','파란 스킬 버튼을 누르면 스킬을 써요.','스킬은 행동력을 20 쓰고, 상급일수록 강해요.'],
- '성장':['레벨이 오르면 체력과 행동력이 늘어요.','훈련에서 공격력과 치명타를 키울 수 있어요.','대장간에서 장비를 강화할 수 있어요.','마을의 코인 러쉬는 하루 한 번 도전해요.'],
+ '성장':['레벨이 오르면 체력과 행동력이 늘어요.','훈련장 교관에게 말을 걸어 훈련하면 공격력·치명타·체력 회복 속도를 키울 수 있어요.','대장간에서 장비를 강화할 수 있어요.','마을의 코인 러쉬는 하루 한 번 도전해요.'],
  '지역·보스':['지역 입구의 해금 문 앞에서 버튼을 눌러 지역을 해금해요. 해금 전에는 들어갈 수 없어요.','지역마다 만나는 몬스터와 보상이 달라요.','높은 산은 1,000코인이면 열려요.','보스는 마왕성 앞에서 티켓을 내면 마왕의 방으로 이동해 도전할 수 있어요. 끝나면 마을로 돌아와요.','보스 티켓은 랜덤 박스에서 얻을 수 있어요.']};
  window.helpMenu=function(mn){Object.keys(HELP).forEach(function(k){cb(mn,''+k,function(){var _lg=document.getElementById('log');if(_lg)_lg.innerHTML='';HELP[k].forEach(function(t){L(''+t)})})});
   cb(mn,'저장 데이터 초기화',function(){if(!confirm('저장된 진행 상황을 모두 지우고 처음부터 시작할까요?'))return;if(!confirm('정말 삭제할까요? 되돌릴 수 없어요.'))return;try{localStorage.removeItem('textRpgSave')}catch(e){}saveCombatResult=function(){};location.reload()});
@@ -1129,7 +1130,8 @@ function ground(){
   if(d==='grass'&&h%13===0){const fx=X+(h>>5)%50+8,fy=Y+(h>>11)%50+8;ctx.fillStyle='#f6e27a';ctx.beginPath();ctx.arc(fx,fy,3,0,PI2);ctx.fill()}
   if(d==='peb'&&h%3===0){ctx.fillStyle='rgba(60,62,68,.5)';ctx.beginPath();ctx.ellipse(X+(h>>4)%50+6,Y+(h>>9)%50+6,4+h%4,3,0,0,PI2);ctx.fill();if(h%9===0){ctx.strokeStyle='rgba(50,52,58,.6)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(X+10,Y+20);ctx.lineTo(X+26,Y+30);ctx.lineTo(X+38,Y+26);ctx.stroke()}}
   if(d==='crack'){ctx.strokeStyle='rgba(0,0,0,.35)';ctx.lineWidth=1;ctx.strokeRect(X+.5,Y+.5,64,64);if(h%6===0){ctx.strokeStyle='rgba(255,70,50,.55)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(X+8,Y+14);ctx.lineTo(X+24,Y+30);ctx.lineTo(X+20,Y+46);ctx.stroke()}}
-  if(d==='cloud'&&h%2===0){ctx.fillStyle='rgba(255,255,255,.9)';const cx=X+(h>>4)%40+12,cy=Y+(h>>9)%40+12;[[0,0,13],[12,3,10],[-12,4,9]].forEach(a=>{ctx.beginPath();ctx.arc(cx+a[0],cy+a[1],a[2],0,PI2);ctx.fill()});if(h%7===0){ctx.fillStyle='rgba(255,213,74,.8)';ctx.fillRect(X+(h>>6)%55,Y+(h>>10)%55,3,3)}}
+  if(d==='wood'){ctx.strokeStyle='rgba(80,52,24,.35)';ctx.lineWidth=1;ctx.strokeRect(X+.5,Y+.5,64,64);if(h%3===0){ctx.beginPath();ctx.moveTo(X+10,Y+22);ctx.lineTo(X+54,Y+22);ctx.stroke()}if(h%5===0){ctx.beginPath();ctx.moveTo(X+8,Y+44);ctx.lineTo(X+46,Y+44);ctx.stroke()}}
+   if(d==='cloud'&&h%2===0){ctx.fillStyle='rgba(255,255,255,.9)';const cx=X+(h>>4)%40+12,cy=Y+(h>>9)%40+12;[[0,0,13],[12,3,10],[-12,4,9]].forEach(a=>{ctx.beginPath();ctx.arc(cx+a[0],cy+a[1],a[2],0,PI2);ctx.fill()});if(h%7===0){ctx.fillStyle='rgba(255,213,74,.8)';ctx.fillRect(X+(h>>6)%55,Y+(h>>10)%55,3,3)}}
   if(d==='spark'&&h%6===0){const sx=X+(h>>4)%52+6,sy=Y+(h>>9)%52+6,tw=.5+.5*Math.sin(R.T*3+h);ctx.fillStyle='rgba(255,255,255,'+(.4+.5*tw)+')';ctx.fillRect(sx-1,sy-4,2,8);ctx.fillRect(sx-4,sy-1,8,2)}
   if(!isOpen(zz)){ctx.fillStyle='rgba(10,8,30,.52)';ctx.fillRect(X,Y,65,65)}
  }
@@ -1593,7 +1595,7 @@ function drawPlayer(){
  let sxs=1,sw=null;
  if(spin){sw=orbit(u,K2);if(u>K2.a&&u<K2.b){const cs=Math.cos(ease((u-K2.a)/(K2.b-K2.a))*ORS);sxs=Math.abs(cs)<.2?.2*(cs<0?-1:1):cs}}
  ctx.save();ctx.translate(P.x,P.y);
- ctx.fillStyle='rgba(0,0,0,.28)';ctx.beginPath();ctx.ellipse(0,2,17+dq*8,6,0,0,PI2);ctx.fill();
+ if(R.zn!=='훈련장'){ctx.fillStyle='rgba(0,0,0,.28)';ctx.beginPath();ctx.ellipse(0,2,17+dq*8,6,0,0,PI2);ctx.fill()}
  if(!dead){
   if(W.tier>=6||W.pal.tr||W.pal.v||W.pal.et){ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=.45+.2*Math.sin(R.T*5);ctx.strokeStyle=W.pal.g;ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(0,2,26+Math.sin(R.T*4)*3,10,0,0,PI2);ctx.stroke();if(W.tier>=8){ctx.beginPath();ctx.ellipse(0,2,38-Math.sin(R.T*4)*3,15,0,0,PI2);ctx.stroke()}ctx.restore()}
   if(p.nextBlock||p.nextParry){ctx.strokeStyle=p.nextParry?'#ffd54a':'#9bd0ff';ctx.lineWidth=3;ctx.globalAlpha=.7;ctx.beginPath();ctx.arc(0,-30,34+Math.sin(R.T*8)*2,0,PI2);ctx.stroke();ctx.globalAlpha=1}
@@ -1618,10 +1620,12 @@ function drawPlayer(){
 }
 /* ---------- 오픈월드: 지역 · 장소 · 해금 ---------- */
 const ARENA={x:0,y:-6000,r:560};
+const TRG={x:0,y:-12000,hw:560,hh:330};
 const POCKET={'천국의 문':{x:4600,y:-800,r:820},'공허':{x:-4600,y:-800,r:820},'이세계 숲':{x:4600,y:2400,r:820},'이세계 산':{x:-4600,y:2400,r:820}};
 const nz=(x,y)=>Math.sin(x*.0043+1.7)*Math.cos(y*.0051-.4)*40+Math.sin(x*.0113+y*.0097)*18;
 function zoneAt(x,y){
  const w=nz(x,y);
+ if(Math.abs(x-TRG.x)<TRG.hw&&Math.abs(y-TRG.y)<TRG.hh)return '훈련장';
  if(Math.hypot(x-ARENA.x,y-ARENA.y)<ARENA.r+w)return '마왕의 방';
  for(const k in POCKET){const c=POCKET[k];if(Math.hypot(x-c.x,y-c.y)<c.r+w)return k}
  const ax=Math.abs(x);
@@ -1632,9 +1636,10 @@ function zoneAt(x,y){
  return '높은 산';
 }
 TH['마왕의 방']={bg:'#0c0712',t:['#3a1d2e','#2e1626'],ob:'pillar',oc:['#3b2e4a','#ff5a2a'],d:'crack',p:0};
+TH['훈련장']={bg:'#14202e',t:['#c9a36b','#c19b64'],ob:'tree',oc:['#fff','#fff'],d:'wood',p:0};
 TH['마을']={bg:'#b9a27a',t:['#c9b48a','#c0aa80'],ob:'tree',oc:['#3f8f45','#5ab85f'],trk:'#6b4a2e',d:'peb',p:0};
-const ZN={'마왕의 방':'마왕의 방','마을':'마을','숲':'숲','높은 산':'높은 산','마왕성':'마왕성','천국의 문':'천국의 문','공허':'공허','이세계 숲':'이세계 숲','이세계 산':'이세계 산'};
-const isOpen=z=>z==='마을'||z==='마왕의 방'||(p.unlockedRegions||['숲']).includes(z);
+const ZN={'훈련장':'훈련장','마왕의 방':'마왕의 방','마을':'마을','숲':'숲','높은 산':'높은 산','마왕성':'마왕성','천국의 문':'천국의 문','공허':'공허','이세계 숲':'이세계 숲','이세계 산':'이세계 산'};
+const isOpen=z=>z==='마을'||z==='마왕의 방'||z==='훈련장'||(p.unlockedRegions||['숲']).includes(z);
 const inCastle=(x,y)=>Math.abs(x)<290&&y<-2040&&y>-2600;
 const walk=(x,y)=>{if(inCastle(x,y))return false;const z=zoneAt(x,y);return !!z&&isOpen(z)};
 const zth=z=>z==='마왕의 방'?TH['마왕의 방']:(bossBattle&&gs==='combat')?TH['마왕성']:(TH[z]||TH['숲']);
@@ -1644,6 +1649,7 @@ const SPOTS=[
  {k:'rift',x:-860,y:430,n:'차원 균열'},{k:'portal',x:860,y:430,n:'포탈'},
  {k:'gate',x:0,y:-760,reg:'높은 산',r:130},{k:'gate',x:0,y:-1290,reg:'마왕성',r:130},
  {k:'castle',x:0,y:-2010,n:'마왕성',r:120}];
+SPOTS.push({k:'trainer',x:TRG.x-250,y:TRG.y-TRG.hh+22,n:'훈련 교관',r:80},{k:'texit',x:TRG.x,y:TRG.y+TRG.hh-22,n:'출구',r:70});
 for(const k in POCKET){const c=POCKET[k];SPOTS.push({k:'portal',x:c.x,y:c.y+520,n:'귀환 포탈',ret:k.indexOf('이세계')===0?'rift':'portal',r:80})}
 const LMS=[{k:'마왕성',x:0,y:-2050,s:1.6},{k:'천국의 문',x:POCKET['천국의 문'].x,y:POCKET['천국의 문'].y-260,s:1.3}];
 const rint=$('rint');
@@ -1695,12 +1701,12 @@ function spotLabel(s){
  if(s.ret)return '마을로 귀환';
  if(s.k==='gate')return ''+s.reg+' 해금 · '+costTxt(s.reg);
  if(s.k==='rift')return p.riftUnlocked?'차원 균열':'???';
- return {plaza:'입장',smith:'입장',shop:'입장',mine:'입장',portal:'포탈',train:'입장',rush:'입장',board:'게시판',castle:'마왕성 진입'}[s.k]||s.n;
+ return {plaza:'입장',smith:'입장',shop:'입장',mine:'입장',portal:'포탈',train:'입장',trainer:'훈련하기',texit:'마을로 나가기',rush:'입장',board:'게시판',castle:'마왕성 진입'}[s.k]||s.n;
 }
 function act(s){
  const k=s.k;
  if(s.ret){tp(s.ret==='rift'?-860:860,330);return}
- if(k==='plaza')showVillage();else if(k==='smith')oe();else if(k==='shop')os();else if(k==='mine')showMageMine();else if(k==='train'){if(typeof ot==='function')ot()}else if(k==='rush'){if(typeof showCoinRush==='function')showCoinRush()}else if(k==='board'){gs='help';uu()}
+ if(k==='plaza')showVillage();else if(k==='smith')oe();else if(k==='shop')os();else if(k==='mine')showMageMine();else if(k==='train'){closeP();tp(TRG.x,TRG.y+TRG.hh-140)}else if(k==='trainer'){if(typeof ot==='function')ot()}else if(k==='texit'){tp(-300,275)}else if(k==='rush'){if(typeof showCoinRush==='function')showCoinRush()}else if(k==='board'){gs='help';uu()}
  else if(k==='castle')openCastle();
  else if(k==='gate')unlockZone(s.reg);
  else if(k==='rift'){if(!(p.unlockedRegions||[]).includes('공허')){toast('이상한 균열이다… 공허를 먼저 해금해야 반응할 것 같다.');return}unlockRift()}
@@ -1731,6 +1737,7 @@ function worldStep(blk){
  rint.addEventListener('contextmenu',e=>e.preventDefault())})();
 addEventListener('keydown',e=>{if(e.code==='KeyE'&&R.on&&!blocked()&&R.ns)act(R.ns)});
 const _sms=showMonsterSelect;showMonsterSelect=function(ro){if(ro)R.pick=true;return _sms.apply(this,arguments)};
+setInterval(function(){try{if(R.on&&!R.end&&p&&p.weapon&&p.hp>0&&p.hp<p.maxHp){const rate=[1,2,3][Math.min(2,Number(p.hpRegenTraining)||0)];p.hp=Math.min(p.maxHp,p.hp+rate);const hv=document.getElementById('hpVal'),hf=document.getElementById('hpFill');if(hv)hv.innerText=p.hp;if(hf)hf.style.width=(Math.max(0,Math.min(1,p.hp/(p.maxHp||1)))*100)+'%';sg()}}catch(e){}},1000);
 const _ecw=ec;ec=function(pw){const wb=bossBattle;const r=_ecw.apply(this,arguments);if(!pw){tp(0,200);toast('쓰러져서 마을로 돌아왔다')}else if(wb){tp(0,200);toast('마왕의 방에서 마을로 돌아왔다')}return r};
 document.head.insertAdjacentHTML('beforeend',`<style>#rint{position:absolute;left:50%;bottom:calc(190px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:none;pointer-events:auto;padding:11px 18px;border-radius:14px;background:rgba(34,48,92,.92);border:2px solid rgba(255,255,255,.7);color:#fff;font-weight:800;font-size:14px;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.35);touch-action:none;transition:transform .08s,filter .08s}#rint.down{transform:translateX(-50%) translateY(2px) scale(.96);filter:brightness(1.15)}#rpanel{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(330px,88vw);max-height:88vh;overflow:auto;background:rgba(255,255,255,.97);border-radius:16px;padding:14px;z-index:60;display:none;box-shadow:0 12px 40px rgba(0,0,0,.4)}#rpanel .rpt{text-align:center;font-weight:800;font-size:16px;margin-bottom:10px}#rpanel .button{margin-bottom:8px}#rpanel .rpx{background:#8a93a6;box-shadow:none}</style>`);
 const ROADS=[[0,90,-290,-40],[0,90,290,-40],[0,90,0,-190],[0,90,-300,170],[0,90,300,170],[0,90,0,330],[-290,-40,-430,-90],[290,-40,430,-90]];
@@ -1806,6 +1813,79 @@ function villageGround(){
  [[52,'#a8916a'],[44,'#d9c8a0']].forEach(a=>{ctx.lineWidth=a[0];ctx.strokeStyle=a[1];ctx.beginPath();for(const r of ROADS){ctx.moveTo(r[0],r[1]);ctx.lineTo(r[2],r[3])}ctx.stroke()});
  ctx.fillStyle='#b9b2a3';ctx.strokeStyle='#8f887a';ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(0,90,66,42,0,0,PI2);ctx.fill();ctx.stroke();ctx.restore();
 }
+/* ---------- 훈련장 ---------- */
+const TDEC=[['rack',TRG.x-430,TRG.y-TRG.hh+30],['rack',TRG.x+250,TRG.y-TRG.hh+30],['rack',TRG.x+430,TRG.y-TRG.hh+30],['barrel',TRG.x+494,TRG.y-TRG.hh+72],['barrel',TRG.x+468,TRG.y-TRG.hh+90],['barrel',TRG.x-494,TRG.y-TRG.hh+72]];
+const DUM=[[-210,0],[0,40],[210,0]].map(a=>({x:TRG.x+a[0],y:TRG.y+a[1]+10,sz:44,hitT:-9,amp:0,tot:0,last:-9}));
+function trainGround(){
+ if(Math.abs(cam.x-TRG.x)>1000||Math.abs(cam.y-TRG.y)>800)return;
+ const L=TRG.x-TRG.hw,Rr=TRG.x+TRG.hw,T0=TRG.y-TRG.hh,B=TRG.y+TRG.hh,W2=TRG.hw*2+88;
+ ctx.save();ctx.lineCap='round';
+ ctx.strokeStyle='rgba(255,255,255,.28)';ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(TRG.x,TRG.y+30,300,120,0,0,PI2);ctx.stroke();
+ const g=ctx.createLinearGradient(0,T0-150,0,T0);g.addColorStop(0,'#4a3b2e');g.addColorStop(1,'#6d5842');
+ ctx.fillStyle=g;ctx.fillRect(L-44,T0-150,W2,150);
+ ctx.strokeStyle='rgba(30,20,12,.35)';ctx.lineWidth=2;
+ for(let r=0;r<5;r++){const y0=T0-150+r*30,off=(r&1)?32:0;ctx.beginPath();ctx.moveTo(L-44,y0);ctx.lineTo(Rr+44,y0);ctx.stroke();for(let x=L-44+off;x<Rr+44;x+=64){ctx.beginPath();ctx.moveTo(x,y0);ctx.lineTo(x,y0+30);ctx.stroke()}}
+ ctx.fillStyle='#8b6a44';ctx.fillRect(L-44,T0-22,W2,22);ctx.fillStyle='#5d452c';ctx.fillRect(L-44,T0-24,W2,4);
+ ctx.fillStyle='#2e2219';ctx.fillRect(L-44,T0-156,W2,8);
+ for(const bx of [-340,-120,120,340]){const x=TRG.x+bx,y=T0-138;ctx.fillStyle='#b5322e';ctx.fillRect(x-22,y,44,72);ctx.strokeStyle='#e8c25a';ctx.lineWidth=2;ctx.strokeRect(x-22,y,44,72);ctx.fillStyle='#2e2219';ctx.fillRect(x-26,y-4,52,5);ctx.fillStyle='#ffe08a';ctx.font='bold 26px system-ui,sans-serif';ctx.textAlign='center';ctx.fillText('武',x,y+40)}
+ ctx.fillStyle='#4a3b2e';ctx.fillRect(L-44,T0-150,44,TRG.hh*2+150);ctx.fillRect(Rr,T0-150,44,TRG.hh*2+150);
+ ctx.fillStyle='#8b6a44';ctx.fillRect(L-8,T0,8,TRG.hh*2);ctx.fillRect(Rr,T0,8,TRG.hh*2);
+ ctx.fillStyle='#2e2219';ctx.fillRect(L-44,B,W2,46);
+ const ex=TRG.x,ey=B-22;
+ ctx.fillStyle='#7d2e2e';ctx.fillRect(ex-46,ey-10,92,22);ctx.strokeStyle='#e8c25a';ctx.lineWidth=2.5;ctx.strokeRect(ex-46,ey-10,92,22);
+ ctx.fillStyle='#e8c25a';ctx.beginPath();ctx.moveTo(ex-7,ey-4);ctx.lineTo(ex+7,ey-4);ctx.lineTo(ex,ey+6);ctx.closePath();ctx.fill();
+ ctx.font='bold 13px system-ui,sans-serif';ctx.textAlign='center';ctx.lineWidth=3;ctx.strokeStyle='rgba(0,0,0,.65)';ctx.fillStyle='#fff';ctx.strokeText('출구',ex,ey-18);ctx.fillText('출구',ex,ey-18);
+ ctx.restore();
+}
+function drawTDec(d){
+ const k=d[0];ctx.save();ctx.translate(d[1],d[2]);
+  if(k==='rack'){ctx.fillStyle='#6b4a2e';ctx.fillRect(-30,-34,60,5);ctx.fillRect(-30,-16,60,5);ctx.fillRect(-32,-42,5,42);ctx.fillRect(27,-42,5,42);
+  for(let i=0;i<5;i++){const x=-22+i*11,h=40+(i%2)*8;ctx.fillStyle='#b8bfc9';ctx.fillRect(x-1.5,-6-h,3,h);ctx.fillStyle='#8a6a43';ctx.fillRect(x-3.5,-12,7,7)}}
+ else if(k==='barrel'){ctx.fillStyle='#8a6038';ctx.fillRect(-12,-24,24,24);ctx.beginPath();ctx.ellipse(0,-24,12,5,0,0,PI2);ctx.fill();ctx.fillStyle='#a77a4a';ctx.beginPath();ctx.ellipse(0,-24,9,3.5,0,0,PI2);ctx.fill();ctx.strokeStyle='#4d3320';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-12,-17);ctx.lineTo(12,-17);ctx.moveTo(-12,-7);ctx.lineTo(12,-7);ctx.stroke()}
+ ctx.restore();
+}
+function drawDummy(d){
+ const tt=R.T-d.hitT,ang=tt<1.2?d.amp*Math.sin(tt*24)*Math.exp(-tt*4.2):0,fl=tt<.12;
+ ctx.save();ctx.translate(d.x,d.y);
+ ctx.fillStyle='#7a5c3a';ctx.beginPath();ctx.ellipse(0,1,15,5,0,0,PI2);ctx.fill();
+ ctx.save();ctx.rotate(ang);ctx.lineCap='round';
+ ctx.fillStyle='#8a6a43';ctx.fillRect(-3,-74,6,74);
+ ctx.fillStyle='#7a5a38';ctx.fillRect(-33,-56,66,5);
+ ctx.strokeStyle='#e0b84a';ctx.lineWidth=2;
+ for(let i=-3;i<=3;i++){ctx.beginPath();ctx.moveTo(i*3.5,-30);ctx.lineTo(i*4.5,-19+(i&1)*4);ctx.stroke()}
+ ctx.fillStyle='#c9a862';ctx.fillRect(-31,-60,18,11);ctx.fillRect(13,-60,18,11);
+ for(const sx of [-1,1])for(let i=0;i<4;i++){ctx.beginPath();ctx.moveTo(sx*31,-58+i*3);ctx.lineTo(sx*(37+(i%2)*2),-61+i*4);ctx.stroke()}
+ ctx.fillStyle=fl?'#fff':'#d9bd7c';ctx.strokeStyle='#9c7f45';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(-13,-64,26,36,6);ctx.fill();ctx.stroke();
+ ctx.strokeStyle='#8a6a3a';ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(-8,-58);ctx.lineTo(-8,-34);for(let y=-56;y<-34;y+=6){ctx.moveTo(-11,y);ctx.lineTo(-5,y+2)}ctx.stroke();
+ ctx.fillStyle='#b5483a';ctx.fillRect(2,-54,9,9);ctx.fillStyle='#7a5a38';ctx.fillRect(-13,-42,26,4);
+ ctx.fillStyle=fl?'#fff':'#e6cc90';ctx.strokeStyle='#9c7f45';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(0,-76,11,0,PI2);ctx.fill();ctx.stroke();
+ ctx.strokeStyle='#3a2a1a';ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(-6,-80);ctx.lineTo(-2,-76);ctx.moveTo(-2,-80);ctx.lineTo(-6,-76);ctx.moveTo(2,-80);ctx.lineTo(6,-76);ctx.moveTo(6,-80);ctx.lineTo(2,-76);ctx.stroke();
+ ctx.beginPath();ctx.moveTo(-6,-71);ctx.lineTo(-3,-72.5);ctx.lineTo(0,-71);ctx.lineTo(3,-72.5);ctx.lineTo(6,-71);ctx.stroke();
+ ctx.fillStyle='#e0b84a';ctx.strokeStyle='#b8902e';ctx.lineWidth=1.2;ctx.beginPath();ctx.ellipse(0,-84,19,5,0,0,PI2);ctx.fill();ctx.stroke();
+ ctx.beginPath();ctx.moveTo(-10,-85);ctx.quadraticCurveTo(0,-104,10,-85);ctx.closePath();ctx.fill();ctx.stroke();
+ ctx.fillStyle='#b5483a';ctx.fillRect(-10,-89,20,3);
+ ctx.restore();
+ const rec=R.T-d.last<4&&d.tot>0,t=rec?'누적 '+d.tot.toLocaleString():'허수아비';
+ ctx.font='bold 12px system-ui,sans-serif';ctx.textAlign='center';ctx.lineWidth=3;ctx.strokeStyle='rgba(0,0,0,.65)';ctx.fillStyle=rec?'#ffe08a':'#fff';ctx.strokeText(t,0,-112);ctx.fillText(t,0,-112);
+ ctx.restore();
+}
+function drawTrainerNpc(s){
+ const T=R.T,f=P.x>=s.x?1:-1,br=Math.sin(T*1.6)*.6,W='#fff',G='#d5dbe3',D='#b9c1cc';
+ ctx.save();ctx.translate(s.x,s.y);
+ ctx.save();ctx.scale(f,1);ctx.rotate(-.08);ctx.lineCap='round';ctx.lineJoin='round';
+ ctx.strokeStyle=G;ctx.lineWidth=7.5;ctx.beginPath();ctx.moveTo(-1,-21);ctx.lineTo(-9,-12);ctx.lineTo(-5,-3);ctx.stroke();
+ ctx.strokeStyle=W;ctx.beginPath();ctx.moveTo(1,-21);ctx.lineTo(4,-11);ctx.lineTo(4,0);ctx.stroke();
+ ctx.translate(0,br);
+ ctx.fillStyle=W;ctx.beginPath();ctx.roundRect(-6.5,-41,13,20,4);ctx.fill();
+  ctx.beginPath();ctx.arc(1,-50,9.5,0,PI2);ctx.fill();
+ ctx.fillStyle='#e53935';ctx.strokeStyle='#a31515';ctx.lineWidth=1;ctx.save();ctx.beginPath();ctx.arc(1,-50,9.5,0,PI2);ctx.clip();ctx.fillRect(-11,-56,24,5);ctx.beginPath();ctx.moveTo(-11,-56);ctx.lineTo(13,-56);ctx.moveTo(-11,-51);ctx.lineTo(13,-51);ctx.stroke();ctx.restore();const tw=Math.sin(T*3)*1.6;ctx.beginPath();ctx.moveTo(-8,-54.5);ctx.quadraticCurveTo(-14,-57+tw,-21,-55+tw*1.6);ctx.lineTo(-20,-51+tw*1.6);ctx.quadraticCurveTo(-14,-52.5+tw,-8,-52);ctx.closePath();ctx.fill();ctx.stroke();ctx.beginPath();ctx.moveTo(-8,-53);ctx.quadraticCurveTo(-13,-50-tw,-20,-47-tw*1.6);ctx.lineTo(-19,-43-tw*1.6);ctx.quadraticCurveTo(-13,-46-tw,-8,-51);ctx.closePath();ctx.fill();ctx.stroke();ctx.beginPath();ctx.arc(-8.5,-53.2,2.6,0,PI2);ctx.fill();ctx.stroke();
+ ctx.strokeStyle=D;ctx.lineWidth=6.5;ctx.beginPath();ctx.moveTo(-3,-37);ctx.lineTo(-5,-30);ctx.lineTo(7,-33);ctx.stroke();
+ ctx.strokeStyle=G;ctx.beginPath();ctx.moveTo(3,-37);ctx.lineTo(8,-30);ctx.lineTo(-6,-33.5);ctx.stroke();
+ ctx.fillStyle=W;ctx.beginPath();ctx.arc(7,-33,3.5,0,PI2);ctx.fill();ctx.beginPath();ctx.arc(-6,-33.5,3.5,0,PI2);ctx.fill();
+ ctx.restore();
+ ctx.font='bold 13px system-ui,sans-serif';ctx.textAlign='center';ctx.lineWidth=3;ctx.strokeStyle='rgba(0,0,0,.65)';ctx.fillStyle='#fff';ctx.strokeText(s.n,0,-72);ctx.fillText(s.n,0,-72);
+ ctx.restore();
+}
 function drawDecor(d){
  const T=R.T,k=d[0];
  if(k==='tree'){drawOb({x:d[1],y:d[2],v:Math.abs(d[1]*3+d[2])|0,th:TH['마을']});return}
@@ -1822,7 +1902,8 @@ function drawDecor(d){
  ctx.restore();
 }
 function drawSpot(s){
- if(s.k==='gate'||s.k==='castle')return;
+ if(s.k==='gate'||s.k==='castle'||s.k==='texit')return;
+ if(s.k==='trainer'){drawTrainerNpc(s);return}
  const T=R.T,k=s.k;let ly=-102;
  ctx.save();ctx.translate(s.x,s.y);
  ctx.fillStyle='rgba(0,0,0,.25)';ctx.beginPath();ctx.ellipse(0,4,36,9,0,0,PI2);ctx.fill();
@@ -1874,10 +1955,10 @@ function spawnForced(){
  pop(''+cm.name,P.x,P.y-95,'#fff',1);
 }
 function reward(e){
- const c0=p.coins,s0=p.mageStones||0;cm=e.m;gs='combat';
+ const c0=p.coins,h0=p.hp,s0=p.mageStones||0;cm=e.m;gs='combat';
  let _need=0;const _uu0=uu;uu=function(){_need=1};try{ec(true)}catch(x){console.error(x)}finally{uu=_uu0;if(_need)setTimeout(function(){try{uu()}catch(x){}},120)}
  if(gs==='combat')gs='main';if(!bossBattle)cm=null;
- const dc=p.coins-c0,ds=(p.mageStones||0)-s0,ex=(e.m.exp&&p.level<50)?e.m.exp:0;let oy=14;if(dc>0){pop('+'+dc,e.x,e.y-e.sz-oy,'#ffd54a',1,'coin');oy+=30}if(ex>0){pop('XP +'+ex,e.x,e.y-e.sz-oy,'#6ee7b7',1,'exp');oy+=30}if(ds>0)pop('+'+ds,e.x,e.y-e.sz-oy,'#c084fc',1,'gem');
+ const dc=p.coins-c0,ds=(p.mageStones||0)-s0,ex=(e.m.exp&&p.level<50)?e.m.exp:0;let oy=14;if(dc>0){pop('+'+dc,e.x,e.y-e.sz-oy,'#ffd54a',1,'coin');oy+=30}if(ex>0){pop('XP +'+ex,e.x,e.y-e.sz-oy,'#6ee7b7',1,'exp');oy+=30}if(ds>0)pop('+'+ds,e.x,e.y-e.sz-oy,'#c084fc',1,'gem');const dh=p.hp-h0;if(dh>0)pop('HP +'+dh,P.x,P.y-100,'#7be08a',1);
 }
 function dealRaw(e,d){e.m.hp-=d;e.fl=.15;e.agg=true;pop(Math.round(d),e.x,e.y-e.sz*.9,'#fff');if(e.m.hp<=0)die(e)}
 function die(e){
@@ -1980,6 +2061,11 @@ function strike(){
    if(e.m.hp<=0)die(e);
   }
  }
+ if(R.zn==='훈련장'){for(const dm of DUM){const dx=(dm.x-P.x)*P.face,dy=dm.y-P.y;
+   if(dx>(big?-55:-12)&&dx<rch+dm.sz*.35&&Math.abs(dy)<((thr?32:46)+(sk==='가로 베기'?40:0))*(W.wid||1)+dm.sz*.22){
+    const r=calculateCombatDamage(mult);dm.tot+=r.damage;dm.last=R.T;dm.hitT=R.T;dm.amp=(dm.x<P.x?-1:1)*(big?.42:.28);
+    pop(r.damage+(r.critical?'!':''),dm.x,dm.y-dm.sz*1.9,r.critical?'#ff5252':(big?'#ffd54a':'#fff'),r.critical||big);
+    hitFX(dm.x,dm.y-dm.sz*.8,c,big,thr);spark(dm.x,dm.y-50,7,'#e0b84a',170,3);R.shake=Math.max(R.shake,SH[c]+R.W.tier)}}}
  n=PT.strikeGhosts(n,fxh,mult,c,big,thr,rch,sk);
  swingFX(c,big,thr,fxh);
  if(sk)skillFX(sk,fxh);
@@ -2006,8 +2092,8 @@ function setTheme(rg){R.rg=rg;R.th=TH[rg]||TH['숲'];document.documentElement.st
 let pid=0,pkT=0,dirtyT=0;
 function dirty(){if(dirtyT)return;dirtyT=setTimeout(()=>{dirtyT=0;try{uu();sg()}catch(e){console.error(e)}},300)}
 /* 몬스터는 마을과 성 내부만 못 들어가고, 나머지 지형은 지역 경계를 넘어 다닐 수 있음 */
-function monCanGo(x,y){const z=zoneAt(x,y);return !!z&&z!=='마을'&&z!=='마왕의 방'&&!inCastle(x,y)}
-function freeSpot(r0,r1){for(let n=0;n<8;n++){const a0=rnd()*PI2,r=r0+rnd()*(r1-r0),x=P.x+Math.cos(a0)*r,y=P.y+Math.sin(a0)*r;const zq=zoneAt(x,y);let ok=!!zq&&zq!=='마을'&&zq!=='마왕의 방'&&isOpen(zq);for(let i=Math.floor(x/190)-1;i<=Math.floor(x/190)+1&&ok;i++)for(let j=Math.floor(y/190)-1;j<=Math.floor(y/190)+1;j++){const o=obAt(i,j);if(o&&Math.hypot(o.x-x,o.y-y)<34){ok=false;break}}if(ok)return[x,y]}return null}
+function monCanGo(x,y){const z=zoneAt(x,y);return !!z&&z!=='마을'&&z!=='마왕의 방'&&z!=='훈련장'&&!inCastle(x,y)}
+function freeSpot(r0,r1){for(let n=0;n<8;n++){const a0=rnd()*PI2,r=r0+rnd()*(r1-r0),x=P.x+Math.cos(a0)*r,y=P.y+Math.sin(a0)*r;const zq=zoneAt(x,y);let ok=!!zq&&zq!=='마을'&&zq!=='마왕의 방'&&zq!=='훈련장'&&isOpen(zq);for(let i=Math.floor(x/190)-1;i<=Math.floor(x/190)+1&&ok;i++)for(let j=Math.floor(y/190)-1;j<=Math.floor(y/190)+1;j++){const o=obAt(i,j);if(o&&Math.hypot(o.x-x,o.y-y)<34){ok=false;break}}if(ok)return[x,y]}return null}
 function spawnPk(){
  const sp=freeSpot(110,430);if(!sp)return;const r=rnd();
  const t=r<.8?'coin':r<.92?'exp':(p.selectedRegion==='이세계 산'?'gem':'coin');
@@ -2048,6 +2134,7 @@ function update(dt,blk){
  for(const h of VDEC){if(h[0]!=='house')continue;const x0=h[1]-32,x1=h[1]+32,y0=h[2]-22,y1=h[2]+6,pr=10,cx=Math.max(x0,Math.min(x1,P.x)),cy=Math.max(y0,Math.min(y1,P.y)),dx=P.x-cx,dy=P.y-cy,dd=Math.hypot(dx,dy);
   if(dd>0){if(dd<pr){P.x=cx+dx/dd*pr;P.y=cy+dy/dd*pr}}
   else{const l=P.x-x0,r=x1-P.x,t=P.y-y0,b=y1-P.y,m=Math.min(l,r,t,b);if(m===l)P.x=x0-pr;else if(m===r)P.x=x1+pr;else if(m===t)P.y=y0-pr;else P.y=y1+pr}}
+ if(R.zn==='훈련장')for(const dm of DUM){const dx=P.x-dm.x,dy=P.y-dm.y,dd=Math.hypot(dx,dy);if(dd<20&&dd>0){P.x=dm.x+dx/dd*20;P.y=dm.y+dy/dd*20}}
  if(!walk(P.x,P.y)&&walk(P.ox,P.oy)){P.x=P.ox;P.y=P.oy}
  P.speed=Math.hypot(P.vx,P.vy);
  if(P.at<0&&Math.abs(ix)>.2)P.face=ix>0?1:-1;
@@ -2124,13 +2211,13 @@ function draw(){
  ctx.setTransform(DPR,0,0,DPR,0,0);ctx.fillStyle=R.th.bg;ctx.fillRect(0,0,VW,VH);bgScreen();
  const shk=window.__cfg.lite?0:R.shake,sx=(rnd()-.5)*shk,sy=(rnd()-.5)*shk;
  ctx.setTransform(DPR*Z,0,0,DPR*Z,DPR*(VW/2-cam.x*Z+sx),DPR*(VH*.42-cam.y*Z+sy));
- ground();villageGround();
+ ground();villageGround();trainGround();
  const L=[],hw=VW/2/Z+60,i0=Math.floor((cam.x-hw)/190),i1=Math.ceil((cam.x+hw)/190),j0=Math.floor((cam.y-VH*.42/Z-120)/190),j1=Math.ceil((cam.y+VH*.58/Z+40)/190);
  for(let j=j0;j<=j1;j++)for(let i=i0;i<=i1;i++){const o=obAt(i,j);if(o)L.push({y:o.y,f:()=>drawOb(o),sh:()=>shadowOb(o)})}
  for(const e of Es)L.push({y:e.y,f:()=>drawMon(e),sh:()=>shadowMon(e)});PT.collect(L);
  if(gs!=='combat')for(const q of Ps)L.push({y:q.y,f:()=>drawPk(q)});
  L.push({y:P.y,f:drawPlayer,sh:shadowPlayer});
- for(const lm of LMS)if(Math.abs(lm.x-cam.x)<900&&Math.abs(lm.y-cam.y)<1100)L.push({y:lm.y,f:()=>landmark(lm)});for(const sp of SPOTS)if(Math.abs(sp.x-cam.x)<420&&Math.abs(sp.y-cam.y)<620)L.push({y:sp.y,f:()=>drawSpot(sp),sh:()=>shadowSpot(sp)});for(const d of VDEC)if(Math.abs(d[1]-cam.x)<420&&Math.abs(d[2]-cam.y)<620)L.push({y:d[2],f:()=>drawDecor(d),sh:()=>shadowDecor(d)});
+ for(const lm of LMS)if(Math.abs(lm.x-cam.x)<900&&Math.abs(lm.y-cam.y)<1100)L.push({y:lm.y,f:()=>landmark(lm)});for(const sp of SPOTS)if(Math.abs(sp.x-cam.x)<420&&Math.abs(sp.y-cam.y)<620)L.push({y:sp.y,f:()=>drawSpot(sp),sh:()=>shadowSpot(sp)});for(const d of VDEC)if(Math.abs(d[1]-cam.x)<420&&Math.abs(d[2]-cam.y)<620)L.push({y:d[2],f:()=>drawDecor(d),sh:()=>shadowDecor(d)});for(const d of TDEC)if(Math.abs(d[1]-cam.x)<560&&Math.abs(d[2]-cam.y)<620)L.push({y:d[2],f:()=>drawTDec(d)});for(const d of DUM)if(Math.abs(d.x-cam.x)<560&&Math.abs(d.y-cam.y)<620)L.push({y:d.y,f:()=>drawDummy(d)});
  L.sort((a,b)=>a.y-b.y);for(const o of L)if(o.sh)o.sh();for(const o of L)o.f();
  for(const q of R.pt){ctx.globalAlpha=Math.min(1,q.l/q.m);ctx.fillStyle=q.c;if(q.sh){ctx.beginPath();ctx.moveTo(q.x,q.y-q.s*1.6);ctx.lineTo(q.x+q.s*.6,q.y);ctx.lineTo(q.x,q.y+q.s*1.6);ctx.lineTo(q.x-q.s*.6,q.y);ctx.fill();ctx.fillRect(q.x-q.s*1.6,q.y-q.s*.3,q.s*3.2,q.s*.6)}else ctx.fillRect(q.x-q.s/2,q.y-q.s/2,q.s,q.s)}
  ctx.globalAlpha=1;drawFx();drawBossHaz();
@@ -2455,24 +2542,27 @@ const PT={on:false,host:false,busy:false,code:'',id:'',peer:null,hc:null,conns:n
 /* ---------- TRPG 연결 ---------- */
 const tb=$('rtoast');
 const rnBox=document.createElement('div');rnBox.id='rnote';document.body.appendChild(rnBox);
-let rnQ=[],rnBusy=false,rnLast='',rnLastT=0;
-function rnNext(){
- if(!rnQ.length){rnBusy=false;return}
- rnBusy=true;const t=rnQ.shift(),w=document.createElement('div');w.className='rn-win';w.textContent=t;
- rnBox.appendChild(w);requestAnimationFrame(()=>w.classList.add('in'));
- setTimeout(()=>{w.classList.remove('in');w.classList.add('out');setTimeout(()=>{if(w.parentNode)w.parentNode.removeChild(w);rnNext()},180)},rnQ.length>1?900:1500);
+let rnLast='',rnLastT=0;
+function rnOut(w){
+ if(!w||w._o)return;w._o=1;clearTimeout(w._t);
+ w.classList.remove('in');w.classList.add('out');
+ setTimeout(()=>{if(w.parentNode)w.parentNode.removeChild(w)},320);
 }
 function toast(t,force){
  t=String(t==null?'':t).replace(/<[^>]*>/g,'').trim();if(!t)return;
  if(!force&&/^(village|shop|merchant|training|lock_menu|rift_upgrades|mage_mine|help)$/.test(gs))return;
  const now=Date.now();if(t===rnLast&&now-rnLastT<900)return;rnLast=t;rnLastT=now;
- rnQ.push(t);while(rnQ.length>6)rnQ.shift();if(!rnBusy)rnNext();
+ /* 기다리지 않고 바로 표시: 이전 알림은 위로 올라가며 사라짐 */
+ Array.prototype.slice.call(rnBox.children).forEach(rnOut);
+ const w=document.createElement('div');w.className='rn-win';w.textContent=t;
+ rnBox.appendChild(w);void w.offsetWidth;w.classList.add('in');
+ w._t=setTimeout(()=>rnOut(w),1600);
 }
 window.gameToast=toast;
-document.head.insertAdjacentHTML('beforeend','<style>#rtoast{display:none!important}#rnote{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 74px);transform:translateX(-50%);width:min(420px,90vw);z-index:90;pointer-events:none;display:flex;flex-direction:column;align-items:center}.rn-win{box-sizing:border-box;max-width:100%;padding:8px 14px;border-radius:8px;background:rgba(30,30,34,.88);color:#fff;font-weight:600;font-size:13px;line-height:1.4;text-align:center;white-space:pre-wrap;word-break:keep-all;opacity:0;transition:opacity .18s ease}.rn-win.in{opacity:1}.rn-win.out{opacity:0}</style>');
+document.head.insertAdjacentHTML('beforeend','<style>#rtoast{display:none!important}#rnote{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 74px);transform:translateX(-50%);width:min(420px,90vw);height:0;z-index:90;pointer-events:none}.rn-win{position:absolute;left:50%;top:0;box-sizing:border-box;width:max-content;max-width:100%;padding:8px 14px;border-radius:8px;background:rgba(30,30,34,.88);color:#fff;font-weight:600;font-size:13px;line-height:1.4;text-align:center;white-space:pre-wrap;word-break:keep-all;opacity:0;transform:translate(-50%,8px);transition:opacity .16s ease,transform .16s ease}.rn-win.in{opacity:1;transform:translate(-50%,0)}.rn-win.out{opacity:0;transform:translate(-50%,-22px);transition:opacity .3s ease-in,transform .3s ease-out}</style>');
 const okMsg=t=>!!t&&!/피해|데미지|치명타|막았|회피|반사/.test(t)&&!/^(코인 \d+개를 발견|마정석 \d+개를 발견했다|XP \d+|최대 레벨 보너스)/.test(t);
 const noise=t=>/처치!|^코인 \+|^XP \+|Eternal 장비는 나오지 않았다|뒤틀린 몬스터 보상/.test(t);
-const _al=al;al=function(t,c){if(noise(String(t).replace(/<[^>]*>/g,'')))return;const r=_al.apply(this,arguments);try{const x=String(t).replace(/<[^>]*>/g,'');if(okMsg(x))toast(x)}catch(e){}return r};
+const _al=al;al=function(t,c){if(noise(String(t).replace(/<[^>]*>/g,'')))return;const r=_al.apply(this,arguments);try{const x=String(t).replace(/<[^>]*>/g,'');if(okMsg(x)||/^(enhancement|weapon_enhancement|armor_enhancement|crafting)$/.test(gs))toast(x)}catch(e){}return r};
 document.querySelectorAll('#log .log-entry').forEach(e=>{const x=e.textContent;if(okMsg(x))toast(x)});
 const _hc=hcb;hcb=function(){if(R.on&&(gs==='main'||gs==='combat')){if(!R.end)buf=true;return}return _hc.apply(this,arguments)};
 const _us=useEquippedSkill;useEquippedSkill=function(){if(R.on&&(gs==='main'||gs==='combat')){sbuf=true;return}return _us.apply(this,arguments)};
@@ -2732,7 +2822,7 @@ function hud(ph,isNight){
 }
 
 /* ---------- 지역별 적용 강도 (실내/우주/천국 등) ---------- */
-const PROF={'공허':{sun:0,night:0},'천국의 문':{sun:1,night:.45}};   // 마왕성은 다른 지역과 같은 날씨 적용
+const PROF={'훈련장':{sun:0,night:0},'공허':{sun:0,night:0},'천국의 문':{sun:1,night:.45}};   // 마왕성은 다른 지역과 같은 날씨 적용
 const cur={sun:1,night:1,ember:0};
 
 /* ---------- 햇빛 효과 (빛줄기 · 번짐 · 렌즈 플레어 · 먼지) ---------- */
@@ -2855,6 +2945,7 @@ function frame(now){
  const rg=hook&&hook.R&&hook.R.rg?hook.R.rg:'숲',tgt=PROF[rg]||{sun:1,night:1};
  cur.sun+=(tgt.sun-cur.sun)*Math.min(1,dt*3);cur.night+=(tgt.night-cur.night)*Math.min(1,dt*3);
  cur.ember+=((rg==='마왕성'?1:0)-cur.ember)*Math.min(1,dt*2.5);
+ if(rg==='훈련장'){cur.sun=0;cur.night=0;cloudCover=0}
 
  const L=lightAt(x),gold=goldAt(x)*ss(0,.3,L);
  const day=L*cur.sun,nightAmt=(1-L)*cur.night,k=clamp(day+nightAmt,0,1);
@@ -2951,7 +3042,7 @@ window.dayNight={
   var ok=document.getElementById('train-ok');ok.addEventListener('click',close);setTimeout(function(){try{ok.focus()}catch(e){}},30);
  }
  function n(v){return Number(v)||0}
- function snap(){return{atk:n(p.baseDamageTraining),crit:n(p.criticalTraining),sta:n(p.staminaRecoveryTraining),maxSta:n(p.maxStamina),coins:n(p.coins),stones:n(p.mageStones)}}
+ function snap(){return{hpr:n(p.hpRegenTraining),atk:n(p.baseDamageTraining),crit:n(p.criticalTraining),sta:n(p.staminaRecoveryTraining),maxSta:n(p.maxStamina),coins:n(p.coins),stones:n(p.mageStones)}}
  function gap(st){return st>=3?'0.5초':(3-st)+'초'}
  function wrap(name,title){
   var orig=window[name];if(typeof orig!=='function')return;
@@ -2965,6 +3056,7 @@ window.dayNight={
     if(b.crit!==a.crit){rows.push(['치명타 훈련',a.crit+'단계',b.crit+'단계']);rows.push(['치명타 확률',(5+a.crit)+'%',(5+b.crit)+'%'])}
     if(b.sta!==a.sta){rows.push(['행동력 회복 훈련',a.sta+'단계',b.sta+'단계']);rows.push(['행동력 회복 간격',gap(a.sta),gap(b.sta)])}
     if(b.maxSta!==a.maxSta)rows.push(['최대 행동력',String(a.maxSta),String(b.maxSta)]);
+     if(b.hpr!==a.hpr){rows.push(['체력 회복 훈련',a.hpr+'단계',b.hpr+'단계']);rows.push(['체력 회복량',(1+a.hpr)+'/초',(1+b.hpr)+'/초'])}
     if(b.coins<a.coins)cost.push('코인 -'+(a.coins-b.coins).toLocaleString()+' (남은 코인 '+b.coins.toLocaleString()+')');
     if(b.stones<a.stones)cost.push('마정석 -'+(a.stones-b.stones)+' (남은 마정석 '+b.stones+')');
     if(rows.length)show(title,rows,cost.join(' · '),'');
@@ -2973,7 +3065,7 @@ window.dayNight={
    return r;
   };
  }
- wrap('td','공격력 훈련 완료!');wrap('ts','행동력 회복 훈련 완료!');wrap('tc','치명타 훈련 완료!');
+ wrap('td','공격력 훈련 완료!');wrap('ts','행동력 회복 훈련 완료!');wrap('tc','치명타 훈련 완료!');wrap('trh','체력 회복 훈련 완료!');
 })();
 </script>
 
